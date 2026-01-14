@@ -1,0 +1,224 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{indentfirst} % to get indentation on the first paragram of a section
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+\title{Combining Generalized Dubins Path Problem with visiting a circular boundary? On optimal Dubins paths for a capture the flag game? Minimal time flag capture in a capture the flag game?}
+\author{Émile Marcotte}
+% \date{December 2025}
+\date{}
+
+\begin{document}
+
+% \maketitle
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{Potential title?}
+
+% Combining a generalized Dubins path problem with visiting a circular boundary? On optimal Dubins paths for a capture the flag game? Minimal time flag capture in a capture the flag game?
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \section{Task at hand}
+
+% We want to solve the following problem:
+
+% Find the minimum time trajectory for a Dubins vehicle starting at some
+% point and heading, that goes to a point on a (stationary) circle and
+% ends up on the boundary of a polytope.
+
+% Understanding those papers should enable you to answer the problem above.
+
+% It would be any polytopic shape in the most general form, for simplicity
+% we can actually start from a circle. In the context of the CTF game it is
+% the robots own half.
+
+% It is important to write the optimal control problem first. You can do it by mirroring the way people formulated the problem in those papers. Clearly define and state the initial conditions and the terminal conditions as well as the kinematics and the cost function.
+
+
+\section{Pose the optimal control problem}
+
+\subsubsection*{Problem statement}
+
+Find the minimum time trajectory for a Dubins vehicle starting at some point and heading that goes to a point on a stationary circle and ends up on the boundary of a polytope.
+
+
+\subsubsection*{Initial conditions}
+
+The vehicle starts at a position $(x_0,y_0) \in \mathbb{R}^2$, with a heading $\theta_0 \in \;]\!-\!\pi,\pi]$ and a constant speed $v_0$.
+
+We have a circular region $\mathcal{C}$ of radius $r_c$ (notation similar to \cite{Jha20})
+\begin{align}
+    &\mathcal{C} = \{ (x,y) \in \mathbb{R}^2 | (x-x_c)^2 + (y-y_c)^2 = r_c^2 \},\\
+    &r_c \in \mathbb{R}^+, \nonumber\\
+    &(x_c,y_c) \in  \mathbb{R}^2. \nonumber
+\end{align}
+% \begin{align}
+%     &\mathcal{C} = \{ (x,y,x_c,y_c) \in \mathbb{R}^4, r_c \in \mathbb{R}^+ | (x-x_c)^2 + (y-y_c)^2 = r_c^2\}
+% \end{align}
+
+% IMAN SAID TO START WITH A CIRCLE FOR SIMPLICITY FOR THE TARGET HOME POLYTOPE
+We also have a terminal area $\mathcal{X}$ that does not overlap with $\mathcal{C}$ and can be of any shape. For the sake of this example, it will be defined as a circle of radius $r_x$, noted as
+\begin{align}
+    &\mathcal{X} = \{ (x,y) \in \mathbb{R}^2 | (x-x_x)^2 + (y-y_x)^2 = r_x^2 \},\\
+    &r_x \in \mathbb{R}^+, \nonumber\\
+    &(x_x,y_x) \in  \mathbb{R}^2, \nonumber\\
+    &\mathcal{C}\cap \mathcal{X} = \emptyset. \nonumber
+\end{align}
+
+
+\subsubsection*{Kinematics}
+
+The kinematics of the Dubins vehicle are
+\begin{align}
+    &\dot{x} = v_0\cos\theta,\\
+    &\dot{y} = v_0\sin\theta,\\
+    &\dot{\theta} = u,\\
+    &v_0\in \mathbb{R}^+,\\
+    &\theta \in \;]\!-\!\pi,\pi],\\
+    &u \in \left[-\frac{v_0}{\rho},\frac{v_0}{\rho}\right],\\
+    &\rho \leq r_c,
+\end{align}
+where $\rho$ is the minimal turning radius of the Dubins vehicle
+
+\subsubsection*{Terminal conditions}
+
+The vehicle has to go from its initial point $(x_0,y_0)$ to a point $(x_g,y_g)$ located on the perimeter of $\mathcal{C}$, then return to a point $(x_f,y_f)$ located on the boundary of $\mathcal{X}$.
+
+% We need to find the terminal position $(x_T,y_T)\in \mathbb{X}$. In the context of a capture the flag game, $\mathbb{X}$ would be the boundary of the corresponding player's field, which typically forms a rectangle. If we choose to represent the field as shown in figure ADD FIGURE OF CTF FIELD, the left and right fields could be represented as follows
+% \begin{align}
+%     \mathbb{X}_L &= \{ (x,y)\in\mathbb{R} | -X_x \leq x \leq -\varepsilon, \;\; -X_y \leq y \leq X_y \} \\
+%     \mathbb{X}_R &= \{ (x,y)\in\mathbb{R} | \; \varepsilon \leq x \leq X_x, \;\; -X_y \leq y \leq X_y \}
+% \end{align}
+
+
+\subsubsection*{Cost function}
+
+The cost function is (almost same notation as \cite{Manyam2017})
+\begin{align}
+    \underset{u(t)}{\min}\int_0^T 1dt
+\end{align}
+where $T$ is the time it takes to go from $(x_0,y_0)$ to $(x_f,y_f)$ while transiting through $(x_g,y_g)$.
+
+Although the objective is to find the fastest path, since the vehicle travels at a constant speed and is assumed to be in a homogeneous environment (friction and drag are constant, and no external perturbations), finding the fastest path is equivalent to finding the shortest path.
+% $\square$
+
+
+\section{What needs to be done compared to what is in the articles}
+
+\begin{itemize}
+    \item What we basically need to do is solve equation (4) in \cite{Chen2021} (basically, \cite{Jha20} started from \cite{Chen2021}, Zhen Chen worked on both of those articles), but with the added difficulty that we need to find the optimal arrival position and angle in X (done in Chen, but not really explained).
+    \item In Jha, they take for granted that the ending position and angle are known, and don't take into account the case where the Dubins path intersects with the circle (it is in fact not the point of the article to consider that case, but it could be relevant in our case if it allows for a shorter path). It is done in Chen, but not really explained;
+    \item The so called "analytical solution" in Jha doesn't directly give us the coordinates of the point at which the Dubins path and the circle intersect. HOWEVER, it gives us the coordinates and heading of the point $\mathbf{P_1}$, and if we keep going in a straight line with the heading given at that point, we will intersect with $\mathcal{C}$. However, those equations hold for $\mathcal{C}$ centered at the origin, which is not a big deal, but we must not forget to take it into account. Then, as soon as we touch the circle, we could simply use a "normal" Dubins path to get back to the safe zone. I think making the "perceived circle $\mathcal{C}$" slightly smaller by some arbitrary tolerance factor would be a good idea to make sure that through discretization, we don't end up passing by $\mathcal{C}$ without touching it.
+\end{itemize}
+
+\vspace{.5cm}
+
+\textbf{Proposed algorithm (incomplete, not detailed enough, and I think this might be too slow, but I don't know right now)}
+\begin{itemize}
+    \item We start with the initial conditions;
+    \item We go through all (discretized) points on the target circle and every arrival angle in 1 degree increments, and compute the Dubins path for all of those (MAYBE ONLY DO THIS STEP IF WE ARE A CERTAIN DISTANCE AWAY FROM X OR C? SO THAT WE MAY SKIP IT IF THERE IS NO WAY IT INTERSECTS?);
+    \item If some of those paths intersect with the target circle, we choose the shortest of those paths, and we're done;
+    \item If none of those paths intersect with the target circle, we go to the next phase in which we use an algorithm similar to that of Jha (which is not fully explained in the article); that means we make it so we initially try to go to the target circle to only touch its perimeter in 1 point (no need to get more into it), then go to the "safe zone";
+    \item We also need to check once again for the arrival point and angle in the safe zone that will give the shortest path;
+\end{itemize}
+
+
+
+
+
+
+
+\section{Figuring out how to do it}
+
+As a starting hypothesis, we find the point on the perimeter of $\mathcal{X}$ that is closest to the starting point $(x_0,y_0)$, then find the Dubins path to that point. Since $\mathcal{X}$ was defined as a circle, the closest point to the starting position would be given by
+\begin{align}
+    d = \sqrt{(x_x-x_0)^2 + (y_x-y_0)^2} - r_x.
+\end{align}
+This point might not be the point that gives the shortest path from the starting point depending on the starting angle $\theta_0$, so we might change this later to look at multiple different points on the perimeter of $\mathcal{X}$ to see which one gives the shortest Dubins path (although this might be inefficient computing wise). Also, we might want to check if one of those paths will intersect with $\mathcal{C}$.
+
+We also need to find at what angle we will arrive in $\mathcal{X}$. That angle will be the angle that helps get the shortest Dubins path. Need to look into that more...
+
+Then, we need to check if the Dubins path intersects with $\mathcal{C}$. To do this, for every point $(x,y)$ of the (discretized) Dubins path, we have to check if the following condition is true
+\begin{align}
+    \sqrt{(x_c-x)^2 + (y_c-y)^2} \leq r_c.
+\end{align}
+If it is true for one point $(x,y)$, then we simply apply the already computed Dubins path to the vehicle. If it's not true, we need to use the method from \cite{Jha20} to get a new path that will intersect with $\mathcal{C}$ in one point (no need to intersect more than that).
+
+---
+
+Main article to consider: \cite{Jha20}. In section 5.2 of that article, the analytical solution if given for the case where there is a "nonzero interval overlapping $\mathcal{C}$".
+
+We want to do kind of like section 4.2 of \cite{Jha20}, page 5. Figure \ref{fig:5jha} shows the meaning of some of the symbols. With our notation, we would have $(x_2,y_2)$ instead of $\mathbf{x_f}$.
+
+CHANGE TARGET TO BE CENTERED AT ORIGIN?
+
+In the article, they have 4 angles:
+\begin{itemize}
+    \item $\theta_0$ is initial heading of the vehicle
+    \item $\theta_1$ is the heading when at point $\mathbf{P_1}$
+    \item $\theta_2$ is the heading when at point $\mathbf{P_2}$
+    \item $\theta_f$ is the heading at the final point
+\end{itemize}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.65\linewidth]{fig 5_jha.png}
+    \caption{Figure 5 from \cite{Jha20}.}
+    \label{fig:5jha}
+\end{figure}
+
+From the article, we would have the following solutions for $\mathbf{P_1} = (P_{x1},P_{y1})$ and $\mathbf{P_2} = (P_{x2},P_{y2})$
+\begin{align}
+    &P_{x1} = x_0 - l_0\rho\sin\theta_0 + l_0\rho\sin\theta_1\\
+    &P_{y1} = y_0 + l_0\rho\cos\theta_0 - l_0\rho\cos\theta_1\\
+    &P_{x2} = x_f - l_f\rho\sin\theta_f + l_f\rho\sin\theta_2\\
+    &P_{y2} = y_f + l_f\rho\cos\theta_f - l_f\rho\cos\theta_2
+\end{align}
+where $l_i = 1$, for $i \in \{0,f\}$, if the turn at $t_i$ is a left turn (L) and
+$l_i = -1$ if it is a right turn (R).
+
+The angles $\theta_1$ and $\theta_2$ are given by
+\begin{align}
+    \theta_{\{1,2\}}=\arccos \Biggl(\frac{(l_{\{0,f\}}\rho - \delta r)(l_{\{0,f\}}\rho\cos\theta_{\{0,f\}} + y_{\{0,f\}})}{\mu + \rho^2}\nonumber\\
+    \pm \frac{(x_{\{0,f\}} - l_{\{0,f\}}\rho\sin\theta_{\{0,f\}})\sqrt{\mu - r^2+2l_{\{0,f\}}\delta\rho r}}{\mu + \rho^2}\Biggr)
+\end{align}
+where $\delta=1$ if O is in anticlockwise direction and $\delta=-1$ if O is in clockwise direction. $\mu$ is defined as follows
+\begin{align}
+    \mu = 2l_{\{0,f\}}\rho(y_{\{0,f\}}\cos\theta_{\{0,f\}}-x_{\{0,f\}}\sin\theta_{\{0,f\}}) + x^2_{\{0,f\}} + y^2_{\{0,f\}}.
+\end{align}
+
+We also need to find $(x_f,y_f)$ and $\theta_f$.
+
+
+
+\section{Random notes}
+
+The terminal position $(x_2,y_2)$ needs to be calculated such that this point of arrival gives the shortest distance. The "transition point" $(x_1,y_1)$ also needs to be found.
+
+We do not have to enter the area of $\mathcal{C}$, but we do need to touch its boundary at least at one point. With that being said, it is also fine to completely go inside $\mathcal{C}$ if it allows for a quicker path to $\mathcal{X}$.
+
+For the original Dubins algorithm: \cite{Dubins57}
+
+To find a path that tangentially touches the circular flag area: \cite{Jha20}.
+
+For a DTSPN algorithm in which it is allowed for the path to intersect with the circle: \cite{Chen2021}.
+
+To go through a sequence of points: \cite{Manyam2017}.
+
+To catch a moving enemy: \cite{Meyer2015}.
+
+
+
+
+
+% \bibliographystyle{alpha}
+\bibliographystyle{apalike}
+\bibliography{bibl}
+
+
+\end{document}
