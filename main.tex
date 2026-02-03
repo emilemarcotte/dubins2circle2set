@@ -2,6 +2,8 @@
 \usepackage{graphicx} % Required for inserting images
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{physics}
+
 \usepackage{indentfirst} % to get indentation on the first paragram of a section
 % Set page size and margins
 % Replace `letterpaper' with `a4paper' for UK/EU standard size
@@ -75,19 +77,33 @@ We also have a terminal area $\mathcal{X}$ that does not overlap with $\mathcal{
 
 The kinematics of the Dubins vehicle are
 \begin{align}
-    &\dot{x} = v_0\cos\theta,\\
-    &\dot{y} = v_0\sin\theta,\\
-    &\dot{\theta} = u,\\
+    &\mathbf{\dot{x}} =
+    \begin{bmatrix}
+        \dot{x}\\\dot{y}\\\dot{\theta}
+    \end{bmatrix}
+    = \begin{bmatrix}
+        v_0\cos\theta\\v_0\sin\theta\\u
+    \end{bmatrix}\\
     &v_0\in \mathbb{R}^+,\\
     &\theta \in (\!-\!\pi,\pi],\\
     &u \in \left[-\frac{v_0}{\rho},\frac{v_0}{\rho}\right],\\
     &\rho \leq r_c,
 \end{align}
+% \begin{align}
+%     &\dot{x} = v_0\cos\theta,\\
+%     &\dot{y} = v_0\sin\theta,\\
+%     &\dot{\theta} = u,\\
+%     &v_0\in \mathbb{R}^+,\\
+%     &\theta \in (\!-\!\pi,\pi],\\
+%     &u \in \left[-\frac{v_0}{\rho},\frac{v_0}{\rho}\right],\\
+%     &\rho \leq r_c,
+% \end{align}
 where $\rho$ is the minimal turning radius of the Dubins vehicle (justify its constraint later?).
 
 \subsubsection*{Terminal conditions}
 
-The vehicle has to go from its initial point $(x_0,y_0)$ to a point $(x_g,y_g)$ located on the perimeter of $\mathcal{C}$, then end up at a point $(x_f,y_f)$ located on the boundary of $\mathcal{X}$ with a heading $\theta_f$ pointing inside $\mathcal{C}$.
+The vehicle has to go from its initial point $(x_0,y_0)$ to a point $(x_g,y_g)$ located on the perimeter of $\mathcal{C}$, then end up at a point $(x_f,y_f)$ located on the boundary of $\mathcal{X}$.
+%with a heading $\theta_f$ pointing inside $\mathcal{C}$.
 
 % We need to find the terminal position $(x_T,y_T)\in \mathbb{X}$. In the context of a capture the flag game, $\mathbb{X}$ would be the boundary of the corresponding player's field, which typically forms a rectangle. If we choose to represent the field as shown in figure ADD FIGURE OF CTF FIELD, the left and right fields could be represented as follows
 % \begin{align}
@@ -100,7 +116,7 @@ The vehicle has to go from its initial point $(x_0,y_0)$ to a point $(x_g,y_g)$ 
 
 The cost function is
 \begin{align}
-    \underset{u(t)}{\min}\int_0^T 1dt
+    J = \underset{u(t)}{\min}\int_0^T 1dt
 \end{align}
 where $T$ is the time it takes to go from $(x_0,y_0)$ to $(x_f,y_f)$ while transiting through $(x_g,y_g)$.
 
@@ -112,29 +128,84 @@ Although the objective is to find the fastest path, since the vehicle travels at
 
 \section{Figuring out how to do it}
 
-At the point $(x_g,y_g)$, to make sure the vehicle either touches the boundary of $\mathcal{C}$ or goes fully through it (whichever gives the shortest path, depends on initial conditions), the following state equality needs to be satisfied
+\subsection{Constraints}
+
+At the point $(x_g,y_g)$, to make sure the vehicle either touches the boundary of $\mathcal{C}$ or goes fully through it (whichever gives the shortest path), the following state equality needs to be satisfied
 \begin{align}
-    S_g(x,y,t) = (x-x_c)^2 + (y-y_c)^2 - r_c^2 = 0.
+    S_\mathcal{C}(\mathbf{x},t) = (x-x_c)^2 + (y-y_c)^2 - r_c^2 = 0.
 \end{align}
 
 At the final destination, the following state equality needs to be satisfied
 \begin{align}
-    S_f(x,y,t) = (x-x_c)^2 + (y-y_c)^2 - r_c^2 = 0
+    S_\mathcal{X}(\mathbf{x},t) = (x-x_x)^2 + (y-y_x)^2 - r_x^2 = 0
 \end{align}
 to make sure the vehicle ends up on the boundary of the terminal area $\mathcal{X}$.
 
-At $\mathcal{C}$, the angle $\theta_g$ needs to satisfy the following contraint
-$$(INSERT.CONSTRAINT)$$
-(the total path length will also influence this angle's value)
+\subsection{What needs to be determined}
 
-The final angle $\theta_f$ needs to satisfy the following constraint
-$$(INSERT .CONSTRAINT)$$
-angle needs to be pointing inside $\mathcal{X}$, needs to be formally expressed.
+The intersection points $(x_g,y_g)$ and $(x_f,y_f)$ need to be determined so that they respect the equality constraints and minimize the Hamiltonian. The heading angles at these locations, respectively $\theta_g$ and $\theta_f$, also need to be determined.
+
+\subsection{Hamiltonian}
+
+
 
 Create the Hamiltonian for the stated problem
-$$(INSERT. HAMILTONIAN).$$
+\begin{align}
+    H(\mathbf{x},\mathbf{p},u) = 1 + p_xv_0\cos\theta + p_yv_0\sin\theta + p_\theta u
+\end{align}
+\begin{align}
+    \mathbf{\dot{p}} = \begin{bmatrix}
+        \dot{p_x}\\\dot{p_y}\\\dot{p_\theta}
+    \end{bmatrix}
+    = -\pdv{H}{\mathbf{x}}
+    = \begin{bmatrix}
+        0\\0\\-p_xv_0\sin\theta + p_yv_0\cos\theta
+    \end{bmatrix}
+    = \begin{bmatrix}
+        0\\0\\-p_x \dot{y}(t) + p_y\dot{x}(t)
+    \end{bmatrix}
+\end{align}
+By integrating for $\dot{p_\theta}$, we obtain
+\begin{align}
+    p_\theta(t) = \int \dot{p_\theta}(t)dt
+    = \int (-p_x \dot{y}(t) + p_y\dot{x}(t))dt
+    = -p_x y(t) + p_yx(t) + c_1
+    \label{eq_ptheta}
+\end{align}
+where $c_1$ is a constant of integration.
 
-From this, find the optimal control $u^*$ that minimizes the Hamiltonian. This could be a long step, because we need to take into account every constraint.
+According to the minimum principle, the optimal control $u^*$ will be
+\begin{align}
+    u^* = \underset{ u \in \left[-\frac{v_0}{\rho},\frac{v_0}{\rho}\right] }{\arg\min} \; H(\mathbf{x},\mathbf{p},u)
+\end{align}
+
+Since the only term in $H$ that implicates the use of $u$ is $p_\theta u$, the value of $u$ that minimizes $H$ will depend on the value of $p_\theta$. We can conclude that we will have
+\begin{align}
+    u^* = \begin{cases}
+        -v_0/\rho & p_\theta > 0\\
+        v_0/\rho & p_\theta < 0.
+    \end{cases}
+\end{align}
+
+The case $p_\theta=0$ is not as trivial as the other cases. To obtain the value of $u^*$, we start from equation \ref{eq_ptheta} and isolate $y(t)$
+\begin{align}
+    p_\theta(t) &= -p_x y(t) + p_yx(t) + c_1 = 0\\
+    y(t) &= \frac{p_x}{p_y}x(t) + \frac{c_1}{p_y}.
+\end{align}
+This is the equation of a straight line. For the vehicle to travel this way, its angular velocity must be equal to 0, which means $u=0$. This means that we will have
+\begin{align}
+    u^* = \begin{cases}
+        -v_0/\rho & p_\theta > 0\\
+        0 & p_\theta = 0\\
+        v_0/\rho & p_\theta < 0.
+    \end{cases}
+\end{align}
+
+The next step is to find what is the value of $p_\theta(t)$.
+
+...
+...
+...
 
 
 
