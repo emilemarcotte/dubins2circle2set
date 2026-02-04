@@ -42,14 +42,14 @@
 % It is important to write the optimal control problem first. You can do it by mirroring the way people formulated the problem in those papers. Clearly define and state the initial conditions and the terminal conditions as well as the kinematics and the cost function.
 
 
-\section{Pose the optimal control problem}
+\section{Formulate the optimal control problem}
 
-\subsubsection*{Problem statement}
+\subsection{Problem statement}
 
 Find the minimum time trajectory for a Dubins vehicle starting at some point and heading that goes to a point on a stationary circle and ends up on the boundary of a polytope.
 
 
-\subsubsection*{Initial conditions}
+\subsection{Initial conditions}
 
 The vehicle starts at a position $(x_0,y_0) \in \mathbb{R}^2$, with a heading $\theta_0 \in (\!-\!\pi,\pi]$ and a constant speed $v_0$.
 
@@ -73,7 +73,7 @@ We also have a terminal area $\mathcal{X}$ that does not overlap with $\mathcal{
 \end{align}
 
 
-\subsubsection*{Kinematics}
+\subsection{Kinematics}
 
 The kinematics of the Dubins vehicle are
 \begin{align}
@@ -86,8 +86,7 @@ The kinematics of the Dubins vehicle are
     \end{bmatrix}\\
     &v_0\in \mathbb{R}^+,\\
     &\theta \in (\!-\!\pi,\pi],\\
-    &u \in \left[-\frac{v_0}{\rho},\frac{v_0}{\rho}\right],\\
-    &\rho \leq r_c,
+    &u \in \left[-\frac{v_0}{\rho},\frac{v_0}{\rho}\right],
 \end{align}
 % \begin{align}
 %     &\dot{x} = v_0\cos\theta,\\
@@ -98,9 +97,9 @@ The kinematics of the Dubins vehicle are
 %     &u \in \left[-\frac{v_0}{\rho},\frac{v_0}{\rho}\right],\\
 %     &\rho \leq r_c,
 % \end{align}
-where $\rho$ is the minimal turning radius of the Dubins vehicle (justify its constraint later?).
+where $\rho$ is the minimal turning radius of the Dubins vehicle.
 
-\subsubsection*{Terminal conditions}
+\subsection{Intermediate point}
 
 The vehicle has to go from its initial point $(x_0,y_0)$ to a point $(x_g,y_g)$ located on the perimeter of $\mathcal{C}$, then end up at a point $(x_f,y_f)$ located on the boundary of $\mathcal{X}$.
 %with a heading $\theta_f$ pointing inside $\mathcal{C}$.
@@ -112,7 +111,7 @@ The vehicle has to go from its initial point $(x_0,y_0)$ to a point $(x_g,y_g)$ 
 % \end{align}
 
 
-\subsubsection*{Cost function}
+\subsection{Cost function}
 
 The cost function is
 \begin{align}
@@ -126,9 +125,9 @@ Although the objective is to find the fastest path, since the vehicle travels at
 
 
 
-\section{Figuring out how to do it}
+% \section{Figuring out how to do it}
 
-\subsection{Constraints}
+\subsection{Boundary conditions}
 
 At the point $(x_g,y_g)$, which is crossed at time $t_g\in (t_0,t_f)$ to make sure the vehicle either touches the boundary of $\mathcal{C}$ or goes fully through it (whichever gives the shortest path), the following state equality needs to be satisfied
 \begin{align}
@@ -155,7 +154,7 @@ Create the Hamiltonian for the stated problem
 \end{align}
 \begin{align}
     \mathbf{\dot{p}} = \begin{bmatrix}
-        \dot{p_x}\\\dot{p_y}\\\dot{p_\theta}
+        \dot{p}_x\\\dot{p}_y\\\dot{p}_\theta
     \end{bmatrix}
     = -\pdv{H}{\mathbf{x}}
     = \begin{bmatrix}
@@ -169,7 +168,7 @@ where $p_x$, $p_y$ and $p_\theta$ are the costates of the system.
 
 Since the derivatives of $p_x$ and $p_y$ are equal to zero, it means they are constant and do not depend on time. This will, however, not be the case for $p_\theta$. By integrating $\dot{p_\theta}$, we obtain
 \begin{align}
-    p_\theta(t) = \int \dot{p_\theta}(t)dt
+    p_\theta(t) = \int \dot{p}_\theta(t)dt
     = \int (-p_x \dot{y}(t) + p_y\dot{x}(t))dt
     = -p_x y(t) + p_yx(t) + c_1
     \label{eq_ptheta}
