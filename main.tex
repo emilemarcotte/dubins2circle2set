@@ -129,16 +129,15 @@ Although the objective is to find the fastest path, since the vehicle travels at
 
 \subsection{Boundary conditions}
 
-At the point $(x_g,y_g)$, which is crossed at time $t_g\in (t_0,t_f)$ to make sure the vehicle either touches the boundary of $\mathcal{C}$ or goes fully through it (whichever gives the shortest path), the following state equality needs to be satisfied
+The point $(x_g,y_g) \in \mathcal{C}$ is reached by the vehicle at time $t_g\in (t_0,t_f)$. This means the following state equality needs to be satisfied
 \begin{align}
-    S_\mathcal{C}(\mathbf{x},t) = (x-x_c)^2 + (y-y_c)^2 - r_c^2 = 0.
+    S_\mathcal{C}(\mathbf{x},t_g) = (x(t_g)-x_c)^2 + (y(t_g)-y_c)^2 - r_c^2 = 0.
 \end{align}
 
-At the final destination, the following state equality needs to be satisfied
+At the final destination, the point $(x_f,y_f)\in\mathcal{X}$ is reached at time $t_f >t_g$. This means the following state equality needs to be satisfied
 \begin{align}
-    S_\mathcal{X}(\mathbf{x},t) = (x-x_x)^2 + (y-y_x)^2 - r_x^2 = 0
+    S_\mathcal{X}(\mathbf{x},t_f) = (x(t_f)-x_x)^2 + (y(t_f)-y_x)^2 - r_x^2 = 0.
 \end{align}
-to make sure the vehicle ends up on the boundary of the terminal area $\mathcal{X}$.
 
 \subsection{What needs to be determined}
 
@@ -166,7 +165,7 @@ Create the Hamiltonian for the stated problem
 \end{align}
 where $p_x$, $p_y$ and $p_\theta$ are the costates of the system.
 
-Since the derivatives of $p_x$ and $p_y$ are equal to zero, it means they are constant and do not depend on time. This will, however, not be the case for $p_\theta$. By integrating $\dot{p_\theta}$, we obtain
+Since the derivatives of $p_x$ and $p_y$ are equal to zero, it means they are constant and do not depend on time. This will, however, not be the case for $p_\theta$. By integrating $\dot{p}_\theta$, we obtain
 \begin{align}
     p_\theta(t) = \int \dot{p}_\theta(t)dt
     = \int (-p_x \dot{y}(t) + p_y\dot{x}(t))dt
@@ -175,25 +174,17 @@ Since the derivatives of $p_x$ and $p_y$ are equal to zero, it means they are co
 \end{align}
 where $c_1$ is a constant of integration.
 
-According to the minimum principle, the optimal control $u^*$ will be
+According to the minimum principle, the optimal control $u^*$ will be given by
 \begin{align}
     u^* = \underset{ u \in \left[-\frac{v_0}{\rho},\frac{v_0}{\rho}\right] }{\arg\min} \; H(\mathbf{x},\mathbf{p},u).
 \end{align}
 
-Since the only term in $H$ that implicates the use of $u$ is $p_\theta u$, the value of $u$ that minimizes $H$ will depend on the value of $p_\theta$. We can conclude that we will have
-\begin{align}
-    u^* = \begin{cases}
-        -v_0/\rho & p_\theta(t) > 0\\
-        v_0/\rho & p_\theta(t) < 0.
-    \end{cases}
-\end{align}
-
-The case $p_\theta=0$ is not as trivial as the other cases. To obtain the value of $u^*$, we start from equation \ref{eq_ptheta} and isolate $y(t)$
+Since the only term that depends on $u$ in the Hamiltonian is multiplied by $p_\theta$, the value of $p_\theta$ will help dictate the optimal control $u^*$. First, if $p_\theta=0$, the following result is obtained
 \begin{align}
     p_\theta(t) &= -p_x y(t) + p_yx(t) + c_1 = 0\\
     y(t) &= \frac{p_x}{p_y}x(t) + \frac{c_1}{p_y}.
 \end{align}
-This is the equation of a straight line. For the vehicle to travel this way, its angular velocity must be equal to 0, which means $u=0$. This means that we will have
+This is the equation of a straight line. For the vehicle to travel this way, its angular velocity must be equal to 0, which means $u=0$. Whenever $p_\theta$ takes non-zero values, it follows directly from the Hamiltonian that $u^*$ will take either its maximum or minimum value depending on the sign of $p_\theta$.
 \begin{align}
     u^* = \begin{cases}
         -v_0/\rho & p_\theta(t) > 0\\
@@ -202,13 +193,21 @@ This is the equation of a straight line. For the vehicle to travel this way, its
     \end{cases}
 \end{align}
 
-The next step is to find what is the value of $p_\theta(t)$.
+The resulting optimal control is a "bang-off-bang" control.
 
-\subsection{Finding $p_\theta$}
 
-...
-...
-...
+
+\subsection{Optimal path characterization}
+
+According to \cite{Dubins57}, the optimal path of a vehicle with bound curvature and constant forward speed going from one given point to another can take two different forms : CCC or CSC, where C represents a left (L) or right (R) turn (curved segment), while S represents a straight segment, and two consecutive segments cannot be of the same type. This means there are six different possible trajectories : LRL, RLR, LSR, LSL, RSL, RSR.
+It should be noted that any segment from those trajectories could be of length zero.
+
+
+
+
+As a first simpler problem, we can choose a fixed end point $(x_f,y_f)$, but let the final angle $\theta_f$ be free.
+
+
 
 
 
