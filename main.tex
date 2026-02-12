@@ -131,12 +131,12 @@ Although the objective is to find the fastest path, since the vehicle travels at
 
 The point $(x_g,y_g) \in \mathcal{C}$ is reached by the vehicle at time $t_g\in (t_0,t_f)$. This means the following state equality needs to be satisfied
 \begin{align}
-    S_\mathcal{C}(\mathbf{x},t_g) = (x(t_g)-x_c)^2 + (y(t_g)-y_c)^2 - r_c^2 = 0.
+    N_\mathcal{C}(\mathbf{x}(t_g)) = (x(t_g)-x_c)^2 + (y(t_g)-y_c)^2 - r_c^2 = 0.
 \end{align}
 
 At the final destination, the point $(x_f,y_f)\in\mathcal{X}$ is reached at time $t_f >t_g$. This means the following state equality needs to be satisfied
 \begin{align}
-    S_\mathcal{X}(\mathbf{x},t_f) = (x(t_f)-x_x)^2 + (y(t_f)-y_x)^2 - r_x^2 = 0.
+    N_\mathcal{X}(\mathbf{x}(t_f)) = (x(t_f)-x_x)^2 + (y(t_f)-y_x)^2 - r_x^2 = 0.
 \end{align}
 
 \subsection{What needs to be determined}
@@ -199,11 +199,21 @@ The resulting optimal control is a "bang-off-bang" control.
 
 \subsection{Optimal path characterization}
 
-According to \cite{Dubins57}, the optimal path of a vehicle with bound curvature and constant forward speed going from one given point to another can take two different forms : CCC or CSC, where C represents a left (L) or right (R) turn (curved segment), while S represents a straight segment, and two consecutive segments cannot be of the same type. This means there are six different possible trajectories : LRL, RLR, LSR, LSL, RSL, RSR.
-It should be noted that any segment from those trajectories could be of length zero.
+According to \cite{Dubins57}, the optimal path of a vehicle with bound curvature and constant forward speed going from one given point to another can take two different forms : CCC or CSC, where C represents a left (L) or right (R) turn (curved segment), while S represents a straight segment, and two consecutive segments cannot be of the same type. This means there are six different possible trajectories : LRL, RLR, LSR, LSL, RSL, RSR. It should be noted that any segment from those trajectories could be of length zero.
+
+According to the optimality principle in \cite{Bellman1966}, it is possible to state that the global optimal path will be a concatenation of two Dubins trajectories, one of those giving the optimal trajectory before the tangent point $(x_g,y_g)$, and the other one giving the optimal trajectory after the tangent point. If we use the symbol "|" to represent the concatenation of two segments, this means the optimal trajectory will either take the form CCC|CCC, CCC|CSC, CSC|CCC, or CSC|CSC. This means there are 36 possible types of trajectories.
+
+With that being said, it can be shown that $p_\theta$ will be continuous at time $t_1$ (DEFINE t1) if there is only one tangent point and if the control $u$ has the same direction before and after the tangent point.
+
+INSERT FULL PROOF, like Jha conf or like Jha article?
+
+Since the segment of optimal path before and after then tangent point are the same type, the types of possible trajectories can be reduced to the following: CCCCC, CCCSC, CSCCC or CSCSC. This means there are note 36 possible types of trajectories, but only 18.
+
+INSERT THEOREM FOR THE M- AND M+ VECTORS
 
 
 
+\subsection{Simpler problem}
 
 As a first simpler problem, we can choose a fixed end point $(x_f,y_f)$, but let the final angle $\theta_f$ be free.
 
