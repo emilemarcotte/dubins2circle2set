@@ -212,11 +212,92 @@ Since the segment of optimal path before and after then tangent point are the sa
 INSERT THEOREM FOR THE M- AND M+ VECTORS
 
 
+\subsection{Every coordinate cases for the middle of the circles}
+
+blablabla
 
 \subsection{Simpler problem}
 
 As a first simpler problem, we can choose a fixed end point $(x_f,y_f)$, but let the final angle $\theta_f$ be free.
 
+
+\subsection{Replicating Jha et al. for LSLSL}
+
+\subsubsection*{Full expression}
+
+\begin{align*}
+    &\Bigl\{\Bigl[(x_{c0} + \rho\sin\theta_0)(1 + \tan^2\frac{\theta_1}{2}) - (r_c+\rho)(2\tan\frac{\theta_1}{2}) \Bigr]\sqrt{m_d^+}\\
+    &- \Bigl[ (x_{fc} - \rho\sin\theta_f)(1 + \tan^2\frac{\theta_1}{2}) + (r_c+\rho)(2\tan\frac{\theta_1}{2})\Bigr]\sqrt{m_d^-}\Bigr\}(1-\tan^2\frac{\theta_1}{2}) \\
+    & + \Bigl\{\Bigl[ (y_{c0} - \rho\cos\theta_0)(1 + \tan^2\frac{\theta_1}{2}) + (r_c + \rho)(1-\tan^2\frac{\theta_1}{2}) \Bigr]\sqrt{m_d^+}\\
+    &- \Bigl[ (y_{fc} - \rho\cos\theta_f)(1 + \tan^2\frac{\theta_1}{2}) - (r_c+\rho)(1-\tan^2\frac{\theta_1}{2}) \Bigr]\sqrt{m_d^-} \Bigr\}(2\tan\frac{\theta_1}{2}) = 0
+\end{align*}
+\begin{align*}
+    m_d^- &= \Bigl[ c_{c0}(1 + \tan^2\frac{\theta_1}{2}) - 2x_{c0}(r_c+\rho)2\tan\frac{\theta_1}{2} - 2\rho(r_c+\rho)\sin\theta_0(2\tan\frac{\theta_1}{2})\\
+    &+ 2y_{c0}(r_c+\rho)(1-\tan^2\frac{\theta_1}{2}) - 2\rho(r_c+\rho)\cos\theta_0(1 - \tan^2\frac{\theta_1}{2}) \Bigr] \frac{1}{1+\tan^2\frac{\theta_1}{2}}
+\end{align*}
+\begin{align*}
+    m_d^+ &= \Bigl[c_{fc}(1 + \tan^2\frac{\theta_1}{2}) + 2x_{fc}(r_c+\rho)(2\tan\frac{\theta_1}{2}) - 2\rho(r_c+\rho)\sin\theta_f(2\tan\frac{\theta_1}{2})\\
+    &- 2y_{fc}(r_c+\rho)(1 - \tan^2\frac{\theta_1}{2}) - 2\rho(r_c+\rho)\cos\theta_f(1 - \tan^2\frac{\theta_1}{2}) \Bigr] \frac{1}{1+\tan^2\frac{\theta_1}{2}}
+\end{align*}
+
+
+\begin{align*}
+    &c_{c0} = x_{c0}^2 + y_{c0}^2 + 2x_{c0}\sin\theta_0 - 2y_{c0}\cos\theta_0 + r_c^2 + 2\rho^2 + 2r_c\rho\\
+    &c_{fc} = x_{fc}^2 + y_{fc}^2 - 2x_{fc}\rho\sin\theta_f + 2y_{fc}\rho\cos\theta_f + r_c^2 + 2\rho^2 + 2r_c\rho\\
+    &x_{c0} = x_c - x_0\\
+    &y_{c_0} = y_c - y_0\\
+    &x_{fc} = x_f - x_c\\
+    &y_{fc} = y_f - y_c\\
+\end{align*}
+
+\subsubsection*{Express as function of $q$}
+
+\begin{align*}
+    q = \tan\frac{\theta_1}{2}
+\end{align*}
+
+\begin{align*}
+    m_d^- &= \Bigl[ c_{c0}(1 + q^2) - 2x_{c0}(r_c+\rho)(2q) - 2\rho(r_c+\rho)\sin\theta_0(2q)\\
+    &+ 2y_{c0}(r_c+\rho)(1-q^2) - 2\rho(r_c+\rho)\cos\theta_0(1 - q^2) \Bigr] \frac{1}{1+q^2}
+\end{align*}
+\begin{align*}
+    m_d^+ &= \Bigl[c_{fc}(1 + q^2) + 2x_{fc}(r_c+\rho)(2q) - 2\rho(r_c+\rho)\sin\theta_f(2q)\\
+    &- 2y_{fc}(r_c+\rho)(1 - q^2) - 2\rho(r_c+\rho)\cos\theta_f(1 - q^2) \Bigr] \frac{1}{1+q^2}
+\end{align*}
+
+\begin{align*}
+    &\Bigl\{\Bigl[(x_{c0} + \rho\sin\theta_0)(1 + q^2) - (r_c+\rho)(2q) \Bigr]\sqrt{m_d^+}\\
+    &- \Bigl[ (x_{fc} - \rho\sin\theta_f)(1 + q^2) + (r_c+\rho)(2q)\Bigr]\sqrt{m_d^-}\Bigr\}(1-q^2) \\
+    & + \Bigl\{\Bigl[ (y_{c0} - \rho\cos\theta_0)(1 + q^2) + (r_c + \rho)(1-q^2) \Bigr]\sqrt{m_d^+}\\
+    &- \Bigl[ (y_{fc} - \rho\cos\theta_f)(1 + q^2) - (r_c+\rho)(1-q^2) \Bigr]\sqrt{m_d^-} \Bigr\}(2q) = 0
+\end{align*}
+
+\subsubsection*{Distribute the $2q$ and $(1-q^2)$ in the brackets, and simplify the terms that can be simplified}
+
+\begin{align*}
+    &\Bigl\{\Bigl[(x_{c0} + \rho\sin\theta_0)(1 + q^2)(1-q^2) - (r_c+\rho)(2q)(1-q^2) \Bigr]\sqrt{m_d^+}\\
+    &- \Bigl[ (x_{fc} - \rho\sin\theta_f)(1 + q^2)(1-q^2) + (r_c+\rho)(2q)(1-q^2)\Bigr]\sqrt{m_d^-}\Bigr\} \\
+    & + \Bigl\{\Bigl[ (y_{c0} - \rho\cos\theta_0)(1 + q^2)(2q) + (r_c + \rho)(1-q^2)(2q) \Bigr]\sqrt{m_d^+}\\
+    &- \Bigl[ (y_{fc} - \rho\cos\theta_f)(1 + q^2)(2q) - (r_c+\rho)(1-q^2)(2q) \Bigr]\sqrt{m_d^-} \Bigr\} = 0
+\end{align*}
+
+\begin{align*}
+    &\Bigl[(x_{c0} + \rho\sin\theta_0)(1 + q^2)(1-q^2) \Bigr]\sqrt{m_d^+}\\
+    &- \Bigl[ (x_{fc} - \rho\sin\theta_f)(1 + q^2)(1-q^2) \Bigr]\sqrt{m_d^-} \\
+    & + \Bigl[ (y_{c0} - \rho\cos\theta_0)(1 + q^2)(2q) \Bigr]\sqrt{m_d^+}\\
+    &- \Bigl[ (y_{fc} - \rho\cos\theta_f)(1 + q^2)(2q) \Bigr]\sqrt{m_d^-}  = 0
+\end{align*}
+
+\begin{align*}
+    &\Bigl[(x_{c0} + \rho\sin\theta_0)(1 + q^2)(1-q^2) + (y_{c0} - \rho\cos\theta_0)(1 + q^2)(2q) \Bigr]\sqrt{m_d^+}\\
+    &- \Bigl[ (x_{fc} - \rho\sin\theta_f)(1 + q^2)(1-q^2) + (y_{fc} - \rho\cos\theta_f)(1 + q^2)(2q) \Bigr]\sqrt{m_d^-} \\
+    & = 0
+\end{align*}
+
+\begin{align*}
+    &\Bigl[(x_{c0} + \rho\sin\theta_0)(1-q^2) + (y_{c0} - \rho\cos\theta_0)(2q) \Bigr]\sqrt{m_d^+}\\
+    &- \Bigl[ (x_{fc} - \rho\sin\theta_f)(1-q^2) + (y_{fc} - \rho\cos\theta_f)(2q) \Bigr]\sqrt{m_d^-} = 0
+\end{align*}
 
 
 
