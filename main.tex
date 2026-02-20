@@ -300,6 +300,206 @@ As a first simpler problem, we can choose a fixed end point $(x_f,y_f)$, but let
 \end{align*}
 
 
+\subsubsection*{Square both sides to get rid of the square roots}
+
+\begin{align*}
+    &\Bigl[(x_{c0} + \rho\sin\theta_0)(1-q^2) + (y_{c0} - \rho\cos\theta_0)(2q) \Bigr]^2 m_d^+\\
+    &- \Bigl[ (x_{fc} - \rho\sin\theta_f)(1-q^2) + (y_{fc} - \rho\cos\theta_f)(2q) \Bigr]^2 m_d^- = 0
+\end{align*}
+(this works because = 0, so it's like putting the second term on the other side of the equality and bringing it back to the left)
+\begin{align*}
+    &\Bigl[(x_{c0} + \rho\sin\theta_0)^2(1-q^2)^2 + 2(y_{c0} - \rho\cos\theta_0)(2q)(x_{c0} + \rho\sin\theta_0)(1-q^2)\\&+ (y_{c0} - \rho\cos\theta_0)^2(2q)^2 \Bigr] m_d^+\\
+    &- \Bigl[ (x_{fc} - \rho\sin\theta_f)^2(1-q^2)^2 + 2(y_{fc} - \rho\cos\theta_f)(2q)(x_{fc} - \rho\sin\theta_f)(1-q^2)\\&+ (y_{fc} - \rho\cos\theta_f)^2(2q)^2 \Bigr] m_d^- = 0
+\end{align*}
+\begin{align*}
+    &\Bigl[(x_{c0} + \rho\sin\theta_0)^2(1-2q^2 + q^4) + 4(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)(q-q^3)\\&+ 4(y_{c0} - \rho\cos\theta_0)^2(q^2) \Bigr] m_d^+\\
+    &- \Bigl[ (x_{fc} - \rho\sin\theta_f)^2(1-2q^2 + q^4) + 4(y_{fc} - \rho\cos\theta_f)(x_{fc} - \rho\sin\theta_f)(q-q^3)\\&+ 4(y_{fc} - \rho\cos\theta_f)^2(q)^2 \Bigr] m_d^- = 0
+\end{align*}
+\begin{align*}
+    &\Bigl[(x_{c0} + \rho\sin\theta_0)^2(1-2q^2 + q^4) + 4(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)(q-q^3)\\&+ 4(y_{c0} - \rho\cos\theta_0)^2(q^2) \Bigr] \Bigl[c_{fc}(1 + q^2) + 2x_{fc}(r_c+\rho)(2q) - 2\rho(r_c+\rho)\sin\theta_f(2q)\\
+    &- 2y_{fc}(r_c+\rho)(1 - q^2) - 2\rho(r_c+\rho)\cos\theta_f(1 - q^2) \Bigr] \frac{1}{1+q^2}\\
+    &- \Bigl[ (x_{fc} - \rho\sin\theta_f)^2(1-2q^2 + q^4) + 4(y_{fc} - \rho\cos\theta_f)(x_{fc} - \rho\sin\theta_f)(q-q^3)\\&+ 4(y_{fc} - \rho\cos\theta_f)^2(q)^2 \Bigr] \Bigl[ c_{c0}(1 + q^2) - 2x_{c0}(r_c+\rho)(2q) - 2\rho(r_c+\rho)\sin\theta_0(2q)\\
+    &+ 2y_{c0}(r_c+\rho)(1-q^2) - 2\rho(r_c+\rho)\cos\theta_0(1 - q^2) \Bigr] \frac{1}{1+q^2} = 0
+\end{align*}
+\begin{align*}
+    &\Bigl[(x_{c0} + \rho\sin\theta_0)^2(1-2q^2 + q^4) + 4(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)(q-q^3)\\&+ 4(y_{c0} - \rho\cos\theta_0)^2(q^2) \Bigr] \Bigl[c_{fc}(1 + q^2) + 4(r_c+\rho)(x_{fc} - \rho\sin\theta_f)(q)\\
+    & -2(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(1 - q^2) \Bigr]\\
+    &- \Bigl[ (x_{fc} - \rho\sin\theta_f)^2(1-2q^2 + q^4) + 4(y_{fc} - \rho\cos\theta_f)(x_{fc} - \rho\sin\theta_f)(q-q^3)\\&+ 4(y_{fc} - \rho\cos\theta_f)^2(q)^2 \Bigr] \Bigl[ c_{c0}(1 + q^2) - 4(r_c+\rho)(x_{c0} +\rho\sin\theta_0)(q)\\
+    &+ 2(r_c+\rho)(y_{c0} - \rho\cos\theta_0)(1 - q^2) \Bigr] = 0
+\end{align*}
+Let's goooo!!! We're going to have a sum of 18 terms!!! YIPPEEEEE!!! But then I'm going to have to make it a sum of 7 terms. YIPPEEEE!!!
+
+Let's divide it in 2 "chunks" to make it a bit easier.
+
+\textbf{Chunk 1:}
+\begin{align*}
+    &\Bigl[(x_{c0} + \rho\sin\theta_0)^2(1-2q^2 + q^4) + 4(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)(q-q^3)\\&+ 4(y_{c0} - \rho\cos\theta_0)^2(q^2) \Bigr] \Bigl[c_{fc}(1 + q^2) + 4(r_c+\rho)(x_{fc} - \rho\sin\theta_f)(q)\\
+    & -2(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(1 - q^2) \Bigr] =
+\end{align*}
+\begin{align*}
+    &c_{fc}(x_{c0} + \rho\sin\theta_0)^2(1-q^2 -q^4 + q^6)\\
+    &+ 4(r_c+\rho)(x_{fc} - \rho\sin\theta_f)(x_{c0} + \rho\sin\theta_0)^2(q-2q^3 + q^5)\\
+    & -2(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(x_{c0} + \rho\sin\theta_0)^2(1 -3q^2 + +3q^4 - q^6) \\
+    &+ 4c_{fc}(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)(q-q^3 + q^3 -q^5) \\
+    &+ 16(r_c+\rho)(x_{fc} - \rho\sin\theta_f)(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)(q^2-q^4)\\
+    & -8(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)(q-q^3 - q^2 + q^5) \\
+    &+ 4c_{fc}(y_{c0} - \rho\cos\theta_0)^2(q^2 + q^4)\\
+    &+ 16(r_c+\rho)(x_{fc} - \rho\sin\theta_f)(y_{c0} - \rho\cos\theta_0)^2(q^3)\\
+    & -8(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(y_{c0} - \rho\cos\theta_0)^2(q^2 - q^4)
+\end{align*}
+1 term:
+\begin{align*}
+    (1)[]
+\end{align*}
+
+q term:
+\begin{align*}
+    (q)[]
+\end{align*}
+
+q2 term:
+\begin{align*}
+    (q^2)[]
+\end{align*}
+
+q3 term:
+\begin{align*}
+    (q^3)[]
+\end{align*}
+
+q4 term:
+\begin{align*}
+    (q^4)[]
+\end{align*}
+
+q5 term:
+\begin{align*}
+    (q^5)[]
+\end{align*}
+
+q6 term:
+\begin{align*}
+    (q^6)[]
+\end{align*}
+
+Sum:
+
+
+
+\textbf{Chunk 2:}
+\begin{align*}
+    &\Bigl[ (x_{fc} - \rho\sin\theta_f)^2(1-2q^2 + q^4) + 4(y_{fc} - \rho\cos\theta_f)(x_{fc} - \rho\sin\theta_f)(q-q^3)\\&+ 4(y_{fc} - \rho\cos\theta_f)^2(q)^2 \Bigr] \Bigl[ c_{c0}(1 + q^2) - 4(r_c+\rho)(x_{c0} +\rho\sin\theta_0)(q)\\
+    &+ 2(r_c+\rho)(y_{c0} - \rho\cos\theta_0)(1 - q^2) \Bigr]
+\end{align*}
+\begin{align*}
+    &\Bigl[ c_{c0}(1 + q^2)(x_{fc} - \rho\sin\theta_f)^2(1-2q^2 + q^4)\\
+    &- 4(r_c+\rho)(x_{c0} +\rho\sin\theta_0)(q)(x_{fc} - \rho\sin\theta_f)^2(1-2q^2 + q^4)\\
+    &+ 2(r_c+\rho)(y_{c0} - \rho\cos\theta_0)(1 - q^2)(x_{fc} - \rho\sin\theta_f)^2(1-2q^2 + q^4) \Bigr]\\
+    &+ \Bigl[ c_{c0}(1 + q^2)4(y_{fc} - \rho\cos\theta_f)(x_{fc} - \rho\sin\theta_f)(q-q^3)\\ &- 4(r_c+\rho)(x_{c0} +\rho\sin\theta_0)(q)4(y_{fc} - \rho\cos\theta_f)(x_{fc} - \rho\sin\theta_f)(q-q^3)\\
+    &+ 2(r_c+\rho)(y_{c0} - \rho\cos\theta_0)(1 - q^2)4(y_{fc} - \rho\cos\theta_f)(x_{fc} - \rho\sin\theta_f)(q-q^3) \Bigr]\\
+    &+ \Bigl[ c_{c0}(1 + q^2)4(y_{fc} - \rho\cos\theta_f)^2(q^2)\\
+    &- 4(r_c+\rho)(x_{c0} +\rho\sin\theta_0)(q)4(y_{fc} - \rho\cos\theta_f)^2(q^2)\\
+    &+ 2(r_c+\rho)(y_{c0} - \rho\cos\theta_0)(1 - q^2)4(y_{fc} - \rho\cos\theta_f)^2(q^2) \Bigr]
+\end{align*}
+\begin{align*}
+    &c_{c0}(x_{fc} - \rho\sin\theta_f)^2(1-q^2 -q^4 + q^6)\\
+    &- 4(r_c+\rho)(x_{c0} +\rho\sin\theta_0)(x_{fc} - \rho\sin\theta_f)^2(q-2q^3 + q^5)\\
+    &+ 2(r_c+\rho)(y_{c0} - \rho\cos\theta_0)(x_{fc} - \rho\sin\theta_f)^2(1-3q^2 +3q^4 - q^6) \\
+    &+ 4c_{c0}(y_{fc} - \rho\cos\theta_f)(x_{fc} - \rho\sin\theta_f)(q-q^5)\\
+    &- 16(r_c+\rho)(x_{c0} +\rho\sin\theta_0)(y_{fc} - \rho\cos\theta_f)(x_{fc} - \rho\sin\theta_f)(q^2-q^4)\\
+    &+ 8(r_c+\rho)(y_{c0} - \rho\cos\theta_0)(y_{fc} - \rho\cos\theta_f)(x_{fc} - \rho\sin\theta_f)(q -2q^3 +q^5)\\
+    &+ 4c_{c0}(y_{fc} - \rho\cos\theta_f)^2(q^2 + q^4)\\
+    &- 16(r_c+\rho)(x_{c0} +\rho\sin\theta_0)(y_{fc} - \rho\cos\theta_f)^2(q^3)\\
+    &+ 8(r_c+\rho)(y_{c0} - \rho\cos\theta_0)(y_{fc} - \rho\cos\theta_f)^2(q^2 - q^4)
+\end{align*}
+
+1 term:
+\begin{align*}
+    (1)[]
+\end{align*}
+
+q term:
+\begin{align*}
+    (q)[]
+\end{align*}
+
+q2 term:
+\begin{align*}
+    (q^2)[]
+\end{align*}
+
+q3 term:
+\begin{align*}
+    (q^3)[]
+\end{align*}
+
+q4 term:
+\begin{align*}
+    (q^4)[]
+\end{align*}
+
+q5 term:
+\begin{align*}
+    (q^5)[]
+\end{align*}
+
+q6 term:
+\begin{align*}
+    (q^6)[]
+\end{align*}
+
+Sum:
+
+
+
+
+
+
+
+\textbf{(Chunk 1) - (Chunk 2):}
+
+UNFINISHED!
+
+1 term:
+\begin{align*}
+    (1)[]
+\end{align*}
+
+q term:
+\begin{align*}
+    (q)[]
+\end{align*}
+
+q2 term:
+\begin{align*}
+    (q^2)[]
+\end{align*}
+
+q3 term:
+\begin{align*}
+    (q^3)[]
+\end{align*}
+
+q4 term:
+\begin{align*}
+    (q^4)[]
+\end{align*}
+
+q5 term:
+\begin{align*}
+    (q^5)[]
+\end{align*}
+
+q6 term:
+\begin{align*}
+    (q^6)[]
+\end{align*}
+
+Sum:
+
+
+
+
 
 
 \section{Random notes}
