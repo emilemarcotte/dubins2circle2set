@@ -339,51 +339,57 @@ Let's divide it in 2 "chunks" to make it a bit easier.
 \begin{align*}
     &c_{fc}(x_{c0} + \rho\sin\theta_0)^2(1-q^2 -q^4 + q^6)\\
     &+ 4(r_c+\rho)(x_{fc} - \rho\sin\theta_f)(x_{c0} + \rho\sin\theta_0)^2(q-2q^3 + q^5)\\
-    & -2(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(x_{c0} + \rho\sin\theta_0)^2(1 -3q^2 + +3q^4 - q^6) \\
-    &+ 4c_{fc}(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)(q-q^3 + q^3 -q^5) \\
+    & -2(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(x_{c0} + \rho\sin\theta_0)^2(1 -3q^2 + 3q^4 - q^6) \\
+    &+ 4c_{fc}(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)(q-q^5) \\
     &+ 16(r_c+\rho)(x_{fc} - \rho\sin\theta_f)(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)(q^2-q^4)\\
-    & -8(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)(q-q^3 - q^2 + q^5) \\
+    & -8(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)(q-q^2 - q^3 + q^5) \\
     &+ 4c_{fc}(y_{c0} - \rho\cos\theta_0)^2(q^2 + q^4)\\
     &+ 16(r_c+\rho)(x_{fc} - \rho\sin\theta_f)(y_{c0} - \rho\cos\theta_0)^2(q^3)\\
     & -8(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(y_{c0} - \rho\cos\theta_0)^2(q^2 - q^4)
 \end{align*}
+
 1 term:
 \begin{align*}
-    (1)[]
+    (1)[c_{fc}(x_{c0} + \rho\sin\theta_0)^2 -2(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(x_{c0} + \rho\sin\theta_0)^2]
 \end{align*}
 
 q term:
 \begin{align*}
-    (q)[]
+    (q)[4(r_c+\rho)(x_{fc} - \rho\sin\theta_f)(x_{c0} + \rho\sin\theta_0)^2 + 4c_{fc}(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)\\ -8(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)]
 \end{align*}
 
 q2 term:
 \begin{align*}
-    (q^2)[]
+    &(q^2)[-c_{fc}(x_{c0} + \rho\sin\theta_0)^2 +6(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(x_{c0} + \rho\sin\theta_0)^2\\
+    &+ 16(r_c+\rho)(x_{fc} - \rho\sin\theta_f)(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)\\
+    &+8(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)\\
+    &+ 4c_{fc}(y_{c0} - \rho\cos\theta_0)^2 -8(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(y_{c0} - \rho\cos\theta_0)^2]
 \end{align*}
 
 q3 term:
 \begin{align*}
-    (q^3)[]
+    &(q^3)[ -8(r_c+\rho)(x_{fc} - \rho\sin\theta_f)(x_{c0} + \rho\sin\theta_0)^2\\
+    &+8(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)\\
+    &+ 16(r_c+\rho)(x_{fc} - \rho\sin\theta_f)(y_{c0} - \rho\cos\theta_0)^2]
 \end{align*}
 
 q4 term:
 \begin{align*}
-    (q^4)[]
+    &(q^4)[-c_{fc}(x_{c0} + \rho\sin\theta_0)^2 -6(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(x_{c0} + \rho\sin\theta_0)^2\\
+    &- 16(r_c+\rho)(x_{fc} - \rho\sin\theta_f)(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0) + 4c_{fc}(y_{c0} - \rho\cos\theta_0)^2\\
+    &+8(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(y_{c0} - \rho\cos\theta_0)^2 ]
 \end{align*}
 
 q5 term:
 \begin{align*}
-    (q^5)[]
+    &(q^5)[ 4(r_c+\rho)(x_{fc} - \rho\sin\theta_f)(x_{c0} + \rho\sin\theta_0)^2 -4c_{fc}(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)\\
+    &-8(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(y_{c0} - \rho\cos\theta_0)(x_{c0} + \rho\sin\theta_0)]
 \end{align*}
 
 q6 term:
 \begin{align*}
-    (q^6)[]
+    (q^6)[c_{fc}(x_{c0} + \rho\sin\theta_0)^2 +2(r_c+\rho)(y_{fc} + \rho\cos\theta_f)(x_{c0} + \rho\sin\theta_0)^2]
 \end{align*}
-
-Sum:
-
 
 
 \textbf{Chunk 2:}
@@ -415,42 +421,46 @@ Sum:
 
 1 term:
 \begin{align*}
-    (1)[]
+    &(1)[c_{c0}(x_{fc} - \rho\sin\theta_f)^2 + 2(r_c+\rho)(y_{c0} - \rho\cos\theta_0)(x_{fc} - \rho\sin\theta_f)^2]
 \end{align*}
 
 q term:
 \begin{align*}
-    (q)[]
+    &(q)[- 4(r_c+\rho)(x_{c0} +\rho\sin\theta_0)(x_{fc} - \rho\sin\theta_f)^2 + 4c_{c0}(y_{fc} - \rho\cos\theta_f)(x_{fc} - \rho\sin\theta_f)\\
+    &+ 8(r_c+\rho)(y_{c0} - \rho\cos\theta_0)(y_{fc} - \rho\cos\theta_f)(x_{fc} - \rho\sin\theta_f)]
 \end{align*}
 
 q2 term:
 \begin{align*}
-    (q^2)[]
+    &(q^2)[ -c_{c0}(x_{fc} - \rho\sin\theta_f)^2 -6(r_c+\rho)(y_{c0} - \rho\cos\theta_0)(x_{fc} - \rho\sin\theta_f)^2\\
+    &- 16(r_c+\rho)(x_{c0} +\rho\sin\theta_0)(y_{fc} - \rho\cos\theta_f)(x_{fc} - \rho\sin\theta_f) + 4c_{c0}(y_{fc} - \rho\cos\theta_f)^2\\
+    &+ 8(r_c+\rho)(y_{c0} - \rho\cos\theta_0)(y_{fc} - \rho\cos\theta_f)^2 ]
 \end{align*}
 
 q3 term:
 \begin{align*}
-    (q^3)[]
+    &(q^3)[8(r_c+\rho)(x_{c0} +\rho\sin\theta_0)(x_{fc} - \rho\sin\theta_f)^2\\
+    &-16(r_c+\rho)(y_{c0} - \rho\cos\theta_0)(y_{fc} - \rho\cos\theta_f)(x_{fc} - \rho\sin\theta_f)\\
+    &- 16(r_c+\rho)(x_{c0} +\rho\sin\theta_0)(y_{fc} - \rho\cos\theta_f)^2]
 \end{align*}
 
 q4 term:
 \begin{align*}
-    (q^4)[]
+    &(q^4)[ -c_{c0}(x_{fc} - \rho\sin\theta_f)^2 + 6(r_c+\rho)(y_{c0} - \rho\cos\theta_0)(x_{fc} - \rho\sin\theta_f)^2\\
+    &+ 16(r_c+\rho)(x_{c0} +\rho\sin\theta_0)(y_{fc} - \rho\cos\theta_f)(x_{fc} - \rho\sin\theta_f) + 4c_{c0}(y_{fc} - \rho\cos\theta_f)^2\\
+    &- 8(r_c+\rho)(y_{c0} - \rho\cos\theta_0)(y_{fc} - \rho\cos\theta_f)^2]
 \end{align*}
 
 q5 term:
 \begin{align*}
-    (q^5)[]
+    &(q^5)[ - 4(r_c+\rho)(x_{c0} +\rho\sin\theta_0)(x_{fc} - \rho\sin\theta_f)^2 - 4c_{c0}(y_{fc} - \rho\cos\theta_f)(x_{fc} - \rho\sin\theta_f)\\
+    &+ 8(r_c+\rho)(y_{c0} - \rho\cos\theta_0)(y_{fc} - \rho\cos\theta_f)(x_{fc} - \rho\sin\theta_f) ]
 \end{align*}
 
 q6 term:
 \begin{align*}
-    (q^6)[]
+    (q^6)[ c_{c0}(x_{fc} - \rho\sin\theta_f)^2 - 2(r_c+\rho)(y_{c0} - \rho\cos\theta_0)(x_{fc} - \rho\sin\theta_f)^2 ]
 \end{align*}
-
-Sum:
-
-
 
 
 
