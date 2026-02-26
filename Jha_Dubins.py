@@ -228,7 +228,6 @@ for angle in angles1:
 plt.plot(x_L1, y_L1, "g-")
 # Get the points for the third curved segment
 anglesf = np.linspace(phi2, thetf+pi, 10)
-print(anglesf)
 x_Lf = []
 y_Lf = []
 for angle in anglesf:
@@ -236,6 +235,11 @@ for angle in anglesf:
     x_Lf.append(x)
     y_Lf.append(y)
 plt.plot(x_Lf, y_Lf, "g-")
+
+all_x_trajectory = x_L0 + x_s01.tolist()[1:-1] + x_L1 + x_s1f.tolist()[1:]
+all_y_trajectory = y_L0 + y_s01.tolist()[1:-1] + y_L1 + y_s1f.tolist()[1:]
+# print(all_x_trajectory)
+# print(all_y_trajectory)
 
 plt.grid(True)
 plt.axis("equal")
