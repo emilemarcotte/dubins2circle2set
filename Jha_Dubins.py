@@ -1,8 +1,8 @@
 import numpy as np
 np.set_printoptions(precision=3)
-from math import sin, cos, tan, pi, atan
+from math import sin, cos, tan, pi, atan, atan2
 import matplotlib.pyplot as plt
-plt.close()
+from time import perf_counter
 
 r_c = 2
 rho = 1
@@ -103,11 +103,8 @@ def get_thet1_LSLSL(r_c, rho, thet0, x0, y0, thetf, xf, yf, xc, yc):
     left_mat = np.vstack((upp_mat, sub_mat))
     companion = np.hstack((left_mat, coeffs))
     # Get the roots by finding the eigenvalues of the comp matrix
-    # print(companion)
     roots, _ = np.linalg.eig(companion)
-    # print(roots)
     real_roots = [np.real(root) for root in roots if np.imag(root) == 0]
-    # print(real_roots)
     return real_roots
 
 def get_circle_center(x, y, thet, rho, turn):
@@ -129,20 +126,36 @@ def get_circle_center(x, y, thet, rho, turn):
         raise ValueError("""The "turn" argument is invalid. It should be either "L" or "R".""")
     return c_x, c_y
 
+def dist_points(x1, y1, x2, y2):
+    """
+    Returns the distance between 2 points in a 2D plane.
+    """
+    return ((x1 - x2)**2 + (y1 - y2)**2)**.5
+
+# Find the candidate values for the angle thet1
+start = perf_counter()
 roots = get_thet1_LSLSL(r_c, rho, thet0, x0, y0, thetf, xf, yf, xc, yc)
-# print(roots)
-thet_1_candidates = [2*atan(half_angle)*180/pi for half_angle in roots]
-# print(angles)
+thet1_candidates = [2*atan(half_angle)*180/pi for half_angle in roots]
 c_x0, c_y0 = get_circle_center(x0, y0, thet0, rho, "L")
 c_xf, c_yf = get_circle_center(xf, yf, thetf, rho, "L")
+thet1_candidates_180 = []
+for angle in thet1_candidates:
+    thet1_candidates_180.append(angle+pi)
+# Account for the fact that adding 180 degrees can also give the same tangent
+thet1_candidates += thet1_candidates_180
 c1_candidates = []
-for thet1 in thet_1_candidates:
+for thet1 in thet1_candidates:
     c_x1, c_y1 = get_circle_center(xc, yc, thet1, rho+r_c, "L")
     c1_candidates.append((c_x1,c_y1))
-    # Account for the fact that adding 180 degrees can also give the same tangent
-    c_x1, c_y1 = get_circle_center(xc, yc, thet1+pi, rho+r_c, "L")
-    c1_candidates.append((c_x1,c_y1))
-print(c1_candidates)
+# Keep only the candidate value that gives the shortest distance between circles c0 and c1
+distances = []
+for c_x1,c_y1 in c1_candidates:
+    dist = dist_points(c_x0, c_y0, c_x1, c_y1)
+    distances.append(dist)
+min_dist_idx = np.argmin(distances)
+c_x1, c_y1 = c1_candidates[min_dist_idx]
+end = perf_counter() # To know how quick the code is
+print("time =", end-start)
 
 fig, ax = plt.subplots() # note we must use plt.subplots, not plt.subplot
 arrow_length = 1
@@ -152,18 +165,77 @@ plt.arrow(x0, y0, arrow_length*cos(thet0), arrow_length*sin(thet0), head_width=0
 circle0 = plt.Circle((c_x0,c_y0), rho, fill=False, linestyle="--")
 ax.add_patch(circle0)
 # Mid circle
-circle1 = plt.Circle((xc,yc), r_c, fill=False, linestyle="--", color="b")
-ax.add_patch(circle1)
+circle_c = plt.Circle((xc,yc), r_c, fill=False, linestyle="--", color="b")
+ax.add_patch(circle_c)
 # End point and circle
 plt.plot(xf, yf, "ro")
 plt.arrow(xf, yf, arrow_length*cos(thetf), arrow_length*sin(thetf), head_width=0.2)
 circlef = plt.Circle((c_xf,c_yf), rho, fill=False, linestyle="--")
 ax.add_patch(circlef)
 # Candidate circles tangent to the target
-for c1_xy in c1_candidates:
-    circle1 = plt.Circle(c1_xy, rho, fill=False, linestyle="--", color="g")
-    ax.add_patch(circle1)
-
+# for c1_xy in c1_candidates:
+#     circle1 = plt.Circle(c1_xy, rho, fill=False, linestyle="--", color="g")
+#     ax.add_patch(circle1)
+circle1 = plt.Circle((c_x1,c_y1), rho, fill=False, linestyle="--", color="k")
+ax.add_patch(circle1)
+# Get and plot the tangent point
+thet1_t = thet1_candidates[min_dist_idx]
+p_xt, p_yt = get_circle_center(xc, yc, thet1_t, r_c, "L")
+plt.plot(p_xt, p_yt, "ro")
+plt.arrow(p_xt, p_yt, arrow_length*cos(thet1_t), arrow_length*sin(thet1_t), head_width=0.2)
+# Plot the point that starts the first S segment
+# First, angle of segment joining the centers of c0 and c1,
+# with an extra pi to get the second tangent point in the circle
+phi = pi + atan2(c_y1-c_y0, c_x1-c_x0)
+x_t0, y_t0 = get_circle_center(c_x0, c_y0, phi, rho, "L")
+plt.plot(x_t0, y_t0, "go")
+x_t1, y_t1 = get_circle_center(c_x1, c_y1, phi, rho, "L")
+plt.plot(x_t1, y_t1, "go")
+# Get the joining segment points
+x_s01 = np.linspace(x_t0, x_t1, 10)
+slope = tan(phi)
+b = y_t0 - slope*x_t0
+y_s01 = slope*x_s01 + b
+plt.plot(x_s01, y_s01, "g-")
+# Do the same thing for the other segment
+phi2 = pi + atan2(c_yf-c_y1, c_xf-c_x1)
+x_t2, y_t2 = get_circle_center(c_x1, c_y1, phi2, rho, "L")
+plt.plot(x_t2, y_t2, "go")
+x_tf, y_tf = get_circle_center(c_xf, c_yf, phi2, rho, "L")
+plt.plot(x_tf, y_tf, "go")
+x_s1f = np.linspace(x_t2, x_tf, 10)
+slope2 = tan(phi2)
+b2 = y_t2 - slope2*x_t2
+y_s1f = slope2*x_s1f + b2
+plt.plot(x_s1f, y_s1f, "g-")
+# Get the points for the first curved segment
+angles0 = np.linspace(thet0-pi, phi, 10)
+x_L0 = []
+y_L0 = []
+for angle in angles0:
+    x, y = get_circle_center(c_x0, c_y0, angle, rho, "L")
+    x_L0.append(x)
+    y_L0.append(y)
+plt.plot(x_L0, y_L0, "g-")
+# Get the points for the second curved segment
+angles1 = np.linspace(phi, phi2, 10)
+x_L1 = []
+y_L1 = []
+for angle in angles1:
+    x, y = get_circle_center(c_x1, c_y1, angle, rho, "L")
+    x_L1.append(x)
+    y_L1.append(y)
+plt.plot(x_L1, y_L1, "g-")
+# Get the points for the third curved segment
+anglesf = np.linspace(phi2, thetf+pi, 10)
+print(anglesf)
+x_Lf = []
+y_Lf = []
+for angle in anglesf:
+    x, y = get_circle_center(c_xf, c_yf, angle, rho, "L")
+    x_Lf.append(x)
+    y_Lf.append(y)
+plt.plot(x_Lf, y_Lf, "g-")
 
 plt.grid(True)
 plt.axis("equal")
