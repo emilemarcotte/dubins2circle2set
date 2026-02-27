@@ -242,6 +242,19 @@ all_y_trajectory = y_L0 + y_s01.tolist()[1:-1] + y_L1 + y_s1f.tolist()[1:-1] + y
 # print(all_y_trajectory)
 plt.plot(all_x_trajectory, all_y_trajectory, "c-")
 
+arc1_length = abs(phi - (thet0 - pi))*rho # arc = theta*rho
+straight1_length = ( (x_t0 - x_t1)**2 + (y_t0 - y_t1)**2 )**.5
+arc2_length = abs(phi2 - phi)*rho
+straight2_length = ( (x_t2 - x_tf)**2 + (y_t2 - y_tf)**2 )**.5
+arc3_length = abs(thetf+pi - phi2)*rho
+total_path_length = arc1_length + straight1_length + arc2_length + straight2_length + arc3_length
+print("arc1_length", arc1_length)
+print("straight1_length", straight1_length)
+print("arc2_length", arc2_length)
+print("straight2_length", straight2_length)
+print("arc3_length", arc3_length)
+print("total_path_length", total_path_length)
+
 plt.grid(True)
 plt.axis("equal")
 plt.show()
