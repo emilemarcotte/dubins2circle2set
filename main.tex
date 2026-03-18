@@ -10,7 +10,7 @@
 % Replace `letterpaper' with `a4paper' for UK/EU standard size
 \usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 
-\title{Combining Generalized Dubins Path Problem with visiting a circular boundary? On optimal Dubins paths for a capture the flag game? Minimal time flag capture in a capture the flag game?}
+\title{Combining Generalized Dubins Path Problem with visiting a circular boundary? On optimal Dubins paths for a capture the flag game? Minimal time flag capture in a capture the flag game? On shortest Dubins path via a circular boundary with a final point with free angle?}
 \author{Émile Marcotte}
 % \date{December 2025}
 \date{}
@@ -509,6 +509,127 @@ q6 term:
 Sum:
 
 
+\section{Doing LSLS case with free final angle}
+
+Since the final angle is free, it will be dictated by the tangent line leaving the turn radius of $c_1$, which means the final segment will always be a straight line.
+
+We assume the final point is at least a distance $2\rho$ away from the circle $\mathcal{C}$, so that it is impossible to have it inside circle $c_1$.
+\begin{align*}
+    q &= \tan\frac{\theta_1}{2}\\
+    \cos\theta_1 &= \frac{1-\tan^2(\theta_1/2)}{1+\tan^2(\theta_1/2)}
+    = \frac{1-q^2}{1+q^2}\\
+    \sin\theta_1 &= \frac{2\tan(\theta_1/2)}{1+\tan^2(\theta_1/2)}
+    = \frac{2q}{1+q^2}
+\end{align*}
+\begin{align}
+    R &= r_c+\rho\\
+    x_{c0} &= x_c - x_0\\
+    y_{c_0} &= y_c - y_0\\
+    x_{fc} &= x_f - x_c\\
+    y_{fc} &= y_f - y_c
+\end{align}
+\begin{align}
+    \mathbf{c_0} = \begin{bmatrix}
+        x_0-\rho\sin\theta_0\\
+        y_0 + \rho\cos\theta_0
+    \end{bmatrix}
+\end{align}
+\begin{align}
+    \mathbf{c_1} &= \begin{bmatrix}
+        x_c-(r_c+\rho)\sin\theta_1\\
+        y_c + (r_c+\rho)\cos\theta_1
+    \end{bmatrix}\\
+    &= \begin{bmatrix}
+        x_c-R\sin\theta_1\\
+        y_c + R\cos\theta_1
+    \end{bmatrix}
+\end{align}
+$L$ is the distance between the final point and the intermediate circle $c_1$.
+\begin{align}
+    L &= \sqrt{(c_{1x} - x_f)^2 + (c_{1y} - y_f)^2}\\
+    &= \sqrt{(x_c-R\sin\theta_1 - x_f)^2 + (y_c + R\cos\theta_1 - y_f)^2}\\
+    &= \sqrt{(-R\sin\theta_1 - x_{fc})^2 + (R\cos\theta_1 - y_{fc})^2}\\
+    &= \sqrt{(R\sin\theta_1 + x_{fc})^2 + (R\cos\theta_1 - y_{fc})^2}\\
+    &= \sqrt{R^2\sin^2\theta_1 + 2x_{fc}R\sin\theta_1 + x_{fc}^2 + R^2\cos^2\theta_1 - 2y_{fc}R\cos\theta_1 + y_{fc}^2}\\
+    &= \sqrt{2x_{fc}R\sin\theta_1  - 2y_{fc}R\cos\theta_1 + x_{fc}^2 + y_{fc}^2 + R^2}\\
+    &= \sqrt{2x_{fc}R\frac{2q}{1+q^2}  - 2y_{fc}R\frac{1-q^2}{1+q^2} + x_{fc}^2 + y_{fc}^2 + R^2}\\
+    &= \sqrt{\frac{1}{1+q^2}} \sqrt{4x_{fc}R(q) - 2y_{fc}R(1-q^2) + (x_{fc}^2 + y_{fc}^2 + R^2)(1+q^2)}\\
+    &= \sqrt{\frac{1}{1+q^2}} \sqrt{(x_{fc}^2 + y_{fc}^2 + R^2 - 2y_{fc}R) + 4x_{fc}R(q) + (x_{fc}^2 + y_{fc}^2 + R^2 + 2y_{fc}R)(q^2)}
+\end{align}
+$D$ is the distance between the tangent point and the final position.
+\begin{align}
+    D =& \sqrt{L^2 - \rho^2}\\
+    =& \biggl[ \frac{1}{1+q^2} \Bigl((x_{fc}^2 + y_{fc}^2 + R^2 - 2y_{fc}R) + 4x_{fc}R(q) \nonumber\\&+ (x_{fc}^2 + y_{fc}^2 + R^2 + 2y_{fc}R)(q^2)\Bigr) - \rho^2\biggr]^{1/2}\\
+    =& \sqrt{\frac{1}{1+q^2}}\biggl( (x_{fc}^2 + y_{fc}^2 + R^2 - 2y_{fc}R) + 4x_{fc}R(q) \nonumber\\&+ (x_{fc}^2 + y_{fc}^2 + R^2 + 2y_{fc}R)(q^2) - \rho^2(1+q^2)\biggr)^{1/2}\\
+    =& \sqrt{\frac{1}{1+q^2}}\biggl( (x_{fc}^2 + y_{fc}^2 + R^2 - 2y_{fc}R - \rho^2) + 4x_{fc}R(q) \nonumber\\&+ (x_{fc}^2 + y_{fc}^2 + R^2 + 2y_{fc}R- \rho^2)(q^2)\biggr)^{1/2}
+\end{align}
+$\delta$ is the angle of the straight line connecting the middle of $c_1$ with the final position, relative to the horizontal. $\theta$ is the angle between $L$ and the line connecting the middle of $c_1$ to the tangent point.
+\begin{align}
+    \theta_f &= \delta + \theta - \pi/2\\
+    \sin\theta &= \frac{D}{L}\\
+    \cos\theta &= \frac{\rho}{L}\\
+    \sin\delta &= \frac{y_f-c_{1y}}{L}
+    = \frac{y_f-(y_c + R\cos\theta_1)}{L}
+    = \frac{y_{fc}-R\cos\theta_1}{L}\\
+    \cos\delta &= \frac{x_f-c_{1x}}{L}
+    = \frac{x_f-(x_c-R\sin\theta_1)}{L}
+    = \frac{x_{fc} + R\sin\theta_1}{L}
+\end{align}
+\begin{align}
+    \mathbf{c_f} &= \begin{bmatrix}
+        x_f-\rho\sin\theta_f\\
+        y_f + \rho\cos\theta_f
+    \end{bmatrix}\\
+    &= \begin{bmatrix}
+        x_f-\rho[\cos\delta\cos\theta + \sin\delta\sin\theta]\\
+        y_f + \rho[\cos\delta\sin\theta - \sin\delta\cos\theta]
+    \end{bmatrix}
+\end{align}
+\begin{align}
+    c_{fx} &= x_f-\rho[\cos\delta\cos\theta + \sin\delta\sin\theta] \\
+    &= x_f-\rho[\frac{x_{fc} + R\sin\theta_1}{L}\frac{\rho}{L} + \frac{y_{fc}-R\cos\theta_1}{L}\frac{D}{L}]\\
+    &= x_f-\frac{\rho}{L^2} [\rho(x_{fc} + R\sin\theta_1) + (y_{fc}-R\cos\theta_1)D]
+\end{align}
+\begin{align}
+    c_{fy} &= y_f + \rho[\cos\delta\sin\theta - \sin\delta\cos\theta]\\
+    &= y_f + \rho[\frac{x_{fc} + R\sin\theta_1}{L}\frac{D}{L} - \frac{y_{fc}-R\cos\theta_1}{L}\frac{\rho}{L}]\\
+    &= 
+\end{align}
+\begin{align}
+    \mathbf{c_L} &= \begin{bmatrix}
+        c_{1x}+\rho\cos(\delta-\theta)\\
+        c_{1y}+\rho\sin(\delta-\theta)
+    \end{bmatrix}\\
+    &= \begin{bmatrix}
+        c_{1x}+\rho[\cos\delta\cos\theta + \sin\delta\sin\theta]\\
+        c_{1y}+\rho[\sin\delta\cos\theta - \cos\delta\sin\theta]
+    \end{bmatrix}
+\end{align}
+\begin{align}
+    c_{Lx} &= c_{1x}+\rho[\cos\delta\cos\theta + \sin\delta\sin\theta]\\
+    &= 
+\end{align}
+\begin{align}
+    c_{Ly} &= c_{1y}+\rho[\sin\delta\cos\theta - \cos\delta\sin\theta]\\
+    &= 
+\end{align}
+\begin{align}
+    \mathbf{m^-} = \frac{\mathbf{c_1} - \mathbf{c_0}}{||\mathbf{c_1} - \mathbf{c_0}||}
+\end{align}
+\begin{align}
+    \mathbf{m^+} = \frac{\mathbf{c_f} - \mathbf{c_L}}{||\mathbf{c_f} - \mathbf{c_L}||}
+\end{align}
+where $\mathbf{c_g}$ is the point at which you start the final S segment.
+\begin{align}
+    \mathbf{v_t} = \begin{bmatrix}
+        \cos\theta_1\\
+        \sin\theta_1
+    \end{bmatrix}
+\end{align}
+\begin{align}
+    \langle \mathbf{m^-} - \mathbf{m^+}, \mathbf{v_t} \rangle = 0
+\end{align}
+
 
 
 
@@ -531,9 +652,12 @@ To catch a moving enemy: \cite{Meyer2015}.
 
 Companion matrix:
 
-\url{https://en.wikipedia.org/wiki/Companion\_matrix}
+\url{https://en.wikipedia.org/wiki/Companion_matrix}
 
 \url{https://mathworld.wolfram.com/CompanionMatrix.html}
+
+% Tangent lines to circle, link used to verify my calculations:
+% \url{https://stackoverflow.com/questions/49968720/find-tangent-points-in-a-circle-from-a-point}
 
 
 % \bibliographystyle{alpha}
