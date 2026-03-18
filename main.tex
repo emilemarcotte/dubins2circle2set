@@ -509,6 +509,8 @@ q6 term:
 Sum:
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Doing LSLS case with free final angle}
 
 Since the final angle is free, it will be dictated by the tangent line leaving the turn radius of $c_1$, which means the final segment will always be a straight line.
@@ -526,11 +528,15 @@ We assume the final point is at least a distance $2\rho$ away from the circle $\
     x_{c0} &= x_c - x_0\\
     y_{c_0} &= y_c - y_0\\
     x_{fc} &= x_f - x_c\\
-    y_{fc} &= y_f - y_c
+    y_{fc} &= y_f - y_c\\
+    c_{c0} &= x_{c0}^2 + y_{c0}^2 + 2x_{c0}\sin\theta_0 - 2y_{c0}\cos\theta_0 + r_c^2 + 2\rho^2 + 2r_c\rho
 \end{align}
+
+\subsection{Calculations for $\mathbf{m^-}$}
+
 \begin{align}
     \mathbf{c_0} = \begin{bmatrix}
-        x_0-\rho\sin\theta_0\\
+        x_0 -\rho\sin\theta_0\\
         y_0 + \rho\cos\theta_0
     \end{bmatrix}
 \end{align}
@@ -542,9 +548,43 @@ We assume the final point is at least a distance $2\rho$ away from the circle $\
     &= \begin{bmatrix}
         x_c-R\sin\theta_1\\
         y_c + R\cos\theta_1
+    \end{bmatrix}\\
+    &= \begin{bmatrix}
+        x_c-R\frac{2q}{1+q^2}\\
+        y_c + R\frac{1-q^2}{1+q^2}
     \end{bmatrix}
 \end{align}
-$L$ is the distance between the final point and the intermediate circle $c_1$.
+\begin{align}
+    \mathbf{m^-} = \frac{\mathbf{c_1} - \mathbf{c_0}}{||\mathbf{c_1} - \mathbf{c_0}||}
+    = \frac{\mathbf{c_1} - \mathbf{c_0}}{\sqrt{m^-_d}}
+    = \frac{1}{\sqrt{m^-_d}}\begin{bmatrix}
+        m^-_x\\
+        m^-_y
+    \end{bmatrix}
+\end{align}
+\begin{align}
+    m^-_x &= c_{1x} - c_{0x}\\
+    &= x_c-R\frac{2q}{1+q^2} - x_0 +\rho\sin\theta_0\\
+    &= x_{c0} -R\frac{2q}{1+q^2} +\rho\sin\theta_0
+\end{align}
+\begin{align}
+    m^-_y &= c_{1y} - c_{0y}\\
+    &= y_c + R\frac{1-q^2}{1+q^2} - y_0 - \rho\cos\theta_0\\
+    &= y_{c0} + R\frac{1-q^2}{1+q^2} - \rho\cos\theta_0
+\end{align}
+$m^-_d$ has the same value as the previously done LSLSL case!
+\begin{align}
+    m_d^- &= \Bigl[ c_{c0}(1 + q^2) - 2x_{c0}(r_c+\rho)(2q) - 2\rho(r_c+\rho)\sin\theta_0(2q) \nonumber\\
+    &+ 2y_{c0}(r_c+\rho)(1-q^2) - 2\rho(r_c+\rho)\cos\theta_0(1 - q^2) \Bigr] \frac{1}{1+q^2}\\
+    &= \Bigl[ c_{c0}(1 + q^2) - 4x_{c0}R(q) - 4\rho R\sin\theta_0(q) \nonumber\\
+    &+ 2y_{c0}R(1-q^2) - 2\rho R\cos\theta_0(1 - q^2) \Bigr] \frac{1}{1+q^2}\\
+    &= \Bigl[ c_{c0}(1 + q^2) + (- 4x_{c0}R - 4\rho R\sin\theta_0)(q) \nonumber\\
+    &+ (2y_{c0}R - 2\rho R\cos\theta_0)(1 - q^2) \Bigr] \frac{1}{1+q^2}
+\end{align}
+
+\subsection{Calculations for $\mathbf{m^+}$}
+
+$L$ is the distance between the final position and the center of the intermediate circle $c_1$.
 \begin{align}
     L &= \sqrt{(c_{1x} - x_f)^2 + (c_{1y} - y_f)^2}\\
     &= \sqrt{(x_c-R\sin\theta_1 - x_f)^2 + (y_c + R\cos\theta_1 - y_f)^2}\\
@@ -575,28 +615,32 @@ $\delta$ is the angle of the straight line connecting the middle of $c_1$ with t
     = \frac{x_f-(x_c-R\sin\theta_1)}{L}
     = \frac{x_{fc} + R\sin\theta_1}{L}
 \end{align}
+% \begin{align}
+%     \mathbf{c_f} &= \begin{bmatrix}
+%         x_f-\rho\sin\theta_f\\
+%         y_f + \rho\cos\theta_f
+%     \end{bmatrix}\\
+%     &= \begin{bmatrix}
+%         x_f-\rho[\cos\delta\cos\theta + \sin\delta\sin\theta]\\
+%         y_f + \rho[\cos\delta\sin\theta - \sin\delta\cos\theta]
+%     \end{bmatrix}
+% \end{align}
+% \begin{align}
+%     c_{fx} &= x_f-\rho[\cos\delta\cos\theta + \sin\delta\sin\theta] \\
+%     &= x_f-\rho[\frac{x_{fc} + R\sin\theta_1}{L}\frac{\rho}{L} + \frac{y_{fc}-R\cos\theta_1}{L}\frac{D}{L}]\\
+%     &= x_f-\frac{\rho}{L^2} [\rho(x_{fc} + R\sin\theta_1) + (y_{fc}-R\cos\theta_1)D]\\
+%     &= x_f-\frac{\rho}{L^2} [\rho(x_{fc} + R\frac{2q}{1+q^2}) + (y_{fc}-R\frac{1-q^2}{1+q^2})D
+% \end{align}
+% \begin{align}
+%     c_{fy} &= y_f + \rho[\cos\delta\sin\theta - \sin\delta\cos\theta]\\
+%     &= y_f + \rho[\frac{x_{fc} + R\sin\theta_1}{L}\frac{D}{L} - \frac{y_{fc}-R\cos\theta_1}{L}\frac{\rho}{L}]\\
+%     &= y_f + \frac{\rho}{L^2}[(x_{fc} + R\sin\theta_1)D - \rho(y_{fc}-R\cos\theta_1)]\\
+%     &= y_f + \frac{\rho}{L^2}[(x_{fc} + R\frac{2q}{1+q^2})D - \rho(y_{fc}-R\frac{1-q^2}{1+q^2})]
+% \end{align}
+$\mathbf{x_L}$ is the point at which the final S segment starts.
 \begin{align}
-    \mathbf{c_f} &= \begin{bmatrix}
-        x_f-\rho\sin\theta_f\\
-        y_f + \rho\cos\theta_f
-    \end{bmatrix}\\
-    &= \begin{bmatrix}
-        x_f-\rho[\cos\delta\cos\theta + \sin\delta\sin\theta]\\
-        y_f + \rho[\cos\delta\sin\theta - \sin\delta\cos\theta]
-    \end{bmatrix}
-\end{align}
-\begin{align}
-    c_{fx} &= x_f-\rho[\cos\delta\cos\theta + \sin\delta\sin\theta] \\
-    &= x_f-\rho[\frac{x_{fc} + R\sin\theta_1}{L}\frac{\rho}{L} + \frac{y_{fc}-R\cos\theta_1}{L}\frac{D}{L}]\\
-    &= x_f-\frac{\rho}{L^2} [\rho(x_{fc} + R\sin\theta_1) + (y_{fc}-R\cos\theta_1)D]
-\end{align}
-\begin{align}
-    c_{fy} &= y_f + \rho[\cos\delta\sin\theta - \sin\delta\cos\theta]\\
-    &= y_f + \rho[\frac{x_{fc} + R\sin\theta_1}{L}\frac{D}{L} - \frac{y_{fc}-R\cos\theta_1}{L}\frac{\rho}{L}]\\
-    &= 
-\end{align}
-\begin{align}
-    \mathbf{c_L} &= \begin{bmatrix}
+    \mathbf{x_L} &= \begin{bmatrix}x_L\\y_L\end{bmatrix}
+    = \begin{bmatrix}
         c_{1x}+\rho\cos(\delta-\theta)\\
         c_{1y}+\rho\sin(\delta-\theta)
     \end{bmatrix}\\
@@ -606,31 +650,132 @@ $\delta$ is the angle of the straight line connecting the middle of $c_1$ with t
     \end{bmatrix}
 \end{align}
 \begin{align}
-    c_{Lx} &= c_{1x}+\rho[\cos\delta\cos\theta + \sin\delta\sin\theta]\\
-    &= 
+    x_L &= c_{1x}+\rho[\cos\delta\cos\theta + \sin\delta\sin\theta]\\
+    &= c_{1x}+\rho[\frac{x_{fc} + R\sin\theta_1}{L}\frac{\rho}{L} + \frac{y_{fc}-R\cos\theta_1}{L}\frac{D}{L}]\\
+    &= c_{1x}+\frac{\rho}{L^2}[\rho(x_{fc} + R\sin\theta_1) + (y_{fc}-R\cos\theta_1)D]\\
+    &= c_{1x}+\frac{\rho}{L^2}\Bigl[\rho(x_{fc} + R\frac{2q}{1+q^2}) + (y_{fc}-R\frac{1-q^2}{1+q^2})D\Bigr]\\
+    &= x_c-R\frac{2q}{1+q^2}+\frac{\rho}{L^2}\Bigl[\rho(x_{fc} + R\frac{2q}{1+q^2}) + (y_{fc}-R\frac{1-q^2}{1+q^2})D\Bigr]
 \end{align}
 \begin{align}
-    c_{Ly} &= c_{1y}+\rho[\sin\delta\cos\theta - \cos\delta\sin\theta]\\
-    &= 
+    y_L &= c_{1y}+\rho[\sin\delta\cos\theta - \cos\delta\sin\theta]\\
+    &= c_{1y}+\rho[\frac{y_{fc}-R\cos\theta_1}{L}\frac{\rho}{L} - \frac{x_{fc} + R\sin\theta_1}{L}\frac{D}{L}]\\
+    &= c_{1y}+\frac{\rho}{L^2}[\rho(y_{fc}-R\cos\theta_1) - (x_{fc} + R\sin\theta_1)D]\\
+    &= c_{1y}+\frac{\rho}{L^2}\Bigl[\rho(y_{fc}-R\frac{1-q^2}{1+q^2}) - (x_{fc} + R\frac{2q}{1+q^2})D\Bigr]\\
+    &= y_c + R\frac{1-q^2}{1+q^2}+\frac{\rho}{L^2}\Bigl[\rho(y_{fc}-R\frac{1-q^2}{1+q^2}) - (x_{fc} + R\frac{2q}{1+q^2})D\Bigr]
 \end{align}
 \begin{align}
-    \mathbf{m^-} = \frac{\mathbf{c_1} - \mathbf{c_0}}{||\mathbf{c_1} - \mathbf{c_0}||}
+    \mathbf{m^+} = \frac{\mathbf{x_f} - \mathbf{x_L}}{||\mathbf{x_f} - \mathbf{x_L}||}
+    = \frac{\mathbf{x_f} - \mathbf{x_L}}{\sqrt{m_d^+}}
+    = \frac{1}{\sqrt{m_d^+}}\begin{bmatrix}
+        m_x^+\\m_y^+
+    \end{bmatrix}
 \end{align}
 \begin{align}
-    \mathbf{m^+} = \frac{\mathbf{c_f} - \mathbf{c_L}}{||\mathbf{c_f} - \mathbf{c_L}||}
+    m^+_x &= x_f - x_L\\
+    &= x_f - x_c +R\frac{2q}{1+q^2} -\frac{\rho}{L^2}\Bigl[\rho(x_{fc} + R\frac{2q}{1+q^2}) + (y_{fc}-R\frac{1-q^2}{1+q^2})D\Bigr]\\
+    &= x_{fc} +R\frac{2q}{1+q^2} -\frac{\rho}{L^2}\Bigl[\rho(x_{fc} + R\frac{2q}{1+q^2}) + (y_{fc}-R\frac{1-q^2}{1+q^2})D\Bigr]
 \end{align}
-where $\mathbf{c_g}$ is the point at which you start the final S segment.
+\begin{align}
+    m^+_y &= y_f - y_L\\
+    &= y_f - y_c -R\frac{1-q^2}{1+q^2} -\frac{\rho}{L^2}\Bigl[\rho(y_{fc}-R\frac{1-q^2}{1+q^2}) - (x_{fc} + R\frac{2q}{1+q^2})D\Bigr]\\
+    &= y_{fc} -R\frac{1-q^2}{1+q^2} -\frac{\rho}{L^2}\Bigl[\rho(y_{fc}-R\frac{1-q^2}{1+q^2}) - (x_{fc} + R\frac{2q}{1+q^2})D\Bigr]
+\end{align}
+\begin{align}
+    m_d^+ =& (m_x^+)^2 + (m_y^+)^2\\
+    =& \Bigl\{ x_{fc} +R\frac{2q}{1+q^2} -\frac{\rho}{L^2}\Bigl[\rho(x_{fc} + R\frac{2q}{1+q^2}) + (y_{fc}-R\frac{1-q^2}{1+q^2})D\Bigr] \Bigr\}^2 \nonumber\\
+    &+ \Bigl\{ y_{fc} -R\frac{1-q^2}{1+q^2} -\frac{\rho}{L^2}\Bigl[\rho(y_{fc}-R\frac{1-q^2}{1+q^2}) - (x_{fc} + R\frac{2q}{1+q^2})D\Bigr] \Bigr\}^2
+\end{align}
+% \begin{align}
+%     =& \Bigl\{ x_{fc} +R\frac{2q}{1+q^2} -\frac{\rho}{L^2}\Bigl[\rho(x_{fc} + R\frac{2q}{1+q^2}) + (y_{fc}-R\frac{1-q^2}{1+q^2})D\Bigr] \Bigr\}^2\frac{1}{(1+q^2)^2} \nonumber\\
+%     &+ \Bigl\{ y_{fc}(1+q^2) -R(1-q^2) \\&-\frac{\rho}{L^2}\Bigl[\rho[y_{fc}(1+q^2)-R(1-q^2)] - [x_{fc}(1+q^2) + R(2q)]D\Bigr] \Bigr\}^2\frac{1}{(1+q^2)^2}
+% \end{align}
+Put it all back in function of $\theta_1$ to simplify when squaring the things:
+\begin{align}
+    m_d^+ =& \Bigl\{ x_{fc} +R\sin\theta_1 -\frac{\rho}{L^2}\Bigl[\rho(x_{fc} + R\sin\theta_1) + (y_{fc}-R\cos\theta_1)D\Bigr] \Bigr\}^2 \nonumber\\
+    &+ \Bigl\{ y_{fc} -R\cos\theta_1 -\frac{\rho}{L^2}\Bigl[\rho(y_{fc}-R\cos\theta_1) - (x_{fc} + R\sin\theta_1)D\Bigr] \Bigr\}^2\\
+    &= ...
+\end{align}
+
+\subsection{Putting it all together}
+
+In this configuration, $\alpha_1=\alpha_2=0$, which slighly simplifies the calculations.
+\begin{align}
+    \mathbf{m^-} - \mathbf{m^+} = \begin{bmatrix}
+        m_x^-\frac{1}{\sqrt{m_d^-}} - m_x^+\frac{1}{\sqrt{m_d^+}}\\
+        m_y^-\frac{1}{\sqrt{m_d^-}} - m_y^+\frac{1}{\sqrt{m_d^+}}\\
+    \end{bmatrix}
+    = \begin{bmatrix}
+        M_x\\M_y
+    \end{bmatrix}
+\end{align}
+
 \begin{align}
     \mathbf{v_t} = \begin{bmatrix}
         \cos\theta_1\\
         \sin\theta_1
     \end{bmatrix}
+    = \begin{bmatrix}
+        \frac{1-q^2}{1+q^2}\\
+        \frac{2q}{1+q^2}
+    \end{bmatrix}
+    = \begin{bmatrix}
+        v_{tx}\\
+        v_{ty}
+    \end{bmatrix}
 \end{align}
+\begin{gather}
+    \langle \mathbf{m^-} - \mathbf{m^+}, \mathbf{v_t} \rangle = 0\\
+    M_x v_{tx} + M_yv_{ty} = 0\\
+    \Bigl[m_x^-\frac{1}{\sqrt{m_d^-}} - m_x^+\frac{1}{\sqrt{m_d^+}}\Bigr]\frac{1-q^2}{1+q^2} + \Bigl[ m_y^-\frac{1}{\sqrt{m_d^-}} - m_y^+\frac{1}{\sqrt{m_d^+}} \Bigr]\frac{2q}{1+q^2} = 0\\
+    \Bigl[m_x^-\sqrt{m_d^+} - m_x^+\sqrt{m_d^-}\Bigr](1-q^2) + \Bigl[ m_y^-\sqrt{m_d^+} - m_y^+\sqrt{m_d^-} \Bigr](2q) = 0\\
+\end{gather}
+\begin{gather}
+    % ----\nonumber\\
+    \Bigl[\Bigl\{ x_{c0} -R\frac{2q}{1+q^2} +\rho\sin\theta_0 \Bigr\}\sqrt{m_d^+} \nonumber\\
+    - \Bigl\{ x_{fc} +R\frac{2q}{1+q^2} -\frac{\rho}{L^2}\Bigl[\rho(x_{fc} + R\frac{2q}{1+q^2}) + (y_{fc}-R\frac{1-q^2}{1+q^2})D\Bigr] \Bigr\} \sqrt{m_d^-}\Bigr](1-q^2) \nonumber\\
+    + \Bigl[ \Big\{y_{c0} + R\frac{1-q^2}{1+q^2} - \rho\cos\theta_0 \Bigr\}\sqrt{m_d^+} \nonumber\\
+    - \Bigl\{ y_{fc} -R\frac{1-q^2}{1+q^2} -\frac{\rho}{L^2}\Bigl[\rho(y_{fc}-R\frac{1-q^2}{1+q^2}) - (x_{fc} + R\frac{2q}{1+q^2})D\Bigr] \Bigr\} \sqrt{m_d^-} \Bigr](2q) = 0\\
+\end{gather}
+\begin{gather}
+    % ----\nonumber\\
+    \Bigl[\Bigl\{ x_{c0} +\rho\sin\theta_0 \Bigr\}\sqrt{m_d^+} \nonumber\\
+    - \Bigl\{ x_{fc} -\frac{\rho}{L^2}\Bigl[\rho x_{fc} + y_{fc}D\Bigr] \Bigr\} \sqrt{m_d^-}\Bigr](1-q^2) \nonumber\\
+    + \Bigl[ \Big\{y_{c0} - \rho\cos\theta_0 \Bigr\}\sqrt{m_d^+} \nonumber\\
+    - \Bigl\{ y_{fc} -\frac{\rho}{L^2}\Bigl[\rho y_{fc} - x_{fc}D\Bigr] \Bigr\} \sqrt{m_d^-} \Bigr](2q) = 0
+\end{gather}
+\begin{gather}
+    % ----\nonumber\\
+    \Bigl\{ x_{c0} +\rho\sin\theta_0 \Bigr\}(1-q^2)\sqrt{m_d^+} \nonumber\\
+    - \Bigl\{ x_{fc} -\frac{\rho}{L^2}\Bigl[\rho x_{fc} + y_{fc}D\Bigr] \Bigr\}(1-q^2) \sqrt{m_d^-} \nonumber\\
+    + \Big\{y_{c0} - \rho\cos\theta_0 \Bigr\}(2q)\sqrt{m_d^+} \nonumber\\
+    - \Bigl\{ y_{fc} -\frac{\rho}{L^2}\Bigl[\rho y_{fc} - x_{fc}D\Bigr] \Bigr\}(2q) \sqrt{m_d^-} = 0
+\end{gather}
+\begin{gather}
+    % ----\nonumber\\
+    \Bigl\{ (x_{c0} +\rho\sin\theta_0)(1-q^2) \Bigr\}\sqrt{m_d^+} \nonumber\\
+    - \Bigl\{ x_{fc}(1-q^2) -\frac{\rho}{L^2}\Bigl[\rho x_{fc} + y_{fc}D\Bigr](1-q^2) \Bigr\} \sqrt{m_d^-} \nonumber\\
+    + \Big\{(y_{c0} - \rho\cos\theta_0)(2q) \Bigr\}\sqrt{m_d^+} \nonumber\\
+    - \Bigl\{ y_{fc}(2q) -\frac{\rho}{L^2}\Bigl[\rho y_{fc} - x_{fc}D\Bigr](2q) \Bigr\} \sqrt{m_d^-} = 0
+\end{gather}
+\begin{gather}
+    % ----\nonumber\\
+    \Bigl\{ (x_{c0} +\rho\sin\theta_0)(1-q^2) + (y_{c0} - \rho\cos\theta_0)(2q) \Bigr\}\sqrt{m_d^+} \nonumber\\
+    - \Bigl\{ x_{fc}(1-q^2) -\frac{\rho}{L^2}\Bigl[\rho x_{fc} + y_{fc}D\Bigr](1-q^2) + y_{fc}(2q) -\frac{\rho}{L^2}\Bigl[\rho y_{fc} - x_{fc}D\Bigr](2q) \Bigr\} \sqrt{m_d^-} \nonumber\\ = 0
+\end{gather}
+
+Got to make sure I only have even exponents of D and L! Maybe worst case scenario would be to change q from tan(thet/2) to the square root of tan?
+
+...
+
+...
+
+...
+
+Reminder but VERIFY IF THE DENOMINATOR SHOULDN'T BE SQUARED!!!:
 \begin{align}
-    \langle \mathbf{m^-} - \mathbf{m^+}, \mathbf{v_t} \rangle = 0
+    m_d^- &= \Bigl[ c_{c0}(1 + q^2) + (- 4x_{c0}R - 4\rho R\sin\theta_0)(q) \nonumber\\
+    &+ (2y_{c0}R - 2\rho R\cos\theta_0)(1 - q^2) \Bigr] \frac{1}{1+q^2}
 \end{align}
-
-
 
 
 
