@@ -4,6 +4,9 @@
 \usepackage{amssymb}
 \usepackage{physics}
 \usepackage{url}
+\usepackage{xcolor}
+% \usepackage{soul}
+\newcommand{\mathcolorbox}[2]{\colorbox{#1}{$\displaystyle #2$}}
 
 \usepackage{indentfirst} % to get indentation on the first paragram of a section
 % Set page size and margins
@@ -599,6 +602,7 @@ $L$ is the distance between the final position and the center of the intermediat
 $D$ is the distance between the tangent point and the final position.
 \begin{align}
     D =& \sqrt{L^2 - \rho^2}\\
+    =&  \sqrt{2x_{fc}R\sin\theta_1  - 2y_{fc}R\cos\theta_1 + x_{fc}^2 + y_{fc}^2 + R^2 - \rho^2} \\
     =& \biggl[ \frac{1}{1+q^2} \Bigl((x_{fc}^2 + y_{fc}^2 + R^2 - 2y_{fc}R) + 4x_{fc}R(q) \nonumber\\&+ (x_{fc}^2 + y_{fc}^2 + R^2 + 2y_{fc}R)(q^2)\Bigr) - \rho^2\biggr]^{1/2}\\
     =& \sqrt{\frac{1}{1+q^2}}\biggl( (x_{fc}^2 + y_{fc}^2 + R^2 - 2y_{fc}R) + 4x_{fc}R(q) \nonumber\\&+ (x_{fc}^2 + y_{fc}^2 + R^2 + 2y_{fc}R)(q^2) - \rho^2(1+q^2)\biggr)^{1/2}\\
     =& \sqrt{\frac{1}{1+q^2}}\biggl( (x_{fc}^2 + y_{fc}^2 + R^2 - 2y_{fc}R - \rho^2) + 4x_{fc}R(q) \nonumber\\&+ (x_{fc}^2 + y_{fc}^2 + R^2 + 2y_{fc}R- \rho^2)(q^2)\biggr)^{1/2}
@@ -749,15 +753,50 @@ With $C_1$ and $C_2$:
     &+(x_{fc}^2 + 2x_{fc}R\sin\theta_1 + R^2\sin^2\theta_1)D^2   \Bigr]\\
     =&  x_{fc}^2 +2x_{fc}R\sin\theta_1 + y_{fc}^2 -2y_{fc}R\cos\theta_1 + R^2 \nonumber\\
     &+ (-2x_{fc}\frac{\rho}{L^2} -2\frac{\rho}{L^2}R\sin\theta_1)\Bigl[\rho(x_{fc} + R\sin\theta_1) + (y_{fc}-R\cos\theta_1)D\Bigr] \nonumber\\
-    &+  \frac{\rho^4}{L^4}(x_{fc}^2 + 2x_{fc}R\sin\theta_1 + R^2\sin^2\theta_1) \nonumber\\
-    &+ 2\frac{\rho^3}{L^4}(y_{fc}x_{fc} + y_{fc}R\sin\theta_1 -x_{fc}R\cos\theta_1 - R^2\sin\theta_1\cos\theta_1)D \nonumber\\
-    &+ \frac{\rho^2}{L^4}(y_{fc}^2 -2y_{fc}R\cos\theta_1 + R^2\cos^2\theta_1)D^2 \nonumber\\
+    &+  \frac{\rho^4}{L^4}(x_{fc}^2 + 2x_{fc}R\sin\theta_1 + \mathcolorbox{yellow}{ R^2\sin^2\theta_1 } ) \nonumber\\
+    &\mathcolorbox{yellow}{  + 2\frac{\rho^3}{L^4}(y_{fc}x_{fc} + y_{fc}R\sin\theta_1 -x_{fc}R\cos\theta_1 - R^2\sin\theta_1\cos\theta_1)D  } \nonumber\\
+    &+ \frac{\rho^2}{L^4}(y_{fc}^2 -2y_{fc}R\cos\theta_1 +  \mathcolorbox{yellow}{ R^2\cos^2\theta_1 } )D^2 \nonumber\\
     &+ (-2y_{fc}\frac{\rho}{L^2} +2\frac{\rho}{L^2}R\cos\theta_1)\Bigl[\rho(y_{fc}-R\cos\theta_1) - (x_{fc} + R\sin\theta_1)D\Bigr] \nonumber\\
-    &+   \frac{\rho^4}{L^4}(y_{fc}^2 -2y_{fc}R\cos\theta_1 + R^2\cos^2\theta_1) \nonumber\\
-    &- 2\frac{\rho^3}{L^4}(y_{fc}x_{fc} + y_{fc}R\sin\theta_1 -x_{fc}R\cos\theta_1 -R^2\cos\theta_1\sin\theta_1)D \nonumber\\
-    &+\frac{\rho^2}{L^4}(x_{fc}^2 + 2x_{fc}R\sin\theta_1 + R^2\sin^2\theta_1)D^2  \\
+    &+   \frac{\rho^4}{L^4}(y_{fc}^2 -2y_{fc}R\cos\theta_1 +  \mathcolorbox{yellow}{  R^2\cos^2\theta_1  } ) \nonumber\\
+    &\mathcolorbox{yellow}{  - 2\frac{\rho^3}{L^4}(y_{fc}x_{fc} + y_{fc}R\sin\theta_1 -x_{fc}R\cos\theta_1 -R^2\cos\theta_1\sin\theta_1)D  } \nonumber\\
+    &+\frac{\rho^2}{L^4}(x_{fc}^2 + 2x_{fc}R\sin\theta_1 + \mathcolorbox{yellow}{ R^2\sin^2\theta_1 } )D^2
 \end{align}
 
+Remove the terms that cancel each other or combine with others:
+\begin{align}
+    m_d^+=& x_{fc}^2 +2x_{fc}R\sin\theta_1 + y_{fc}^2 -2y_{fc}R\cos\theta_1 + R^2 + \frac{\rho^4}{L^4}R^2 \nonumber\\
+    &+  \frac{\rho^4}{L^4}( x_{fc}^2 + 2x_{fc}R\sin\theta_1 + y_{fc}^2 -2y_{fc}R\cos\theta_1) \nonumber\\
+    &+ (-2x_{fc}\frac{\rho}{L^2} -2\frac{\rho}{L^2}R\sin\theta_1)\Bigl[\rho(x_{fc} + R\sin\theta_1) + (y_{fc}-R\cos\theta_1)D\Bigr] \nonumber\\
+    &+ (-2y_{fc}\frac{\rho}{L^2} +2\frac{\rho}{L^2}R\cos\theta_1)\Bigl[\rho(y_{fc}-R\cos\theta_1) - (x_{fc} + R\sin\theta_1)D\Bigr] \nonumber\\
+    &+\frac{\rho^2}{L^4}(x_{fc}^2 + 2x_{fc}R\sin\theta_1 + y_{fc}^2 -2y_{fc}R\cos\theta_1 +  R^2 )D^2  \\
+    =& x_{fc}^2 +2x_{fc}R\sin\theta_1 + y_{fc}^2 -2y_{fc}R\cos\theta_1 + R^2 + \frac{\rho^4}{L^4}R^2 \nonumber\\
+    &+   \frac{\rho^4}{L^4}x_{fc}^2 + \frac{\rho^4}{L^4}2x_{fc}R\sin\theta_1 + \frac{\rho^4}{L^4}y_{fc}^2 -\frac{\rho^4}{L^4}2y_{fc}R\cos\theta_1 \nonumber\\
+    &-2x_{fc}\frac{\rho}{L^2}\Bigl[\rho(x_{fc} + R\sin\theta_1) + (y_{fc}-R\cos\theta_1)D\Bigr] \nonumber\\
+    &+ 2\frac{\rho}{L^2}R\cos\theta_1\Bigl[\rho(y_{fc}-R\cos\theta_1) - (x_{fc} + R\sin\theta_1)D\Bigr] \nonumber\\
+    &-2\frac{\rho}{L^2}R\sin\theta_1\Bigl[\rho(x_{fc} + R\sin\theta_1) + (y_{fc}-R\cos\theta_1)D\Bigr] \nonumber\\
+    &-2y_{fc}\frac{\rho}{L^2}\Bigl[\rho(y_{fc}-R\cos\theta_1) - (x_{fc} + R\sin\theta_1)D\Bigr] \nonumber\\
+    &+\frac{\rho^2}{L^4}(x_{fc}^2 + 2x_{fc}R\sin\theta_1 + y_{fc}^2 -2y_{fc}R\cos\theta_1 +  R^2 )D^2\\
+    =& x_{fc}^2 +2x_{fc}R\sin\theta_1 + y_{fc}^2 -2y_{fc}R\cos\theta_1 + R^2 + \frac{\rho^4}{L^4}R^2 \nonumber\\
+    &+   \frac{\rho^4}{L^4}x_{fc}^2 + \frac{\rho^4}{L^4}2x_{fc}R\sin\theta_1 + \frac{\rho^4}{L^4}y_{fc}^2 -\frac{\rho^4}{L^4}2y_{fc}R\cos\theta_1 \nonumber\\
+    &+ 2\frac{\rho}{L^2}\Bigl[\rho R\cos\theta_1(y_{fc}-R\cos\theta_1) - R\cos\theta_1(x_{fc} + R\sin\theta_1)D \nonumber\\
+    &-\rho R\sin\theta_1(x_{fc} + R\sin\theta_1) - R\sin\theta_1(y_{fc}-R\cos\theta_1)D \nonumber\\
+    &-\rho x_{fc}(x_{fc} + R\sin\theta_1) - x_{fc}(y_{fc}-R\cos\theta_1)D \nonumber\\
+    &-\rho y_{fc}(y_{fc}-R\cos\theta_1) + y_{fc}(x_{fc} + R\sin\theta_1)D\Bigr] \nonumber\\
+    &+\frac{\rho^2}{L^4}(x_{fc}^2 + 2x_{fc}R\sin\theta_1 + y_{fc}^2 -2y_{fc}R\cos\theta_1 +  R^2 )D^2\\
+    =& x_{fc}^2 +2x_{fc}R\sin\theta_1 + y_{fc}^2 -2y_{fc}R\cos\theta_1 + R^2 + \frac{\rho^4}{L^4}R^2 \nonumber\\
+    &+   \frac{\rho^4}{L^4}x_{fc}^2 + \frac{\rho^4}{L^4}2x_{fc}R\sin\theta_1 + \frac{\rho^4}{L^4}y_{fc}^2 -\frac{\rho^4}{L^4}2y_{fc}R\cos\theta_1 \nonumber\\
+    &+ 2\frac{\rho}{L^2}\Bigl[ \mathcolorbox{green}{y_{fc}\rho R\cos\theta_1} -\mathcolorbox{green}{R^2\rho \cos^2\theta_1} + ( \mathcolorbox{yellow}{ -x_{fc}R\cos\theta_1} - \mathcolorbox{yellow}{ R^2\sin\theta_1\cos\theta_1 } )D \nonumber\\
+    &- \mathcolorbox{green}{ x_{fc}\rho R\sin\theta_1 } - \mathcolorbox{green}{R^2\rho \sin^2\theta_1} + (- \mathcolorbox{yellow}{ y_{fc}R\sin\theta_1 } + \mathcolorbox{yellow}{ R^2\cos\theta_1\sin\theta_1 } )D \nonumber\\
+    &-\rho x_{fc}^2 - \mathcolorbox{green}{ \rho x_{fc}R\sin\theta_1 } + (- \mathcolorbox{yellow}{x_{fc}y_{fc} } + \mathcolorbox{yellow}{ Rx_{fc}\cos\theta_1 } )D \nonumber\\
+    &-\rho y_{fc}^2 +\mathcolorbox{green}{ \rho y_{fc}R\cos\theta_1 } + ( \mathcolorbox{yellow}{ x_{fc}y_{fc} } + \mathcolorbox{yellow}{ Ry_{fc}\sin\theta_1 } )D\Bigr] \nonumber\\
+    &+\frac{\rho^2}{L^4}(x_{fc}^2 + 2x_{fc}R\sin\theta_1 + y_{fc}^2 -2y_{fc}R\cos\theta_1 +  R^2 )D^2
+\end{align}
+\begin{align}
+    m_d^+=& x_{fc}^2 +2x_{fc}R\sin\theta_1 + y_{fc}^2 -2y_{fc}R\cos\theta_1 + R^2 + \frac{\rho^4}{L^4}R^2 \nonumber\\
+    &+   \frac{\rho^4}{L^4}x_{fc}^2 + \frac{\rho^4}{L^4}2x_{fc}R\sin\theta_1 + \frac{\rho^4}{L^4}y_{fc}^2 -\frac{\rho^4}{L^4}2y_{fc}R\cos\theta_1 \nonumber\\
+    &+ 2\frac{\rho}{L^2}\Bigl[ 2y_{fc}\rho R\cos\theta_1 -R^2\rho - 2 x_{fc}\rho R\sin\theta_1 -\rho x_{fc}^2 -\rho y_{fc}^2 \Bigr] \nonumber\\
+    &+\frac{\rho^2}{L^4}(x_{fc}^2 + 2x_{fc}R\sin\theta_1 + y_{fc}^2 -2y_{fc}R\cos\theta_1 +  R^2 )D^2
+\end{align}
 
 
 
