@@ -568,21 +568,25 @@ We assume the final point is at least a distance $2\rho$ away from the circle $\
 \begin{align}
     m^-_x &= c_{1x} - c_{0x}\\
     &= x_c-R\frac{2q}{1+q^2} - x_0 +\rho\sin\theta_0\\
-    &= x_{c0} -R\frac{2q}{1+q^2} +\rho\sin\theta_0
+    &= x_{c0} -R\frac{2q}{1+q^2} +\rho\sin\theta_0\\
+    &= x_{c0} -R\sin\theta_1 +\rho\sin\theta_0
 \end{align}
 \begin{align}
     m^-_y &= c_{1y} - c_{0y}\\
     &= y_c + R\frac{1-q^2}{1+q^2} - y_0 - \rho\cos\theta_0\\
-    &= y_{c0} + R\frac{1-q^2}{1+q^2} - \rho\cos\theta_0
+    &= y_{c0} + R\frac{1-q^2}{1+q^2} - \rho\cos\theta_0\\
+    &= y_{c0} + R\cos\theta_1 - \rho\cos\theta_0
 \end{align}
 $m^-_d$ has the same value as the previously done LSLSL case!
 \begin{align}
-    m_d^- &= \Bigl[ c_{c0}(1 + q^2) - 2x_{c0}(r_c+\rho)(2q) - 2\rho(r_c+\rho)\sin\theta_0(2q) \nonumber\\
+    m_d^- =& \Bigl[ c_{c0}(1 + q^2) - 2x_{c0}(r_c+\rho)(2q) - 2\rho(r_c+\rho)\sin\theta_0(2q) \nonumber\\
     &+ 2y_{c0}(r_c+\rho)(1-q^2) - 2\rho(r_c+\rho)\cos\theta_0(1 - q^2) \Bigr] \frac{1}{1+q^2}\\
-    &= \Bigl[ c_{c0}(1 + q^2) - 4x_{c0}R(q) - 4\rho R\sin\theta_0(q) \nonumber\\
+    =& \Bigl[ c_{c0}(1 + q^2) - 4x_{c0}R(q) - 4\rho R\sin\theta_0(q) \nonumber\\
     &+ 2y_{c0}R(1-q^2) - 2\rho R\cos\theta_0(1 - q^2) \Bigr] \frac{1}{1+q^2}\\
     &= \Bigl[ c_{c0}(1 + q^2) + (- 4x_{c0}R - 4\rho R\sin\theta_0)(q) \nonumber\\
-    &+ (2y_{c0}R - 2\rho R\cos\theta_0)(1 - q^2) \Bigr] \frac{1}{1+q^2}
+    &+ (2y_{c0}R - 2\rho R\cos\theta_0)(1 - q^2) \Bigr] \frac{1}{1+q^2}\\
+    =& c_{c0} - 2x_0R\sin\theta_1 - 2\rho R\sin\theta_0\sin\theta_1 + 2y_{c0}R\cos\theta_1 -2\rho R\cos\theta_0\cos\theta_1\\
+    =& c_{c0} +(- 2x_0R - 2\rho R\sin\theta_0)\sin\theta_1 + (2y_{c0}R -2\rho R\cos\theta_0)\cos\theta_1
 \end{align}
 
 \subsection{Calculations for $\mathbf{m^+}$}
@@ -594,15 +598,30 @@ $L$ is the distance between the final position and the center of the intermediat
     &= \sqrt{(-R\sin\theta_1 - x_{fc})^2 + (R\cos\theta_1 - y_{fc})^2}\\
     &= \sqrt{(R\sin\theta_1 + x_{fc})^2 + (R\cos\theta_1 - y_{fc})^2}\\
     &= \sqrt{R^2\sin^2\theta_1 + 2x_{fc}R\sin\theta_1 + x_{fc}^2 + R^2\cos^2\theta_1 - 2y_{fc}R\cos\theta_1 + y_{fc}^2}\\
-    &= \sqrt{2x_{fc}R\sin\theta_1  - 2y_{fc}R\cos\theta_1 + x_{fc}^2 + y_{fc}^2 + R^2}\\
-    &= \sqrt{2x_{fc}R\frac{2q}{1+q^2}  - 2y_{fc}R\frac{1-q^2}{1+q^2} + x_{fc}^2 + y_{fc}^2 + R^2}\\
-    &= \sqrt{\frac{1}{1+q^2}} \sqrt{4x_{fc}R(q) - 2y_{fc}R(1-q^2) + (x_{fc}^2 + y_{fc}^2 + R^2)(1+q^2)}\\
-    &= \sqrt{\frac{1}{1+q^2}} \sqrt{(x_{fc}^2 + y_{fc}^2 + R^2 - 2y_{fc}R) + 4x_{fc}R(q) + (x_{fc}^2 + y_{fc}^2 + R^2 + 2y_{fc}R)(q^2)}
+    &= \sqrt{2x_{fc}R\sin\theta_1  - 2y_{fc}R\cos\theta_1 + (x_{fc}^2 + y_{fc}^2 + R^2)}%\\
+    % &= \sqrt{2x_{fc}R\frac{2q}{1+q^2}  - 2y_{fc}R\frac{1-q^2}{1+q^2} + x_{fc}^2 + y_{fc}^2 + R^2}\\
+    % &= \sqrt{\frac{1}{1+q^2}} \sqrt{4x_{fc}R(q) - 2y_{fc}R(1-q^2) + (x_{fc}^2 + y_{fc}^2 + R^2)(1+q^2)}\\
+    % &= \sqrt{\frac{1}{1+q^2}} \sqrt{(x_{fc}^2 + y_{fc}^2 + R^2 - 2y_{fc}R) + 4x_{fc}R(q) + (x_{fc}^2 + y_{fc}^2 + R^2 + 2y_{fc}R)(q^2)}
+\end{align}
+\begin{align}
+    c_{sq} = x_{fc}^2 + y_{fc}^2 + R^2
+\end{align}
+\begin{align}
+    L^2 =& 2x_{fc}R\sin\theta_1  - 2y_{fc}R\cos\theta_1 + c_{sq}\\
+    L^4 =& [2x_{fc}R\sin\theta_1  - 2y_{fc}R\cos\theta_1 + c_{sq}]^2\\
+    =& 2x_{fc}R\sin\theta_1[2x_{fc}R\sin\theta_1  - 2y_{fc}R\cos\theta_1 + c_{sq}] \nonumber\\
+    &+ - 2y_{fc}R\cos\theta_1[ 2x_{fc}R\sin\theta_1  - 2y_{fc}R\cos\theta_1 + c_{sq}] \nonumber\\
+    &+ (x_{fc}^2 + y_{fc}^2 + R^2)[2x_{fc}R\sin\theta_1  - 2y_{fc}R\cos\theta_1 + c_{sq}]\\
+    =& 4x_{fc}^2R^2\sin^2\theta_1 - 4x_{fc}y_{fc}R^2\cos\theta_1\sin\theta_1 + 2c_{sq}x_{fc}R\sin\theta_1 \nonumber\\
+    &+ -4x_{fc}y_{fc}R^2\cos\theta_1\sin\theta_1  + 4y_{fc}^2R^2\cos^2\theta_1 - 2c_{sq}y_{fc}R\cos\theta_1 \nonumber\\
+    &+ 2c_{sq}x_{fc}R\sin\theta_1  - 2c_{sq}y_{fc}R\cos\theta_1 + c_{sq}^2 \\
+    =& 4x_{fc}^2R^2\sin^2\theta_1 - 8x_{fc}y_{fc}R^2\cos\theta_1\sin\theta_1 + 2c_{sq}x_{fc}R\sin\theta_1 \nonumber\\
+    &+ 4y_{fc}^2R^2\cos^2\theta_1 - 4c_{sq}y_{fc}R\cos\theta_1 + 2c_{sq}x_{fc}R\sin\theta_1 + c_{sq}^2
 \end{align}
 $D$ is the distance between the tangent point and the final position.
 \begin{align}
     D =& \sqrt{L^2 - \rho^2}\\
-    =&  \sqrt{2x_{fc}R\sin\theta_1  - 2y_{fc}R\cos\theta_1 + x_{fc}^2 + y_{fc}^2 + R^2 - \rho^2} \\
+    =&  \sqrt{2x_{fc}R\sin\theta_1  - 2y_{fc}R\cos\theta_1 + (c_{sq} - \rho^2)} \\
     =& \biggl[ \frac{1}{1+q^2} \Bigl((x_{fc}^2 + y_{fc}^2 + R^2 - 2y_{fc}R) + 4x_{fc}R(q) \nonumber\\&+ (x_{fc}^2 + y_{fc}^2 + R^2 + 2y_{fc}R)(q^2)\Bigr) - \rho^2\biggr]^{1/2}\\
     =& \sqrt{\frac{1}{1+q^2}}\biggl( (x_{fc}^2 + y_{fc}^2 + R^2 - 2y_{fc}R) + 4x_{fc}R(q) \nonumber\\&+ (x_{fc}^2 + y_{fc}^2 + R^2 + 2y_{fc}R)(q^2) - \rho^2(1+q^2)\biggr)^{1/2}\\
     =& \sqrt{\frac{1}{1+q^2}}\biggl( (x_{fc}^2 + y_{fc}^2 + R^2 - 2y_{fc}R - \rho^2) + 4x_{fc}R(q) \nonumber\\&+ (x_{fc}^2 + y_{fc}^2 + R^2 + 2y_{fc}R- \rho^2)(q^2)\biggr)^{1/2}
@@ -677,13 +696,21 @@ $\mathbf{x_L}$ is the point at which the final S segment starts.
 \begin{align}
     m^+_x &= x_f - x_L\\
     &= x_f - x_c +R\frac{2q}{1+q^2} -\frac{\rho}{L^2}\Bigl[\rho(x_{fc} + R\frac{2q}{1+q^2}) + (y_{fc}-R\frac{1-q^2}{1+q^2})D\Bigr]\\
-    &= x_{fc} +R\frac{2q}{1+q^2} -\frac{\rho}{L^2}\Bigl[\rho(x_{fc} + R\frac{2q}{1+q^2}) + (y_{fc}-R\frac{1-q^2}{1+q^2})D\Bigr]
+    &= x_{fc} +R\frac{2q}{1+q^2} -\frac{\rho}{L^2}\Bigl[\rho(x_{fc} + R\frac{2q}{1+q^2}) + (y_{fc}-R\frac{1-q^2}{1+q^2})D\Bigr]\\
+    &= x_{fc} +R\sin\theta_1 -\frac{\rho}{L^2}\Bigl[\rho(x_{fc} + R\sin\theta_1) + (y_{fc}-R\cos\theta_1)D\Bigr]\\
+    &= x_{fc} +R\sin\theta_1 -\frac{\rho^2}{L^2}(x_{fc} - R\sin\theta_1) - \frac{\rho}{L^2}(y_{fc}-R\cos\theta_1)D\\
+    &= x_{fc} +R\sin\theta_1 -\frac{\rho^2}{L^2}x_{fc} + \frac{\rho^2}{L^2}R\sin\theta_1 + (-\frac{\rho}{L^2}y_{fc} +\frac{\rho}{L^2}R\cos\theta_1)D
 \end{align}
 \begin{align}
     m^+_y &= y_f - y_L\\
     &= y_f - y_c -R\frac{1-q^2}{1+q^2} -\frac{\rho}{L^2}\Bigl[\rho(y_{fc}-R\frac{1-q^2}{1+q^2}) - (x_{fc} + R\frac{2q}{1+q^2})D\Bigr]\\
-    &= y_{fc} -R\frac{1-q^2}{1+q^2} -\frac{\rho}{L^2}\Bigl[\rho(y_{fc}-R\frac{1-q^2}{1+q^2}) - (x_{fc} + R\frac{2q}{1+q^2})D\Bigr]
+    &= y_{fc} -R\frac{1-q^2}{1+q^2} -\frac{\rho}{L^2}\Bigl[\rho(y_{fc}-R\frac{1-q^2}{1+q^2}) - (x_{fc} + R\frac{2q}{1+q^2})D\Bigr]\\
+    &= y_{fc} -R\cos\theta_1 -\frac{\rho}{L^2}\Bigl[\rho(y_{fc}-R\cos\theta_1) - (x_{fc} + R\sin\theta_1)D\Bigr]\\
+    &= y_{fc} -R\cos\theta_1 -\frac{\rho^2}{L^2}(y_{fc}-R\cos\theta_1) + \frac{\rho}{L^2}(x_{fc} + R\sin\theta_1)D\\
+    &= y_{fc} -R\cos\theta_1 -\frac{\rho^2}{L^2}y_{fc}+\frac{\rho^2}{L^2}R\cos\theta_1 + (\frac{\rho}{L^2}x_{fc} + \frac{\rho}{L^2}R\sin\theta_1)D
 \end{align}
+
+Now let's manage $m_d^+$:
 \begin{align}
     m_d^+ =& (m_x^+)^2 + (m_y^+)^2\\
     =& \Bigl\{ x_{fc} +R\frac{2q}{1+q^2} -\frac{\rho}{L^2}\Bigl[\rho(x_{fc} + R\frac{2q}{1+q^2}) + (y_{fc}-R\frac{1-q^2}{1+q^2})D\Bigr] \Bigr\}^2 \nonumber\\
@@ -693,6 +720,7 @@ $\mathbf{x_L}$ is the point at which the final S segment starts.
 %     =& \Bigl\{ x_{fc} +R\frac{2q}{1+q^2} -\frac{\rho}{L^2}\Bigl[\rho(x_{fc} + R\frac{2q}{1+q^2}) + (y_{fc}-R\frac{1-q^2}{1+q^2})D\Bigr] \Bigr\}^2\frac{1}{(1+q^2)^2} \nonumber\\
 %     &+ \Bigl\{ y_{fc}(1+q^2) -R(1-q^2) \\&-\frac{\rho}{L^2}\Bigl[\rho[y_{fc}(1+q^2)-R(1-q^2)] - [x_{fc}(1+q^2) + R(2q)]D\Bigr] \Bigr\}^2\frac{1}{(1+q^2)^2}
 % \end{align}
+
 Put it all back in function of $\theta_1$ to simplify when squaring the things:
 With
 \begin{align}
@@ -795,7 +823,11 @@ Remove the terms that cancel each other or combine with others:
     m_d^+=& x_{fc}^2 +2x_{fc}R\sin\theta_1 + y_{fc}^2 -2y_{fc}R\cos\theta_1 + R^2 + \frac{\rho^4}{L^4}R^2 \nonumber\\
     &+   \frac{\rho^4}{L^4}x_{fc}^2 + \frac{\rho^4}{L^4}2x_{fc}R\sin\theta_1 + \frac{\rho^4}{L^4}y_{fc}^2 -\frac{\rho^4}{L^4}2y_{fc}R\cos\theta_1 \nonumber\\
     &+ 2\frac{\rho}{L^2}\Bigl[ 2y_{fc}\rho R\cos\theta_1 -R^2\rho - 2 x_{fc}\rho R\sin\theta_1 -\rho x_{fc}^2 -\rho y_{fc}^2 \Bigr] \nonumber\\
-    &+\frac{\rho^2}{L^4}(x_{fc}^2 + 2x_{fc}R\sin\theta_1 + y_{fc}^2 -2y_{fc}R\cos\theta_1 +  R^2 )D^2
+    &+\frac{\rho^2}{L^4}(x_{fc}^2 + 2x_{fc}R\sin\theta_1 + y_{fc}^2 -2y_{fc}R\cos\theta_1 +  R^2 )D^2\\
+    =& (x_{fc}^2 + y_{fc}^2 + R^2) +2x_{fc}R\sin\theta_1  -2y_{fc}R\cos\theta_1 \nonumber\\
+    &+   \frac{\rho^4}{L^4}(x_{fc}^2 +y_{fc}^2 + R^2 )+ \frac{\rho^4}{L^4}2x_{fc}R\sin\theta_1 -\frac{\rho^4}{L^4}2y_{fc}R\cos\theta_1 \nonumber\\
+    &+ 2\frac{\rho^2}{L^2}\Bigl[ 2y_{fc} R\cos\theta_1  - 2 x_{fc} R\sin\theta_1 -(x_{fc}^2 + y_{fc}^2 +R^2) \Bigr] \nonumber\\
+    &+\frac{\rho^2}{L^4}[ (x_{fc}^2 + y_{fc}^2 + R^2) + 2x_{fc}R\sin\theta_1  -2y_{fc}R\cos\theta_1  ]D^2
 \end{align}
 
 
@@ -876,12 +908,121 @@ Got to make sure I only have even exponents of D and L! Maybe worst case scenari
 
 ...
 
+\textbf{Let's redo it in function of sin and cos, it might help simplify things down the road:}
+\begin{align}
+    &\langle \mathbf{m^-} - \mathbf{m^+}, \mathbf{v_t} \rangle = 0\\
+    &M_x v_{tx} + M_yv_{ty} = 0\\
+    &\Bigl[m_x^-\frac{1}{\sqrt{m_d^-}} - m_x^+\frac{1}{\sqrt{m_d^+}}\Bigr]\cos\theta_1 + \Bigl[ m_y^-\frac{1}{\sqrt{m_d^-}} - m_y^+\frac{1}{\sqrt{m_d^+}} \Bigr]\sin\theta_1 = 0\\
+    &\Bigl[m_x^-\sqrt{m_d^+} - m_x^+\sqrt{m_d^-}\Bigr]\cos\theta_1 + \Bigl[ m_y^-\sqrt{m_d^+} - m_y^+\sqrt{m_d^-} \Bigr]\sin\theta_1 = 0\\
+    &\Bigl[\cos\theta_1m_x^-\sqrt{m_d^+} - \cos\theta_1m_x^+\sqrt{m_d^-}\Bigr] + \Bigl[ \sin\theta_1m_y^-\sqrt{m_d^+} - \sin\theta_1m_y^+\sqrt{m_d^-} \Bigr] = 0\\
+    &\Bigl[\cos\theta_1m_x^- + \sin\theta_1m_y^- \Bigr]\sqrt{m_d^+} - \Bigl[ \cos\theta_1m_x^+  + \sin\theta_1m_y^+ \Bigr]\sqrt{m_d^-} = 0\\
+    &\Bigl[\cos\theta_1m_x^- + \sin\theta_1m_y^- \Bigr]^2 m_d^+ - \Bigl[ \cos\theta_1m_x^+  + \sin\theta_1m_y^+ \Bigr]^2 m_d^- = 0\\
+    &\Bigl[\cos^2\theta_1(m_x^-)^2 + 2\cos\theta_1m_x^- \sin\theta_1m_y^-  + \sin^2\theta_1(m_y^-)^2 \Bigr] m_d^+ \nonumber\\
+    &- \Bigl[ \cos^2\theta_1(m_x^+)^2  + 2\cos\theta_1m_x^+ \sin\theta_1m_y^+  +\sin^2\theta_1(m_y^+)^2 \Bigr] m_d^- = 0
+\end{align}
+
+Calculations for the squares:
+\begin{align}
+    (m^-_x)^2 =& [ (x_{c0}+\rho\sin\theta_0) -R\sin\theta_1 ]^2\\
+    =& (x_{c0}+\rho\sin\theta_0)^2 -2(x_{c0}+\rho\sin\theta_0)R\sin\theta_1  +R^2\sin^2\theta_1\\
+    (m^-_y)^2 =& [(y_{c0}- \rho\cos\theta_0) + R\cos\theta_1 ]^2\\
+    =& (y_{c0}- \rho\cos\theta_0)^2 + 2(y_{c0}- \rho\cos\theta_0)R\cos\theta_1  + R^2\cos^2\theta_1
+\end{align}
+\begin{align}
+    (m^+_x)^2 =& [x_{fc} +R\sin\theta_1 -\frac{\rho^2}{L^2}x_{fc} + \frac{\rho^2}{L^2}R\sin\theta_1 + (-\frac{\rho}{L^2}y_{fc} +\frac{\rho}{L^2}R\cos\theta_1)D]^2\\
+    =& x_{fc}[x_{fc} +R\sin\theta_1 -\frac{\rho^2}{L^2}x_{fc} + \frac{\rho^2}{L^2}R\sin\theta_1 + (-\frac{\rho}{L^2}y_{fc} +\frac{\rho}{L^2}R\cos\theta_1)D]  \nonumber\\
+    &+ R\sin\theta_1[x_{fc} +R\sin\theta_1 -\frac{\rho^2}{L^2}x_{fc} + \frac{\rho^2}{L^2}R\sin\theta_1 + (-\frac{\rho}{L^2}y_{fc} +\frac{\rho}{L^2}R\cos\theta_1)D]   \nonumber\\
+    &+ -\frac{\rho^2}{L^2}x_{fc}[x_{fc} +R\sin\theta_1 -\frac{\rho^2}{L^2}x_{fc} + \frac{\rho^2}{L^2}R\sin\theta_1 + (-\frac{\rho}{L^2}y_{fc} +\frac{\rho}{L^2}R\cos\theta_1)D]  \nonumber\\
+    &+ \frac{\rho^2}{L^2}R\sin\theta_1[x_{fc} +R\sin\theta_1 -\frac{\rho^2}{L^2}x_{fc} + \frac{\rho^2}{L^2}R\sin\theta_1 + (-\frac{\rho}{L^2}y_{fc} +\frac{\rho}{L^2}R\cos\theta_1)D]  \nonumber\\
+    &+ (-\frac{\rho}{L^2}y_{fc} +\frac{\rho}{L^2}R\cos\theta_1)D[x_{fc} +R\sin\theta_1 -\frac{\rho^2}{L^2}x_{fc} + \frac{\rho^2}{L^2}R\sin\theta_1 \nonumber\\ &+ (-\frac{\rho}{L^2}y_{fc} +\frac{\rho}{L^2}R\cos\theta_1)D]  \\
+\end{align}
+\begin{align}
+    (m^+_x)^2=& x_{fc}^2 +x_{fc}R\sin\theta_1 -\frac{\rho^2}{L^2}x_{fc}^2 + \frac{\rho^2}{L^2}x_{fc}R\sin\theta_1 \nonumber\\
+    &+ x_{fc}R\sin\theta_1 +R^2\sin^2\theta_1 -\frac{\rho^2}{L^2}x_{fc}R\sin\theta_1 + \frac{\rho^2}{L^2}R^2\sin^2\theta_1 + \nonumber\\
+    &+ -\frac{\rho^2}{L^2}x_{fc}^2  -\frac{\rho^2}{L^2}x_{fc}R\sin\theta_1 +\frac{\rho^4}{L^4}x_{fc}^2 - \frac{\rho^4}{L^4}x_{fc}R\sin\theta_1 \nonumber\\
+    &+ \frac{\rho^2}{L^2}x_{fc}R\sin\theta_1 +\frac{\rho^2}{L^2}R^2\sin^2\theta_1 -\frac{\rho^4}{L^4}x_{fc}R\sin\theta_1 + \frac{\rho^4}{L^4}R^2\sin^2\theta_1 \nonumber\\
+    &+ (\frac{\rho^3}{L^4}x_{fc}y_{fc} -\frac{\rho^2}{L^4}x_{fc}R\cos\theta_1)D  \nonumber\\
+    &+(\frac{\rho^3}{L^4}x_{fc}y_{fc} -\frac{\rho^3}{L^4}x_{fc}R\cos\theta_1)D \nonumber\\   &+ (-\frac{\rho^3}{L^4}y_{fc}R\sin\theta_1 +\frac{\rho^3}{L^4}R^2\cos\theta_1\sin\theta_1)D \nonumber\\
+    &+ (-\frac{\rho^3}{L^4}y_{fc}R\sin\theta_1 +\frac{\rho^3}{L^4}R^2\cos\theta_1\sin\theta_1)D  \nonumber\\
+    &+ (-\frac{\rho}{L^2}x_{fc}y_{fc} +\frac{\rho}{L^2}x_{fc}R\cos\theta_1)D \nonumber\\
+    &+ (-\frac{\rho}{L^2}x_{fc}y_{fc} +\frac{\rho}{L^2}x_{fc}R\cos\theta_1)D  \nonumber\\
+    &+ (-\frac{\rho}{L^2}y_{fc}R\sin\theta_1 +\frac{\rho}{L^2}R^2\cos\theta_1\sin\theta_1)D   \nonumber\\
+    &+(-\frac{\rho}{L^2}y_{fc}R\sin\theta_1 +\frac{\rho}{L^2}R^2\cos\theta_1\sin\theta_1)D \nonumber\\
+    &+ (\frac{\rho^2}{L^4}y_{fc}^2 -2\frac{\rho^2}{L^4}y_{fc}R\cos\theta_1 +\frac{\rho^2}{L^4}R^2\cos^2\theta_1)D^2 \\
+\end{align}
+\begin{align}
+    (m^+_x)^2=& x_{fc}^2 +2x_{fc}R\sin\theta_1 -2\frac{\rho^2}{L^2}x_{fc}^2 + R^2\sin^2\theta_1  \nonumber\\
+    &+ \frac{\rho^4}{L^4}x_{fc}^2 - 2\frac{\rho^4}{L^4}x_{fc}R\sin\theta_1 + 2\frac{\rho^2}{L^2}R^2\sin^2\theta_1 + \frac{\rho^4}{L^4}R^2\sin^2\theta_1 \nonumber\\
+    &+ \Bigl[ 2\frac{\rho^3}{L^4}x_{fc}y_{fc} -2\frac{\rho^3}{L^4}x_{fc}R\cos\theta_1  -2\frac{\rho^3}{L^4}y_{fc}R\sin\theta_1 +2\frac{\rho^3}{L^4}R^2\cos\theta_1\sin\theta_1  \nonumber\\
+    &+ -2\frac{\rho}{L^2}x_{fc}y_{fc} +2\frac{\rho}{L^2}x_{fc}R\cos\theta_1  + -2\frac{\rho}{L^2}y_{fc}R\sin\theta_1 +2\frac{\rho}{L^2}R^2\cos\theta_1\sin\theta_1 \Bigr] D   \nonumber\\
+    &+ (\frac{\rho^2}{L^4}y_{fc}^2 -2\frac{\rho^2}{L^4}y_{fc}R\cos\theta_1 +\frac{\rho^2}{L^4}R^2\cos^2\theta_1)D^2
+\end{align}
+
+
+\begin{align}
+    (m^+_y)^2 =& [y_{fc} -R\cos\theta_1 -\frac{\rho^2}{L^2}y_{fc}+\frac{\rho^2}{L^2}R\cos\theta_1 + (\frac{\rho}{L^2}x_{fc} + \frac{\rho}{L^2}R\sin\theta_1)D]^2\\
+    &= y_{fc}[y_{fc} -R\cos\theta_1 -\frac{\rho^2}{L^2}y_{fc}+\frac{\rho^2}{L^2}R\cos\theta_1 + (\frac{\rho}{L^2}x_{fc} + \frac{\rho}{L^2}R\sin\theta_1)D] \nonumber\\
+    &+ -R\cos\theta_1[y_{fc} -R\cos\theta_1 -\frac{\rho^2}{L^2}y_{fc}+\frac{\rho^2}{L^2}R\cos\theta_1 + (\frac{\rho}{L^2}x_{fc} + \frac{\rho}{L^2}R\sin\theta_1)D] \nonumber\\
+    &+ -\frac{\rho^2}{L^2}y_{fc}[y_{fc} -R\cos\theta_1 -\frac{\rho^2}{L^2}y_{fc}+\frac{\rho^2}{L^2}R\cos\theta_1 + (\frac{\rho}{L^2}x_{fc} + \frac{\rho}{L^2}R\sin\theta_1)D] \nonumber\\
+    &+ \frac{\rho^2}{L^2}R\cos\theta_1[y_{fc} -R\cos\theta_1 -\frac{\rho^2}{L^2}y_{fc}+\frac{\rho^2}{L^2}R\cos\theta_1 + (\frac{\rho}{L^2}x_{fc} + \frac{\rho}{L^2}R\sin\theta_1)D] \nonumber\\
+    &+ (\frac{\rho}{L^2}x_{fc} + \frac{\rho}{L^2}R\sin\theta_1)D[y_{fc} -R\cos\theta_1 -\frac{\rho^2}{L^2}y_{fc}+\frac{\rho^2}{L^2}R\cos\theta_1 \nonumber\\ &+ (\frac{\rho}{L^2}x_{fc} + \frac{\rho}{L^2}R\sin\theta_1)D]
+\end{align}
+\begin{align}
+    (m^+_y)^2 =& y_{fc}^2 -y_{fc}R\cos\theta_1 -\frac{\rho^2}{L^2}y_{fc}^2 +\frac{\rho^2}{L^2}y_{fc}R\cos\theta_1 \nonumber\\
+    &+ -y_{fc}R\cos\theta_1 +R^2\cos^2\theta_1 +\frac{\rho^2}{L^2}y_{fc}R\cos\theta_1 -\frac{\rho^2}{L^2}R\cos^2\theta_1\nonumber\\
+    &+ \frac{\rho^2}{L^2}y_{fc}R\cos\theta_1 -\frac{\rho^2}{L^2}R^2\cos^2\theta_1 -\frac{\rho^4}{L^4}y_{fc}R\cos\theta_1 +\frac{\rho^4}{L^4}R^2\cos^2\theta_1 \nonumber\\
+    &+  -\frac{\rho^2}{L^2}y_{fc}^2 +\frac{\rho^2}{L^2}y_{fc}R\cos\theta_1 +\frac{\rho^4}{L^4}y_{fc}^2 -\frac{\rho^4}{L^4}y_{fc}R\cos\theta_1 \nonumber\\
+    &+ (\frac{\rho}{L^2}x_{fc}y_{fc} + \frac{\rho}{L^2}y_{fc}R\sin\theta_1)D \nonumber\\
+    &+ (\frac{\rho}{L^2}x_{fc}y_{fc} + \frac{\rho}{L^2}y_{fc}R\sin\theta_1)D \nonumber\\
+    &+ (-\frac{\rho}{L^2}x_{fc}R\cos\theta_1 -\frac{\rho}{L^2}R^2\cos\theta_1\sin\theta_1)D \nonumber\\
+    &+ (-\frac{\rho}{L^2}x_{fc}R\cos\theta_1 - \frac{\rho}{L^2}R^2\cos\theta_1\sin\theta_1)D \nonumber\\
+    &+ (-\frac{\rho^3}{L^4}y_{fc}x_{fc} -\frac{\rho^3}{L^4}y_{fc}R\sin\theta_1)D \nonumber\\
+    &+ (-\frac{\rho^3}{L^4}x_{fc}y_{fc} - \frac{\rho^3}{L^4}y_{fc}R\sin\theta_1)D \nonumber\\
+    &+ (\frac{\rho^3}{L^4}x_{fc}R\cos\theta_1 + \frac{\rho^3}{L^4}R^2\sin\theta_1\cos\theta_1)D \nonumber\\
+    &+ (\frac{\rho^3}{L^4}x_{fc}R\cos\theta_1 + \frac{\rho^3}{L^4}R^2\cos\theta_1\sin\theta_1)D \nonumber\\
+    &+ (\frac{\rho^2}{L^4}x_{fc}^2 + 2\frac{\rho^2}{L^4}x_{fc}R\sin\theta_1 + \frac{\rho^2}{L^4}R^2\sin^2\theta_1)D^2
+\end{align}
+
+\begin{align}
+    (m^+_y)^2 =& y_{fc}^2 -2y_{fc}R\cos\theta_1 -2\frac{\rho^2}{L^2}y_{fc}^2 + R^2\cos^2\theta_1 -2\frac{\rho^2}{L^2}R\cos^2\theta_1\nonumber\\
+    &+ 4\frac{\rho^2}{L^2}y_{fc}R\cos\theta_1  +\frac{\rho^4}{L^4}R^2\cos^2\theta_1 + \frac{\rho^4}{L^4}y_{fc}^2 -2\frac{\rho^4}{L^4}y_{fc}R\cos\theta_1 \nonumber\\
+    &+ \Bigl[ 2\frac{\rho}{L^2}x_{fc}y_{fc} + 2\frac{\rho}{L^2}y_{fc}R\sin\theta_1  -2\frac{\rho}{L^2}x_{fc}R\cos\theta_1 -2\frac{\rho}{L^2}R^2\cos\theta_1\sin\theta_1 \nonumber\\
+    &- 2\frac{\rho^3}{L^4}x_{fc}y_{fc} - 2\frac{\rho^3}{L^4}y_{fc}R\sin\theta_1 + 2\frac{\rho^3}{L^4}x_{fc}R\cos\theta_1 + 2\frac{\rho^3}{L^4}R^2\cos\theta_1\sin\theta_1 \Bigr]D \nonumber\\
+    &+ (\frac{\rho^2}{L^4}x_{fc}^2 + 2\frac{\rho^2}{L^4}x_{fc}R\sin\theta_1 + \frac{\rho^2}{L^4}R^2\sin^2\theta_1)D^2
+\end{align}
+
+\begin{align}
+    (m_x^-m_y^-) =& (x_{c0} -R\sin\theta_1 +\rho\sin\theta_0)( y_{c0} + R\cos\theta_1 - \rho\cos\theta_0 )\\
+    =& ( x_{c0}y_{c0} + x_{c0}R\cos\theta_1 - x_{c0}\rho\cos\theta_0 ) \nonumber\\
+    &+ (y_{c0}R\sin\theta_1 - R^2\cos\theta_1\sin\theta_1 + \rho R\cos\theta_0\sin\theta_1 ) \nonumber\\
+    &+ ( \rho y_{c0}\sin\theta_0 + \rho R\cos\theta_1\sin\theta_0 - \rho^2\cos\theta_0\sin\theta_0)\\
+    =&  ( x_{c0}y_{c0} - x_{c0}\rho\cos\theta_0 +  \rho y_{c0}\sin\theta_0 - \rho^2\cos\theta_0\sin\theta_0 )  \nonumber\\
+    &+ x_{c0}R\cos\theta_1 + y_{c0}R\sin\theta_1 - R^2\cos\theta_1\sin\theta_1 + \rho R\cos\theta_0\sin\theta_1  \nonumber\\
+    & + \rho R\sin\theta_0\cos\theta_1\\
+    =&  c_{xm} + (x_{c0}R + \rho R\sin\theta_0)\cos\theta_1 + (y_{c0}R + \rho R\cos\theta_0)\sin\theta_1 - R^2\cos\theta_1\sin\theta_1
+\end{align}
+\begin{align}
+    c_{xm} =& ( x_{c0}y_{c0} - x_{c0}\rho\cos\theta_0 +  \rho y_{c0}\sin\theta_0 - \rho^2\cos\theta_0\sin\theta_0 )
+\end{align}
+\begin{align}
+    (m_x^+m_y^+) =& \Bigl[ x_{fc} +R\sin\theta_1 -\frac{\rho^2}{L^2}x_{fc} + \frac{\rho^2}{L^2}R\sin\theta_1 + (-\frac{\rho}{L^2}y_{fc} +\frac{\rho}{L^2}R\cos\theta_1)D  \Bigr] \nonumber\\
+    &\times \Bigl[ y_{fc} -R\cos\theta_1 -\frac{\rho^2}{L^2}y_{fc}+\frac{\rho^2}{L^2}R\cos\theta_1 + (\frac{\rho}{L^2}x_{fc} + \frac{\rho}{L^2}R\sin\theta_1)D \Bigr]\\
+    =& 
+\end{align}
+
+
 Reminder:
 \begin{align}
-    m_d^- =& \Bigl[ c_{c0}(1 + q^2) + (- 4x_{c0}R - 4\rho R\sin\theta_0)(q) \nonumber\\
-    &+ (2y_{c0}R - 2\rho R\cos\theta_0)(1 - q^2) \Bigr] \frac{1}{1+q^2}\\
-    m_d^+=&  x_{fc}^2 +2x_{fc}R\sin\theta_1 + (-2x_{fc}\frac{\rho}{L^2} -2\frac{\rho}{L^2}R\sin\theta_1)C_1 + R^2  + \frac{\rho^2}{L^4}C_1^2 \nonumber\\
-    &+ y_{fc}^2 -2y_{fc}R\cos\theta_1 -2y_{fc}\frac{\rho}{L^2}C_2 +2R\cos\theta_1\frac{\rho}{L^2}C_2 + \frac{\rho^2}{L^4}C_2^2 
+    m_d^- =& c_{c0} - 2x_0R\sin\theta_1 - 2\rho R\sin\theta_0\sin\theta_1 + 2y_{c0}R\cos\theta_1 -2\rho R\cos\theta_0\cos\theta_1\\
+    =& c_{c0} +(- 2x_0R - 2\rho R\sin\theta_0)\sin\theta_1 + (2y_{c0}R -2\rho R\cos\theta_0)\cos\theta_1\\
+    m^-_x =& x_{c0} -R\sin\theta_1 +\rho\sin\theta_0\\
+    m^-_y =& y_{c0} + R\cos\theta_1 - \rho\cos\theta_0\\
+    m_d^+ =& (x_{fc}^2 + y_{fc}^2 + R^2) +2x_{fc}R\sin\theta_1  -2y_{fc}R\cos\theta_1 \nonumber\\
+    &+   \frac{\rho^4}{L^4}(x_{fc}^2 +y_{fc}^2 + R^2 )+ \frac{\rho^4}{L^4}2x_{fc}R\sin\theta_1 -\frac{\rho^4}{L^4}2y_{fc}R\cos\theta_1 \nonumber\\
+    &+ 2\frac{\rho^2}{L^2}\Bigl[ 2y_{fc} R\cos\theta_1  - 2 x_{fc} R\sin\theta_1 -(x_{fc}^2 + y_{fc}^2 +R^2) \Bigr] \nonumber\\
+    &+\frac{\rho^2}{L^4}[ (x_{fc}^2 + y_{fc}^2 + R^2) + 2x_{fc}R\sin\theta_1  -2y_{fc}R\cos\theta_1  ]D^2\\
+    m^+_x =& x_{fc} +R\sin\theta_1 -\frac{\rho^2}{L^2}x_{fc} + \frac{\rho^2}{L^2}R\sin\theta_1 + (-\frac{\rho}{L^2}y_{fc} +\frac{\rho}{L^2}R\cos\theta_1)D\\
+    m^+_y =& y_{fc} -R\cos\theta_1 -\frac{\rho^2}{L^2}y_{fc}+\frac{\rho^2}{L^2}R\cos\theta_1 + (\frac{\rho}{L^2}x_{fc} + \frac{\rho}{L^2}R\sin\theta_1)D
 \end{align}
 
 
