@@ -26,7 +26,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \section{Potential title?}
 
-% Combining a generalized Dubins path problem with visiting a circular boundary? On optimal Dubins paths for a capture the flag game? Minimal time flag capture in a capture the flag game?
+% Combining Generalized Dubins Path Problem with visiting a circular boundary?
+% On optimal Dubins paths for a capture the flag game?
+% Minimal time flag capture in a capture the flag game?
+% On shortest Dubins path via a circular boundary with a final point with free angle?
+
+% Combining a generalized Dubins path problem with visiting a circular boundary?
+% On optimal Dubins paths for a capture the flag game?
+% Minimal time flag capture in a capture the flag game?
+
+% Current title:
+% Scalable Computation of Closed Loop Equilibrium Policy in Multi-Player Games
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % \section{Task at hand}
@@ -586,7 +598,8 @@ $m^-_d$ has the same value as the previously done LSLSL case!
     &= \Bigl[ c_{c0}(1 + q^2) + (- 4x_{c0}R - 4\rho R\sin\theta_0)(q) \nonumber\\
     &+ (2y_{c0}R - 2\rho R\cos\theta_0)(1 - q^2) \Bigr] \frac{1}{1+q^2}\\
     =& c_{c0} - 2x_0R\sin\theta_1 - 2\rho R\sin\theta_0\sin\theta_1 + 2y_{c0}R\cos\theta_1 -2\rho R\cos\theta_0\cos\theta_1\\
-    =& c_{c0} +(- 2x_0R - 2\rho R\sin\theta_0)\sin\theta_1 + (2y_{c0}R -2\rho R\cos\theta_0)\cos\theta_1
+    =& c_{c0} +(- 2x_0R - 2\rho R\sin\theta_0)\sin\theta_1 + (2y_{c0}R -2\rho R\cos\theta_0)\cos\theta_1\\
+    =& c_{c0} +c_{-1}\sin\theta_1 + c_{-2}\cos\theta_1
 \end{align}
 
 \subsection{Calculations for $\mathbf{m^+}$}
@@ -607,7 +620,20 @@ $L$ is the distance between the final position and the center of the intermediat
     c_{sq} = x_{fc}^2 + y_{fc}^2 + R^2
 \end{align}
 \begin{align}
+    \cos\theta_1 &= \frac{1-q^2}{1+q^2}\\
+    \sin\theta_1 &= \frac{2q}{1+q^2}\\
+    \cos^2\theta_1 &= \frac{(1-q^2)^2}{(1+q^2)^2} = \frac{1-2q^2+q^4}{1+2q^2+q^4}\\
+    \sin^2\theta_1 &= \frac{(2q)^2}{(1+q^2)^2} = \frac{4q^2}{1+2q^2+q^4}\\
+    \cos^3\theta_1 &= \frac{(1-2q^2+q^4)}{(1+2q^2+q^4)}\frac{(1-q^2)}{(1+q^2)} = \frac{1-3q^2+3q^4-q^6}{1+3q^2+3q^4+q^6} = \frac{1-3q^2+3q^4-q^6}{(1+q^2)^3}\\
+    \sin^3\theta_1 &= \frac{(4q^2)}{(1+2q^2+q^4)}\frac{(2q)}{(1+q^2)} = \frac{8q^3}{1+3q^2+3q^4+q^6} = \frac{8q^3}{(1+q^2)^3}
+\end{align}
+\begin{align}
     L^2 =& 2x_{fc}R\sin\theta_1  - 2y_{fc}R\cos\theta_1 + c_{sq}\\
+    =& 2x_{fc}R\frac{2q}{1+q^2}  - 2y_{fc}R\frac{1-q^2}{1+q^2} + c_{sq}\\
+    =& [ 4x_{fc}R(q)  - 2y_{fc}R(1-q^2) + c_{sq}(1+q^2)]\frac{1}{1+q^2}\\
+    =& [ (c_{sq} - 2y_{fc}R) + 4x_{fc}R(q)  + (2y_{fc}R+ c_{sq})(q^2)]\frac{1}{1+q^2}
+\end{align}
+\begin{align}
     L^4 =& [2x_{fc}R\sin\theta_1  - 2y_{fc}R\cos\theta_1 + c_{sq}]^2\\
     =& 2x_{fc}R\sin\theta_1[2x_{fc}R\sin\theta_1  - 2y_{fc}R\cos\theta_1 + c_{sq}] \nonumber\\
     &+ - 2y_{fc}R\cos\theta_1[ 2x_{fc}R\sin\theta_1  - 2y_{fc}R\cos\theta_1 + c_{sq}] \nonumber\\
@@ -616,7 +642,18 @@ $L$ is the distance between the final position and the center of the intermediat
     &+ -4x_{fc}y_{fc}R^2\cos\theta_1\sin\theta_1  + 4y_{fc}^2R^2\cos^2\theta_1 - 2c_{sq}y_{fc}R\cos\theta_1 \nonumber\\
     &+ 2c_{sq}x_{fc}R\sin\theta_1  - 2c_{sq}y_{fc}R\cos\theta_1 + c_{sq}^2 \\
     =& 4x_{fc}^2R^2\sin^2\theta_1 - 8x_{fc}y_{fc}R^2\cos\theta_1\sin\theta_1 + 2c_{sq}x_{fc}R\sin\theta_1 \nonumber\\
-    &+ 4y_{fc}^2R^2\cos^2\theta_1 - 4c_{sq}y_{fc}R\cos\theta_1 + 2c_{sq}x_{fc}R\sin\theta_1 + c_{sq}^2
+    &+ 4y_{fc}^2R^2\cos^2\theta_1 - 4c_{sq}y_{fc}R\cos\theta_1 + 2c_{sq}x_{fc}R\sin\theta_1 + c_{sq}^2\\
+    =& \Bigl[ 4x_{fc}^2R^2\frac{4q^2}{(1+q^2)^2} - 8x_{fc}y_{fc}R^2\frac{(1-q^2)}{(1+q^2)}\frac{(2q)}{(1+q^2)} + 2c_{sq}x_{fc}R\frac{(2q)}{(1+q^2)} \nonumber\\
+    &+ 4y_{fc}^2R^2\frac{(1-2q^2+q^4)}{(1+q^2)^2} - 4c_{sq}y_{fc}R\frac{(1-q^2)}{(1+q^2)} + 2c_{sq}x_{fc}R\frac{(2q)}{(1+q^2)} + c_{sq}^2 \Bigr] \\
+    =& \Bigl[ 4x_{fc}^2R^2(4q^2) - 8x_{fc}y_{fc}R^2(1-q^2)(2q) + 2c_{sq}x_{fc}R(2q)(1+q^2) \nonumber\\
+    &+ 4y_{fc}^2R^2(1-2q^2+q^4) - 4c_{sq}y_{fc}R(1-q^2)(1+q^2) \nonumber\\
+    &+ 2c_{sq}x_{fc}R(2q)(1+q^2) + c_{sq}^2(1+q^2)^2 \Bigr]\frac{1}{(1+q^2)^2}\\
+    =& \Bigl[ 16x_{fc}^2R^2(q^2) - 16x_{fc}y_{fc}R^2(q-q^3) + 8c_{sq}x_{fc}R(q+q^3) \nonumber\\
+    &+ 4y_{fc}^2R^2(1-2q^2+q^4) - 4c_{sq}y_{fc}R(1-q^4) \nonumber\\
+    &+ c_{sq}^2(1+2q^2+q^4) \Bigr]\frac{1}{(1+q^2)^2}\\
+    =& \Bigl[ (4y_{fc}^2R^2 - 4c_{sq}y_{fc}R + c_{sq}^2)(1) +  (- 16x_{fc}y_{fc}R^2 +8c_{sq}x_{fc}R )(q) \nonumber\\
+    &+ (16x_{fc}^2R^2 - 8y_{fc}^2R^2 + 2c_{sq}^2)(q^2) + (16x_{fc}y_{fc}R^2 + 8c_{sq}x_{fc}R)(q^3) \nonumber\\
+    &+ (4y_{fc}^2R^2 + 4c_{sq}y_{fc}R + c_{sq}^2 )(q^4) \Bigr]\frac{1}{(1+q^2)^2}
 \end{align}
 $D$ is the distance between the tangent point and the final position.
 \begin{align}
@@ -1086,7 +1123,90 @@ Simply inserting the values in this equality is very long and confusing, the ful
     +& (y_{c0}- \rho\cos\theta_0)^2\sin^2\theta_1\Bigl[ (c_{sq} +2x_{fc}R\sin\theta_1  -2y_{fc}R\cos\theta_1)\Lambda(\theta_1) \Bigr] \nonumber\\
     +& 2c_{xm}\Bigl[ (c_{sq} +2x_{fc}R\sin\theta_1  -2y_{fc}R\cos\theta_1)\Lambda(\theta_1) \Big]\nonumber \\
     +& 4y_{c0}R\cos\theta_1\sin^2\theta_1\Bigl[ (c_{sq} +2x_{fc}R\sin\theta_1  -2y_{fc}R\cos\theta_1)\Lambda(\theta_1) \Big]\\
-    =& A FINIR PEUT-ETRE
+\end{align}
+With $c_{d1}=(x_{c0}+\rho\sin\theta_0)^2$ and $c_{d2}=(y_{c0}- \rho\cos\theta_0)^2$:
+\begin{align}
+    =& A, FINIR\\
+    =& \Bigl\{ \frac{(1-2q^2+q^4)}{(1+q^2)^3}\Bigl[ c_{d1}c_{sq}(1+q^2) +4c_{d1}x_{fc}R(q)  -2c_{d1}y_{fc}R(1-q^2) \Bigr] \nonumber\\
+    +& \frac{(q^2)}{(1+q^2)^3}\Bigl[ 4c_{d2}c_{sq}(1+q^2) +16c_{d2}x_{fc}R(q)  -8c_{d2}y_{fc}R(1-q^2) \Bigr]  \nonumber\\
+    +& \frac{1}{(1+q^2)} \Bigl[ 2c_{xm}c_{sq}(1+q^2) +8c_{xm}x_{fc}R(q)  -4c_{xm}y_{fc}R(1-q^2) \Big] \nonumber \\
+    +& 16y_{c0}R\frac{(q^2-q^4)}{(1+q^2)^4}\Bigl[ c_{sq}(1+q^2) +4x_{fc}R(q)  -2y_{fc}R(1-q^2) \Big] \Bigr\}\Lambda(\theta_1)\\
+    =& \Bigl\{ \frac{(1-2q^2+q^4)}{(1+q^2)^3}\Bigl[ (c_{d1}c_{sq} -2c_{d1}y_{fc}R)(1) +4c_{d1}x_{fc}R(q)  +(c_{d1}c_{sq} +2c_{d1}y_{fc}R)(q^2) \Bigr] \nonumber\\
+    +& \frac{(q^2)}{(1+q^2)^3}\Bigl[ (4c_{d2}c_{sq} -8c_{d2}y_{fc})(1) +16c_{d2}x_{fc}R(q)  +(4c_{d2}c_{sq} +8c_{d2}y_{fc})(q^2) \Bigr]  \nonumber\\
+    +& \frac{1}{(1+q^2)} \Bigl[ (2c_{xm}c_{sq} -4c_{xm}y_{fc}R )(1) + 8c_{xm}x_{fc}R(q)  +(2c_{xm}c_{sq}+ 4c_{xm}y_{fc}R)(q^2) \Big] \nonumber \\
+    +& 16y_{c0}R\frac{(q^2-q^4)}{(1+q^2)^4}\Bigl[ (c_{sq}-2y_{fc}R)(1) +4x_{fc}R(q)  + (c_{sq} + 2y_{fc}R)(q^2) \Big] \Bigr\}\Lambda(\theta_1)\\
+    =& NEXT
+\end{align}
+\begin{align}
+    =& \Bigl\{ (1-q^2 -q^4+q^6)\Bigl[ (c_{d1}c_{sq} -2c_{d1}y_{fc}R)(1) +4c_{d1}x_{fc}R(q)  +(c_{d1}c_{sq} +2c_{d1}y_{fc}R)(q^2) \Bigr] \nonumber\\
+    +& (q^2+q^4)\Bigl[ (4c_{d2}c_{sq} -8c_{d2}y_{fc})(1) +16c_{d2}x_{fc}R(q)  +(4c_{d2}c_{sq} +8c_{d2}y_{fc})(q^2) \Bigr]  \nonumber\\
+    +& (1+3q^2+3q^4+q^6) \Bigl[ (2c_{xm}c_{sq} -4c_{xm}y_{fc}R )(1) + 8c_{xm}x_{fc}R(q)  +(2c_{xm}c_{sq}+ 4c_{xm}y_{fc}R)(q^2) \Big] \nonumber \\
+    +& (q^2-q^4)\Bigl[ 16y_{c0}R(c_{sq}-2y_{fc}R)(1) +16y_{c0}R4x_{fc}R(q)  + 16y_{c0}R(c_{sq} + 2y_{fc}R)(q^2) \Big] \Bigr\}\Lambda(\theta_1)\frac{1}{(1+q^2)^4}
+\end{align}
+\begin{align}
+    =& \Bigl\{ \Bigl[ (c_{d1}c_{sq} -2c_{d1}y_{fc}R)(1) +4c_{d1}x_{fc}R(q)  +(c_{d1}c_{sq} +2c_{d1}y_{fc}R)(q^2) \nonumber\\
+    &+ (-c_{d1}c_{sq} +2c_{d1}y_{fc}R)(q^2) -4c_{d1}x_{fc}R(q^3)  +(-c_{d1}c_{sq} -2c_{d1}y_{fc}R)(q^4) \nonumber\\
+    &+ (-c_{d1}c_{sq} +2c_{d1}y_{fc}R)(q^4) -4c_{d1}x_{fc}R(q^5)  +(-c_{d1}c_{sq} -2c_{d1}y_{fc}R)(q^6) \nonumber\\
+    &+ (c_{d1}c_{sq} -2c_{d1}y_{fc}R)(q^6) +4c_{d1}x_{fc}R(q^7)  +(c_{d1}c_{sq} +2c_{d1}y_{fc}R)(q^8)  \Bigr] \nonumber\\
+    &+ \Bigl[ (4c_{d2}c_{sq} -8c_{d2}y_{fc})(q^2) +16c_{d2}x_{fc}R(q^3)  +(4c_{d2}c_{sq} +8c_{d2}y_{fc})(q^4) \nonumber\\
+    &+ (4c_{d2}c_{sq} -8c_{d2}y_{fc})(q^4) +16c_{d2}x_{fc}R(q^5)  +(4c_{d2}c_{sq} +8c_{d2}y_{fc})(q^6) \Bigr]  \nonumber\\
+    &+ \Bigl[ (2c_{xm}c_{sq} -4c_{xm}y_{fc}R )(1) + 8c_{xm}x_{fc}R(q)  +(2c_{xm}c_{sq}+ 4c_{xm}y_{fc}R)(q^2) \nonumber\\
+    &+ (6c_{xm}c_{sq} -12c_{xm}y_{fc}R )(q^2) + 24c_{xm}x_{fc}R(q^3)  +(6c_{xm}c_{sq}+ 12c_{xm}y_{fc}R)(q^4) \nonumber\\
+    &+ (6c_{xm}c_{sq} -12c_{xm}y_{fc}R )(q^4) + 24c_{xm}x_{fc}R(q^5)  +(6c_{xm}c_{sq}+ 12c_{xm}y_{fc}R)(q^6) \nonumber\\
+    &+ (2c_{xm}c_{sq} -4c_{xm}y_{fc}R )(q^6) + 8c_{xm}x_{fc}R(q^7)  +(2c_{xm}c_{sq}+ 4c_{xm}y_{fc}R)(q^8)  \Big] \nonumber \\
+    &+ \Bigl[ 16y_{c0}R(c_{sq}-2y_{fc}R)(q^2) +16y_{c0}R4x_{fc}R(q^3)  + 16y_{c0}R(c_{sq} + 2y_{fc}R)(q^4) \nonumber\\
+    &+ 16y_{c0}R(-c_{sq}+2y_{fc}R)(q^4) -16y_{c0}R4x_{fc}R(q^5)  + 16y_{c0}R(-c_{sq} - 2y_{fc}R)(q^6) \Big] \Bigr\}\Lambda(\theta_1)\frac{1}{(1+q^2)^4}
+\end{align}
+\begin{align}
+    =& \Bigl\{ \Bigl[ (c_{d1}c_{sq} -2c_{d1}y_{fc}R)(1) +4c_{d1}x_{fc}R(q)  +(+4c_{d1}y_{fc}R)(q^2) \nonumber\\
+    &+  -4c_{d1}x_{fc}R(q^3)  +(-2c_{d1}c_{sq} )(q^4) + -4c_{d1}x_{fc}R(q^5)  +(-4c_{d1}y_{fc}R)(q^6) \nonumber\\
+    &+ 4c_{d1}x_{fc}R(q^7)  +(c_{d1}c_{sq} +2c_{d1}y_{fc}R)(q^8)  \Bigr] \nonumber\\
+    &+ \Bigl[ (4c_{d2}c_{sq} -8c_{d2}y_{fc})(q^2) +16c_{d2}x_{fc}R(q^3)  +(8c_{d2}c_{sq} )(q^4) \nonumber\\
+    &+ 16c_{d2}x_{fc}R(q^5)  +(4c_{d2}c_{sq} +8c_{d2}y_{fc})(q^6) \Bigr]  \nonumber\\
+    &+ \Bigl[ (2c_{xm}c_{sq} -4c_{xm}y_{fc}R )(1) + 8c_{xm}x_{fc}R(q)  +(8c_{xm}c_{sq}- 8c_{xm}y_{fc}R)(q^2) \nonumber\\
+    &+  24c_{xm}x_{fc}R(q^3)  +(12c_{xm}c_{sq})(q^4) \nonumber\\
+    &+  24c_{xm}x_{fc}R(q^5)  +(8c_{xm}c_{sq}+ 8c_{xm}y_{fc}R)(q^6) \nonumber\\
+    &+ 8c_{xm}x_{fc}R(q^7)  +(2c_{xm}c_{sq}+ 4c_{xm}y_{fc}R)(q^8)  \Big] \nonumber \\
+    &+ \Bigl[ 16y_{c0}R(c_{sq}-2y_{fc}R)(q^2) +64x_{fc}y_{c0}R^2(q^3)  + 64y_{c0}y_{fc}R^2(q^4) \nonumber\\
+    &+ -64x_{fc}y_{c0}R^2(q^5)  + 16y_{c0}R(-c_{sq} - 2y_{fc}R)(q^6) \Big] \Bigr\}\Lambda(\theta_1)\frac{1}{(1+q^2)^4}
+\end{align}
+\begin{align}
+    =& \Bigl\{
+    [(c_{d1}c_{sq} -2c_{d1}y_{fc}R) + (2c_{xm}c_{sq} -4c_{xm}y_{fc}R )](1) \nonumber\\
+    &+ [+4c_{d1}x_{fc}R + 8c_{xm}x_{fc}R](q) \nonumber\\
+    &+ [(4c_{d1}y_{fc}R) + (4c_{d2}c_{sq} -8c_{d2}y_{fc}) + (8c_{xm}c_{sq}- 8c_{xm}y_{fc}R) + 16y_{c0}R(c_{sq}-2y_{fc}R)](q^2) \nonumber\\
+    &+ [-4c_{d1}x_{fc}R + 16c_{d2}x_{fc}R + 24c_{xm}x_{fc}R + 64x_{fc}y_{c0}R^2](q^3) \nonumber\\
+    &+ [(-2c_{d1}c_{sq} ) + (8c_{d2}c_{sq} ) + (12c_{xm}c_{sq}) + 64y_{c0}y_{fc}R^2](q^4) \nonumber\\
+    &+ [-4c_{d1}x_{fc}R + 16c_{d2}x_{fc}R + 24c_{xm}x_{fc}R -64x_{fc}y_{c0}R^2](q^5) \nonumber\\
+    &+ [(-4c_{d1}y_{fc}R) + (4c_{d2}c_{sq} +8c_{d2}y_{fc}) + (8c_{xm}c_{sq}+ 8c_{xm}y_{fc}R) + 16y_{c0}R(-c_{sq} - 2y_{fc}R)](q^6) \nonumber\\
+    &+ [4c_{d1}x_{fc}R + 8c_{xm}x_{fc}R](q^7) \nonumber\\
+    &+ [(c_{d1}c_{sq} +2c_{d1}y_{fc}R) + (2c_{xm}c_{sq}+ 4c_{xm}y_{fc}R)](q^8)
+    \Bigr\}\Lambda(\theta_1)\frac{1}{(1+q^2)^4}
+\end{align}
+\begin{align}
+    =& \Bigl\{
+    c_{q0}(1) + c_{q1}(q) + c_{q2}(q^2) + c_{q3}(q^3) + c_{q4}(q^4) + c_{q5}(q^5) + c_{q6}(q^6) \nonumber\\
+    &+ c_{q7}(q^7) + c_{q8}(q^8)
+    \Bigr\}\Lambda(\theta_1)\frac{1}{(1+q^2)^4}
+\end{align}
+
+\begin{align}
+    \Lambda(\theta_1) = [ \frac{L^4 + \rho^4 -2\rho^2L^2 + \rho^2D^2}{L^4}]
+\end{align}
+
+End of one of the 2 big terms in the theorem!
+
+................................................................
+
+
+\begin{align}
+    \cos\theta_1 &= \frac{(1-q^2)}{(1+q^2)}\\
+    \sin\theta_1 &= \frac{(2q)}{(1+q^2)}\\
+    \cos^2\theta_1 &= \frac{(1-q^2)^2}{(1+q^2)^2} = \frac{1-2q^2+q^4}{1+2q^2+q^4} = \frac{(1-2q^2+q^4)}{(1+q^2)^2}\\
+    \sin^2\theta_1 &= \frac{(2q)^2}{(1+q^2)^2} = \frac{4q^2}{1+2q^2+q^4} = \frac{(4q^2)}{(1+q^2)^2}\\
+    (1+q^2)^2 &= (1+2q^2+q^4)\\
+    (1+q^2)^3 &= (1+2q^2+q^4)(1+q^2) = (1+3q^2+3q^4+q^6)\\
+    (1+q^2)^4 &= (1+3q^2+3q^4+q^6)(1+q^2) = (1+4q^2+6q^4 +4q^6+q^8)
 \end{align}
 
 \begin{align}
@@ -1105,30 +1225,34 @@ Simply inserting the values in this equality is very long and confusing, the ful
 \end{align}
 \begin{align}
     &\cos^2\theta_1(m_x^+)^2 + \sin^2\theta_1(m_y^+)^2\\
-    =& x_{fc}^2\cos^2\theta_1 +2x_{fc}R\cos^2\theta_1\sin\theta_1 + 2R^2\cos^2\theta_1\sin^2\theta_1 + \sin^2\theta_1y_{fc}^2 -2y_{fc}R\cos\theta_1\sin^2\theta_1 \nonumber\\
+    =& x_{fc}^2\cos^2\theta_1 +2x_{fc}R\cos^2\theta_1\sin\theta_1 + 2R^2\cos^2\theta_1\sin^2\theta_1 + y_{fc}^2\sin^2\theta_1 -2y_{fc}R\cos\theta_1\sin^2\theta_1 \nonumber\\
     &+ \frac{\rho^2}{L^2}[(2R^2-2R)\cos^2\theta_1\sin^2\theta_1 -2x_{fc}^2\cos^2\theta_1 -2y_{fc}^2\sin^2\theta_1 + 4y_{fc}R\cos\theta_1\sin^2\theta_1] \nonumber\\
     &+ \frac{\rho^4}{L^4}[x_{fc}^2\cos^2\theta_1 - 2x_{fc}R\cos^2\theta_1\sin\theta_1 + 2R^2\cos^2\theta_1\sin^2\theta_1 + y_{fc}^2\sin^2\theta_1 -2y_{fc}R\cos\theta_1\sin^2\theta_1] \nonumber\\
     &+ \frac{\rho}{L^2}[-2x_{fc}y_{fc}\cos^2\theta_1 +2x_{fc}R\cos^3\theta_1 -2y_{fc}R\cos^2\theta_1\sin\theta_1 +2R^2\cos^3\theta_1\sin\theta_1  \nonumber\\
     &+ 2x_{fc}y_{fc}\sin^2\theta_1 + 2y_{fc}R\sin^3\theta_1  -2x_{fc}R\cos\theta_1\sin^2\theta_1 -2R^2\cos\theta_1\sin^3\theta_1]D \nonumber\\
     &+ \frac{\rho^3}{L^4}[2x_{fc}y_{fc}\cos^2\theta_1 -2x_{fc}R\cos^3\theta_1  -2y_{fc}R\cos^2\theta_1\sin\theta_1 +2R^2\cos^3\theta_1\sin\theta_1  \nonumber\\
     &- 2x_{fc}y_{fc}\sin^2\theta_1 - 2y_{fc}R\sin^3\theta_1 + 2x_{fc}R\cos\theta_1\sin^2\theta_1 + 2R^2\cos\theta_1\sin^3\theta_1]D \nonumber\\
-    &+ \frac{\rho^2}{L^4}[y_{fc}^2\cos^2\theta_1 -2y_{fc}R\cos^3\theta_1 +R^2\cos^4\theta_1 + x_{fc}^2\sin^2\theta_1 + 2x_{fc}R\sin^3\theta_1 + R^2\sin^4\theta_1]D^2
+    &+ \frac{\rho^2}{L^4}[y_{fc}^2\cos^2\theta_1 -2y_{fc}R\cos^3\theta_1 +R^2\cos^4\theta_1 + x_{fc}^2\sin^2\theta_1 + 2x_{fc}R\sin^3\theta_1 + R^2\sin^4\theta_1]D^2\\
+    =& THERE,HAS,TO,BE,REPEATED,TERMS;SEE,\Lambda\\
+    =& [x_{fc}^2\cos^2\theta_1 + y_{fc}^2\sin^2\theta_1  -2y_{fc}R\cos\theta_1\sin^2\theta_1][1 -2\frac{\rho^2}{L^2} + \frac{\rho^4}{L^4}] + 
 \end{align}
 
 \begin{align}
-    &2\cos\theta_1\sin\theta_1(m_x^+m_y^+) \\
+    &2\cos\theta_1\sin\theta_1(m_x^+ m_y^+) \\
     =& 2x_{fc}y_{fc}\cos\theta_1\sin\theta_1 -2x_{fc}R\cos^2\theta_1\sin\theta_1 + 2y_{fc}R\cos\theta_1\sin^2\theta_1 -2R^2\cos^2\theta_1\sin^2\theta_1 \nonumber\\
     &+ \frac{\rho^2}{L^2}(-4x_{fc}y_{fc}\cos\theta_1\sin\theta_1 +4x_{fc}R\cos^2\theta_1\sin\theta_1) \nonumber\\
     &+ \frac{\rho^4}{L^4}(2x_{fc}y_{fc}\cos\theta_1\sin\theta_1 -2x_{fc}R\cos^2\theta_1\sin\theta_1 -2y_{fc}R\cos\theta_1\sin^2\theta_1 +2R^2\cos^2\theta_1\sin^2\theta_1) \nonumber\\
     &+ \frac{\rho}{L^2}[(-2y_{fc}^2 + 2x_{fc}^2)\cos\theta_1\sin\theta_1 + 4y_{fc}R\cos^2\theta_1\sin\theta_1 -2R^2\cos^3\theta_1\sin\theta_1 \nonumber\\
     &+ 4x_{fc}R\cos\theta_1\sin^2\theta_1 + 2R^2\cos\theta_1\sin^3\theta_1]D \nonumber\\
     &+ \frac{\rho^3}{L^4}[ (2y_{fc}^2 +2R^2 -2x_{fc}^2)\cos\theta_1\sin\theta_1 -4y_{fc}R\cos^2\theta_1\sin\theta_1 ]D \nonumber\\
-    &+ \frac{\rho}{L^2}(-2x_{fc}y_{fc}\cos\theta_1\sin\theta_1 + 2x_{fc}R\cos^2\theta_1\sin\theta_1 -2y_{fc}R\cos\theta_1\sin^2\theta_1 +  2R^2\cos^2\theta_1\sin^2\theta_1 )D^2
+    &+ \frac{\rho}{L^2}(-2x_{fc}y_{fc}\cos\theta_1\sin\theta_1 + 2x_{fc}R\cos^2\theta_1\sin\theta_1 -2y_{fc}R\cos\theta_1\sin^2\theta_1 +  2R^2\cos^2\theta_1\sin^2\theta_1 )D^2\\
+    =& THERE,HAS,TO,BE,REPEATED,TERMS;SEE,\Lambda\\
+    =& [2x_{fc}y_{fc}\cos\theta_1\sin\theta_1 -2x_{fc}R\cos^2\theta_1\sin\theta_1][ 1 -2\frac{\rho^2}{L^2} + \frac{\rho^4}{L^4} -  \frac{\rho}{L^2}D^2  ] + 
 \end{align}
 
 \begin{align}
     &\cos^2\theta_1(m_x^+)^2  + 2\cos\theta_1\sin\theta_1(m_x^+m_y^+)  +\sin^2\theta_1(m_y^+)^2 \\
-    =& x_{fc}^2\cos^2\theta_1  + \sin^2\theta_1y_{fc}^2 + 2x_{fc}y_{fc}\cos\theta_1\sin\theta_1   \nonumber\\
+    =& x_{fc}^2\cos^2\theta_1  + y_{fc}^2\sin^2\theta_1 + 2x_{fc}y_{fc}\cos\theta_1\sin\theta_1   \nonumber\\
     &+ \frac{\rho^2}{L^2}[(2R^2-2R)\cos^2\theta_1\sin^2\theta_1 -2x_{fc}^2\cos^2\theta_1 -2y_{fc}^2\sin^2\theta_1 + 4y_{fc}R\cos\theta_1\sin^2\theta_1 \nonumber\\
     &+ -4x_{fc}y_{fc}\cos\theta_1\sin\theta_1 +4x_{fc}R\cos^2\theta_1\sin\theta_1] \nonumber\\
     &+ \frac{\rho^4}{L^4}[x_{fc}^2\cos^2\theta_1 - 4x_{fc}R\cos^2\theta_1\sin\theta_1 + 4R^2\cos^2\theta_1\sin^2\theta_1 + y_{fc}^2\sin^2\theta_1 -4y_{fc}R\cos\theta_1\sin^2\theta_1 \nonumber\\
@@ -1140,6 +1264,41 @@ Simply inserting the values in this equality is very long and confusing, the ful
     &+  (2y_{fc}^2 +2R^2 -2x_{fc}^2)\cos\theta_1\sin\theta_1  ]D \nonumber\\
     &+ \frac{\rho^2}{L^4}[y_{fc}^2\cos^2\theta_1 -2y_{fc}R\cos^3\theta_1 +R^2\cos^4\theta_1 + x_{fc}^2\sin^2\theta_1 + 2x_{fc}R\sin^3\theta_1 + R^2\sin^4\theta_1]D^2 \nonumber\\
     &+ \frac{\rho}{L^2}(-2x_{fc}y_{fc}\cos\theta_1\sin\theta_1 + 2x_{fc}R\cos^2\theta_1\sin\theta_1 -2y_{fc}R\cos\theta_1\sin^2\theta_1 +  2R^2\cos^2\theta_1\sin^2\theta_1 )D^2
+\end{align}
+\begin{align}
+    =& [x_{fc}^2\cos^2\theta_1  + y_{fc}^2\sin^2\theta_1 + 2x_{fc}y_{fc}\cos\theta_1\sin\theta_1][ 1 -2\frac{\rho^2}{L^2} + \frac{\rho^4}{L^4} ] \nonumber\\
+    &+  [ 4y_{fc}R\cos\theta_1\sin^2\theta_1 + 4x_{fc}R\cos^2\theta_1\sin\theta_1 ][ \frac{\rho^2}{L^2} - \frac{\rho^4}{L^4} ] \nonumber\\
+    &+ \frac{\rho^2}{L^2}[(2R^2-2R)\cos^2\theta_1\sin^2\theta_1] + \frac{\rho^4}{L^4}[ 4R^2\cos^2\theta_1\sin^2\theta_1  ] \nonumber\\
+    &+ [ -2x_{fc}y_{fc}\cos^2\theta_1 +2x_{fc}R\cos^3\theta_1 + 2x_{fc}y_{fc}\sin^2\theta_1 + 2y_{fc}R\sin^3\theta_1 ][ \frac{\rho}{L^2} - \frac{\rho^3}{L^4}  ]D \nonumber\\
+    &+ \frac{\rho}{L^2}[2y_{fc}R\cos^2\theta_1\sin\theta_1 + (-2y_{fc}^2 + 2x_{fc}^2)\cos\theta_1\sin\theta_1 + 2x_{fc}R\cos\theta_1\sin^2\theta_1 ]D \nonumber\\
+    &+ \frac{\rho^3}{L^4}[ -6y_{fc}R\cos^2\theta_1\sin\theta_1 +2R^2\cos^3\theta_1\sin\theta_1 + 2x_{fc}R\cos\theta_1\sin^2\theta_1 \nonumber\\
+    &+ 2R^2\cos\theta_1\sin^3\theta_1 +  (2y_{fc}^2 +2R^2 -2x_{fc}^2)\cos\theta_1\sin\theta_1  ]D \nonumber\\
+    &+ \frac{\rho^2}{L^4}[y_{fc}^2\cos^2\theta_1 -2y_{fc}R\cos^3\theta_1 +R^2\cos^4\theta_1 + x_{fc}^2\sin^2\theta_1 + 2x_{fc}R\sin^3\theta_1 + R^2\sin^4\theta_1]D^2 \nonumber\\
+    &+ \frac{\rho}{L^2}(-2x_{fc}y_{fc}\cos\theta_1\sin\theta_1 + 2x_{fc}R\cos^2\theta_1\sin\theta_1 -2y_{fc}R\cos\theta_1\sin^2\theta_1 +  2R^2\cos^2\theta_1\sin^2\theta_1 )D^2
+\end{align}
+
+\begin{align}
+    &\Bigl[ \cos^2\theta_1(m_x^+)^2  + 2\cos\theta_1\sin\theta_1(m_x^+m_y^+)  +\sin^2\theta_1(m_y^+)^2 \Bigr] m_d^-\\
+    =&  \Bigl[ - \Bigr]  \Bigl[ c_{c0} +c_{-1}\sin\theta_1 + c_{-2}\cos\theta_1 \Bigr]
+\end{align}
+\begin{align}
+    &\Bigl[ \cos^2\theta_1(m_x^+)^2  + 2\cos\theta_1\sin\theta_1(m_x^+m_y^+)  +\sin^2\theta_1(m_y^+)^2 \Bigr] m_d^-\\
+    =& \Bigl[ [x_{fc}^2\cos^2\theta_1  + y_{fc}^2\sin^2\theta_1 + 2x_{fc}y_{fc}\cos\theta_1\sin\theta_1][ \frac{L^4-2\rho^2L^2 + \rho^4}{L^4} ] \nonumber\\
+    &+  [ 4y_{fc}R\cos\theta_1\sin^2\theta_1 + 4x_{fc}R\cos^2\theta_1\sin\theta_1 ][ \frac{\rho^2L^2 -\rho^4}{L^4} ] \nonumber\\
+    &+ \frac{\rho^2}{L^2}[(2R^2-2R)\cos^2\theta_1\sin^2\theta_1] + \frac{\rho^4}{L^4}[ 4R^2\cos^2\theta_1\sin^2\theta_1  ] \nonumber\\
+    &+ [ -2x_{fc}y_{fc}\cos^2\theta_1 +2x_{fc}R\cos^3\theta_1 + 2x_{fc}y_{fc}\sin^2\theta_1 + 2y_{fc}R\sin^3\theta_1 ][ \frac{\rho L^2 -\rho^3}{L^4}  ]D \nonumber\\
+    &+ \frac{\rho}{L^2}[2y_{fc}R\cos^2\theta_1\sin\theta_1 + (-2y_{fc}^2 + 2x_{fc}^2)\cos\theta_1\sin\theta_1 + 2x_{fc}R\cos\theta_1\sin^2\theta_1 ]D \nonumber\\
+    &+ \frac{\rho^3}{L^4}[ -6y_{fc}R\cos^2\theta_1\sin\theta_1 +2R^2\cos^3\theta_1\sin\theta_1 + 2x_{fc}R\cos\theta_1\sin^2\theta_1 \nonumber\\
+    &+ 2R^2\cos\theta_1\sin^3\theta_1 +  (2y_{fc}^2 +2R^2 -2x_{fc}^2)\cos\theta_1\sin\theta_1  ]D \nonumber\\
+    &+ \frac{\rho^2}{L^4}[y_{fc}^2\cos^2\theta_1 -2y_{fc}R\cos^3\theta_1 +R^2\cos^4\theta_1 + x_{fc}^2\sin^2\theta_1 + 2x_{fc}R\sin^3\theta_1 + R^2\sin^4\theta_1]D^2 \nonumber\\
+    &+ \frac{\rho}{L^2}(-2x_{fc}y_{fc}\cos\theta_1\sin\theta_1 + 2x_{fc}R\cos^2\theta_1\sin\theta_1 -2y_{fc}R\cos\theta_1\sin^2\theta_1 \nonumber\\
+    &+  2R^2\cos^2\theta_1\sin^2\theta_1 )D^2 \Bigr]  \Bigl[ c_{c0} +c_{-1}\sin\theta_1 + c_{-2}\cos\theta_1 \Bigr]
+\end{align}
+
+Putting it all together:
+\begin{align}
+    &\Bigl[\cos^2\theta_1(m_x^-)^2 + 2\cos\theta_1\sin\theta_1 (m_x^-m_y^-)  + \sin^2\theta_1(m_y^-)^2 \Bigr] m_d^+ \nonumber\\
+    &- \Bigl[ \cos^2\theta_1(m_x^+)^2  + 2\cos\theta_1\sin\theta_1(m_x^+m_y^+)  +\sin^2\theta_1(m_y^+)^2 \Bigr] m_d^- = 0
 \end{align}
 
 
@@ -1184,6 +1343,7 @@ Reminder:
 \begin{align}
     m_d^- =& c_{c0} - 2x_0R\sin\theta_1 - 2\rho R\sin\theta_0\sin\theta_1 + 2y_{c0}R\cos\theta_1 -2\rho R\cos\theta_0\cos\theta_1\\
     =& c_{c0} +(- 2x_0R - 2\rho R\sin\theta_0)\sin\theta_1 + (2y_{c0}R -2\rho R\cos\theta_0)\cos\theta_1\\
+    =& c_{c0} +c_{-1}\sin\theta_1 + c_{-2}\cos\theta_1\\
     m^-_x =& x_{c0} -R\sin\theta_1 +\rho\sin\theta_0\\
     m^-_y =& y_{c0} + R\cos\theta_1 - \rho\cos\theta_0\\
     m_d^+ =& c_{sq} +2x_{fc}R\sin\theta_1  -2y_{fc}R\cos\theta_1 \nonumber\\
