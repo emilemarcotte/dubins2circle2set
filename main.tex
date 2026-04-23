@@ -1188,6 +1188,7 @@ With $c_{d1}=(x_{c0}+\rho\sin\theta_0)^2$ and $c_{d2}=(y_{c0}- \rho\cos\theta_0)
     &+ -64x_{fc}y_{c0}R^2(q^5)  + 16y_{c0}R(-c_{sq} - 2y_{fc}R)(q^6) \Big] \Bigr\}\Lambda(\theta_1)\frac{1}{(1+q^2)^4}
 \end{align}
 \begin{align}
+    &\Bigl[\cos^2\theta_1(m_x^-)^2 + 2\cos\theta_1\sin\theta_1 (m_x^-m_y^-)  + \sin^2\theta_1(m_y^-)^2 \Bigr] m_d^+ \\
     =& \Bigl\{
     [(c_{d1}c_{sq} -2c_{d1}y_{fc}R) + (2c_{xm}c_{sq} -4c_{xm}y_{fc}R )](1) \nonumber\\
     &+ [+4c_{d1}x_{fc}R + 8c_{xm}x_{fc}R](q) \nonumber\\
@@ -1198,9 +1199,7 @@ With $c_{d1}=(x_{c0}+\rho\sin\theta_0)^2$ and $c_{d2}=(y_{c0}- \rho\cos\theta_0)
     &+ [(-4c_{d1}y_{fc}R) + (4c_{d2}c_{sq} +8c_{d2}y_{fc}) + (8c_{xm}c_{sq}+ 8c_{xm}y_{fc}R) + 16y_{c0}R(-c_{sq} - 2y_{fc}R)](q^6) \nonumber\\
     &+ [4c_{d1}x_{fc}R + 8c_{xm}x_{fc}R](q^7) \nonumber\\
     &+ [(c_{d1}c_{sq} +2c_{d1}y_{fc}R) + (2c_{xm}c_{sq}+ 4c_{xm}y_{fc}R)](q^8)
-    \Bigr\}\Lambda(\theta_1)\frac{1}{(1+q^2)^4}
-\end{align}
-\begin{align}
+    \Bigr\}\Lambda(\theta_1)\frac{1}{(1+q^2)^4} \\
     =& \Bigl\{
     c_{q0}(1) + c_{q1}(q) + c_{q2}(q^2) + c_{q3}(q^3) + c_{q4}(q^4) + c_{q5}(q^5) + c_{q6}(q^6) \nonumber\\
     &+ c_{q7}(q^7) + c_{q8}(q^8)
@@ -1208,7 +1207,47 @@ With $c_{d1}=(x_{c0}+\rho\sin\theta_0)^2$ and $c_{d2}=(y_{c0}- \rho\cos\theta_0)
 \end{align}
 
 \begin{align}
-    \Lambda(\theta_1) = [ \frac{L^4 + \rho^4 -2\rho^2L^2 + \rho^2D^2}{L^4}]
+    \Lambda(\theta_1) =& [ \frac{L^4 + \rho^4 -2\rho^2L^2 + \rho^2D^2}{L^4}]\\
+    =& [ L^4 + \rho^4 -2\rho^2L^2 + \rho^2D^2]\frac{1}{L^4}\\
+    =& \Bigl\{ \Bigl[ c_{L40}(1) +  c_{L41}(q) + c_{L42}(q^2) + c_{L43}(q^3) + c_{L44}(q^4) \Bigr]\frac{1}{(1+q^2)^2} \nonumber\\
+    &+ \rho^4 -2\rho^2[ c_{L20}(1) + c_{L21}(q)  + c_{L22}(q^2)]\frac{1}{1+q^2} \nonumber\\
+    &+ \rho^2\Bigl[ c_{D20}(1) + c_{D21}(q) + c_{D22}(q^2)\Bigr]\frac{1}{1+q^2}  \Bigr\}\frac{1}{L^4}\\
+    =& \Bigl\{ \Bigl[ c_{L40}(1) +  c_{L41}(q) + c_{L42}(q^2) + c_{L43}(q^3) + c_{L44}(q^4) \Bigr] \nonumber\\
+    &+ \rho^4(1+2q^2 + q^4) -2\rho^2[ c_{L20}(1) + c_{L21}(q)  + c_{L22}(q^2)](1+q^2) \nonumber\\
+    &+ \rho^2\Bigl[ c_{D20}(1) + c_{D21}(q) + c_{D22}(q^2)\Bigr](1+q^2)  \Bigr\}\frac{1}{(1+q^2)^2}\frac{1}{L^4}\\
+    =& \Bigl\{ \Bigl[ c_{L40}(1) +  c_{L41}(q) + c_{L42}(q^2) + c_{L43}(q^3) + c_{L44}(q^4) \Bigr] \nonumber\\
+    &+ [\rho^4(1)+ \rho^42(q^2) + \rho^4(q^4)] \nonumber\\
+    &+ [ -2\rho^2c_{L20}(1) -2\rho^2c_{L21}(q)  -2\rho^2c_{L22}(q^2) \nonumber\\
+    &+ -2\rho^2c_{L20}(q^2) -2\rho^2c_{L21}(q^3)  -2\rho^2c_{L22}(q^4)] \nonumber\\
+    &+ \Bigl[ \rho^2c_{D20}(1) + \rho^2c_{D21}(q) + \rho^2c_{D22}(q^2) \nonumber\\
+    &+ \rho^2c_{D20}(q^2) + \rho^2c_{D21}(q^3) + \rho^2c_{D22}(q^4) \Bigr]  \Bigr\}\frac{1}{(1+q^2)^2}\frac{1}{L^4}\\
+\end{align}
+
+\begin{align}
+    \Lambda(\theta_1)
+    =& \Bigl\{ ( c_{L40} + \rho^4 -2\rho^2c_{L20} + \rho^2c_{D20})(1)\nonumber\\
+    &+ (c_{L41} -2\rho^2c_{L21} + \rho^2c_{D21})(q)\nonumber\\
+    &+(c_{L42} + 2\rho^4 -2\rho^2c_{L22} -2\rho^2c_{L20} + \rho^2c_{D22} + \rho^2c_{D20})(q^2)\nonumber\\
+    &+(c_{L43} -2\rho^2c_{L21} + \rho^2c_{D21} )(q^3)\nonumber\\
+    &+( c_{L44} + \rho^4 -2\rho^2c_{L22} +  \rho^2c_{D22} )(q^4)
+    \Bigr\}\frac{1}{(1+q^2)^2}\frac{1}{L^4}\\
+    =& \Bigl\{ c_{\lambda0}(1) + c_{\lambda1}(q) +c_{\lambda2}(q^2) +c_{\lambda3}(q^3) +c_{\lambda4}(q^4)
+    \Bigr\}\frac{1}{(1+q^2)^2}\frac{1}{L^4}\\
+\end{align}
+
+\begin{align}
+    L^2 =& [ c_{L20}(1) + c_{L21}(q)  + c_{L22}(q^2)]\frac{1}{1+q^2}\\
+    L^4 =&  \Bigl[ c_{L40}(1) +  c_{L41}(q) + c_{L42}(q^2) + c_{L43}(q^3) + c_{L44}(q^4) \Bigr]\frac{1}{(1+q^2)^2}\\
+    D^2 =& \Bigl[ c_{D20}(1) + c_{D21}(q) + c_{D22}(q^2)\Bigr]\frac{1}{1+q^2}
+\end{align}
+
+\begin{align}
+    &\Bigl[\cos^2\theta_1(m_x^-)^2 + 2\cos\theta_1\sin\theta_1 (m_x^-m_y^-)  + \sin^2\theta_1(m_y^-)^2 \Bigr] m_d^+ \\
+    =& \Bigl\{
+    c_{q0}(1) + c_{q1}(q) + c_{q2}(q^2) + c_{q3}(q^3) + c_{q4}(q^4) + c_{q5}(q^5) + c_{q6}(q^6) \nonumber\\
+    &+ c_{q7}(q^7) + c_{q8}(q^8)
+    \Bigr\}\Bigl\{ c_{\lambda0}(1) + c_{\lambda1}(q) +c_{\lambda2}(q^2) +c_{\lambda3}(q^3) +c_{\lambda4}(q^4)
+    \Bigr\}\frac{1}{(1+q^2)^6}\frac{1}{L^4}
 \end{align}
 
 End of one of the 2 big terms in the theorem!
@@ -1331,7 +1370,7 @@ End of one of the 2 big terms in the theorem!
     &+ 4\rho^4R^2\frac{1}{(1+q^2)^4}[ 4(q^2)-8(q^4)+4(q^6) ] \nonumber\\
     &+ 2\rho[  L^2 - \rho^2  ][ -x_{fc}y_{fc}\frac{(1-2q^2+q^4)}{(1+q^2)^2} +x_{fc}R\frac{(1-3q^2+3q^4-q^6)}{(1+q^2)^3} \nonumber\\
     &+ x_{fc}y_{fc}\frac{(4q^2)}{(1+q^2)^2} + y_{fc}R\frac{(8q^3)}{(1+q^2)^3} ]D \nonumber\\
-    &+ 2\rho L^2\frac{(2q-2q^3)}{(1+q^2)^2}[y_{fc}R\frac{(1-q^2)}{(1+q^2)} + (-y_{fc}^2 + x_{fc}^2) + x_{fc}R\frac{(2q)}{(1+q^2)} ]D \nonumber\\
+    &+ 2\rho L^2\frac{(2q-2q^3)}{(1+q^2)^3}[y_{fc}R(1-q^2) + (-y_{fc}^2 + x_{fc}^2)(1+q^2) + x_{fc}R(2q) ]D \nonumber\\
     &+ 2\rho^3\frac{(2q-2q^3)}{(1+q^2)^2}[ -3y_{fc}R\frac{(1-q^2)}{(1+q^2)} +R^2\frac{(1-2q^2+q^4)}{(1+q^2)^2} + x_{fc}R\frac{(2q)}{(1+q^2)} \nonumber\\
     &+ R^2\frac{(4q^2)}{(1+q^2)^2} +  (y_{fc}^2 +R^2 -x_{fc}^2)  ]D \nonumber\\
     &+ \rho^2[y_{fc}^2\frac{(1-2q^2+q^4)}{(1+q^2)^2} -2y_{fc}R\frac{(1-3q^2+3q^4-q^6)}{(1+q^2)^3} +R^2\frac{(1-4q^2+ 6q^4-4q^6+q^8)}{(1+q^2)^4} \nonumber\\
