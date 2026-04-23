@@ -633,6 +633,7 @@ $L$ is the distance between the final position and the center of the intermediat
     =& [ 4x_{fc}R(q)  - 2y_{fc}R(1-q^2) + c_{sq}(1+q^2)]\frac{1}{1+q^2}\\
     =& [ (c_{sq} - 2y_{fc}R) + 4x_{fc}R(q)  + (2y_{fc}R+ c_{sq})(q^2)]\frac{1}{1+q^2}
 \end{align}
+
 \begin{align}
     L^4 =& [2x_{fc}R\sin\theta_1  - 2y_{fc}R\cos\theta_1 + c_{sq}]^2\\
     =& 2x_{fc}R\sin\theta_1[2x_{fc}R\sin\theta_1  - 2y_{fc}R\cos\theta_1 + c_{sq}] \nonumber\\
@@ -655,6 +656,7 @@ $L$ is the distance between the final position and the center of the intermediat
     &+ (16x_{fc}^2R^2 - 8y_{fc}^2R^2 + 2c_{sq}^2)(q^2) + (16x_{fc}y_{fc}R^2 + 8c_{sq}x_{fc}R)(q^3) \nonumber\\
     &+ (4y_{fc}^2R^2 + 4c_{sq}y_{fc}R + c_{sq}^2 )(q^4) \Bigr]\frac{1}{(1+q^2)^2}
 \end{align}
+
 $D$ is the distance between the tangent point and the final position.
 \begin{align}
     D =& \sqrt{L^2 - \rho^2}\\
@@ -663,6 +665,17 @@ $D$ is the distance between the tangent point and the final position.
     =& \sqrt{\frac{1}{1+q^2}}\biggl( (x_{fc}^2 + y_{fc}^2 + R^2 - 2y_{fc}R) + 4x_{fc}R(q) \nonumber\\&+ (x_{fc}^2 + y_{fc}^2 + R^2 + 2y_{fc}R)(q^2) - \rho^2(1+q^2)\biggr)^{1/2}\\
     =& \sqrt{\frac{1}{1+q^2}}\biggl( (x_{fc}^2 + y_{fc}^2 + R^2 - 2y_{fc}R - \rho^2) + 4x_{fc}R(q) \nonumber\\&+ (x_{fc}^2 + y_{fc}^2 + R^2 + 2y_{fc}R- \rho^2)(q^2)\biggr)^{1/2}
 \end{align}
+
+\begin{align}
+    L^2 =& [ (c_{sq} - 2y_{fc}R) + 4x_{fc}R(q)  + (2y_{fc}R+ c_{sq})(q^2)]\frac{1}{1+q^2}\\
+    L^4 =& \Bigl[ (4y_{fc}^2R^2 - 4c_{sq}y_{fc}R + c_{sq}^2)(1) +  (- 16x_{fc}y_{fc}R^2 +8c_{sq}x_{fc}R )(q) \nonumber\\
+    &+ (16x_{fc}^2R^2 - 8y_{fc}^2R^2 + 2c_{sq}^2)(q^2) + (16x_{fc}y_{fc}R^2 + 8c_{sq}x_{fc}R)(q^3) \nonumber\\
+    &+ (4y_{fc}^2R^2 + 4c_{sq}y_{fc}R + c_{sq}^2 )(q^4) \Bigr]\frac{1}{(1+q^2)^2}\\
+    D^2 =& \Bigl[ (x_{fc}^2 + y_{fc}^2 + R^2 - 2y_{fc}R - \rho^2) + 4x_{fc}R(q) \nonumber\\&+ (x_{fc}^2 + y_{fc}^2 + R^2 + 2y_{fc}R- \rho^2)(q^2)\Bigr]\frac{1}{1+q^2}
+\end{align}
+
+.........................................
+
 $\delta$ is the angle of the straight line connecting the middle of $c_1$ with the final position, relative to the horizontal. $\theta$ is the angle between $L$ and the line connecting the middle of $c_1$ to the tangent point.
 \begin{align}
     \theta_f &= \delta + \theta - \pi/2\\
@@ -1276,6 +1289,60 @@ End of one of the 2 big terms in the theorem!
     &+ \frac{\rho^2}{L^4}[y_{fc}^2\cos^2\theta_1 -2y_{fc}R\cos^3\theta_1 +R^2\cos^4\theta_1 + x_{fc}^2\sin^2\theta_1 + 2x_{fc}R\sin^3\theta_1 + R^2\sin^4\theta_1]D^2 \nonumber\\
     &+ \frac{\rho}{L^2}(-2x_{fc}y_{fc}\cos\theta_1\sin\theta_1 + 2x_{fc}R\cos^2\theta_1\sin\theta_1 -2y_{fc}R\cos\theta_1\sin^2\theta_1 +  2R^2\cos^2\theta_1\sin^2\theta_1 )D^2
 \end{align}
+\begin{align}
+    =& \frac{1}{L^4} \Bigl\{ [ L^4 -2\rho^2L^2 + \rho^4 ][x_{fc}^2\cos^2\theta_1  + y_{fc}^2\sin^2\theta_1 + 2x_{fc}y_{fc}\cos\theta_1\sin\theta_1] \nonumber\\
+    &+  4\rho^2R\cos\theta_1\sin\theta_1[ L^2 - \rho^2 ][ y_{fc}\sin\theta_1 + x_{fc}\cos\theta_1 ] \nonumber\\
+    &+ \rho^2L^2[(2R^2-2R)\cos^2\theta_1\sin^2\theta_1] + [ 4\rho^4R^2\cos^2\theta_1\sin^2\theta_1  ] \nonumber\\
+    &+ 2\rho[  L^2 - \rho^2  ][ -x_{fc}y_{fc}\cos^2\theta_1 +x_{fc}R\cos^3\theta_1 + x_{fc}y_{fc}\sin^2\theta_1 + y_{fc}R\sin^3\theta_1 ]D \nonumber\\
+    &+ 2\rho L^2\cos\theta_1\sin\theta_1[y_{fc}R\cos\theta_1 + (-y_{fc}^2 + x_{fc}^2) + x_{fc}R\sin\theta_1 ]D \nonumber\\
+    &+ 2\rho^3\cos\theta_1\sin\theta_1[ -3y_{fc}R\cos\theta_1 +R^2\cos^2\theta_1 + x_{fc}R\sin\theta_1 \nonumber\\
+    &+ R^2\sin^2\theta_1 +  (y_{fc}^2 +R^2 -x_{fc}^2)  ]D \nonumber\\
+    &+ \rho^2[y_{fc}^2\cos^2\theta_1 -2y_{fc}R\cos^3\theta_1 +R^2\cos^4\theta_1 + x_{fc}^2\sin^2\theta_1 + 2x_{fc}R\sin^3\theta_1 + R^2\sin^4\theta_1]D^2 \nonumber\\
+    &+ 2\rho L^2\cos\theta_1\sin\theta_1(-x_{fc}y_{fc} + x_{fc}R\cos\theta_1 -y_{fc}R\sin\theta_1 +  R^2\cos\theta_1\sin\theta_1 )D^2 \Bigr\}
+\end{align}
+
+...............................
+
+As a function of $q$:
+\begin{align}
+    =& \frac{1}{L^4} \Bigl\{ [ L^4 -2\rho^2L^2 + \rho^4 ][x_{fc}^2\frac{(1-2q^2+q^4)}{(1+q^2)^2}  + y_{fc}^2\frac{(4q^2)}{(1+q^2)^2} + 2x_{fc}y_{fc}\frac{(1-q^2)}{(1+q^2)}\frac{(2q)}{(1+q^2)}] \nonumber\\
+    &+  4\rho^2R\frac{(1-q^2)}{(1+q^2)}\frac{(2q)}{(1+q^2)}[ L^2 - \rho^2 ][ y_{fc}\frac{(2q)}{(1+q^2)} + x_{fc}\frac{(1-q^2)}{(1+q^2)} ] \nonumber\\
+    &+ \rho^2L^2[(2R^2-2R)\frac{(1-2q^2+q^4)}{(1+q^2)^2}\frac{(4q^2)}{(1+q^2)^2}] + [ 4\rho^4R^2\frac{(1-2q^2+q^4)}{(1+q^2)^2}\frac{(4q^2)}{(1+q^2)^2}  ] \nonumber\\
+    &+ 2\rho[  L^2 - \rho^2  ][ -x_{fc}y_{fc}\frac{(1-2q^2+q^4)}{(1+q^2)^2} +x_{fc}R\frac{(1-3q^2+3q^4-q^6)}{(1+q^2)^3} + x_{fc}y_{fc}\frac{(4q^2)}{(1+q^2)^2} \nonumber\\
+    &+ y_{fc}R\frac{(8q^3)}{(1+q^2)^3} ]D \nonumber\\
+    &+ 2\rho L^2\frac{(1-q^2)}{(1+q^2)}\frac{(2q)}{(1+q^2)}[y_{fc}R\frac{(1-q^2)}{(1+q^2)} + (-y_{fc}^2 + x_{fc}^2) + x_{fc}R\frac{(2q)}{(1+q^2)} ]D \nonumber\\
+    &+ 2\rho^3\frac{(1-q^2)}{(1+q^2)}\frac{(2q)}{(1+q^2)}[ -3y_{fc}R\frac{(1-q^2)}{(1+q^2)} +R^2\frac{(1-2q^2+q^4)}{(1+q^2)^2} + x_{fc}R\frac{(2q)}{(1+q^2)} \nonumber\\
+    &+ R^2\frac{(4q^2)}{(1+q^2)^2} +  (y_{fc}^2 +R^2 -x_{fc}^2)  ]D \nonumber\\
+    &+ \rho^2[y_{fc}^2\frac{(1-2q^2+q^4)}{(1+q^2)^2} -2y_{fc}R\frac{(1-3q^2+3q^4-q^6)}{(1+q^2)^3} +R^2\frac{(1-4q^2+ 6q^4-4q^6+q^8)}{(1+q^2)^4} + x_{fc}^2\frac{(4q^2)}{(1+q^2)^2} \nonumber\\
+    &+ 2x_{fc}R\frac{(8q^3)}{(1+q^2)^3} + R^2\frac{(16q^4)}{(1+q^2)^4}]D^2 \nonumber\\
+    &+ 2\rho L^2\frac{(1-q^2)}{(1+q^2)}\frac{(2q)}{(1+q^2)}(-x_{fc}y_{fc} + x_{fc}R\frac{(1-q^2)}{(1+q^2)} -y_{fc}R\frac{(2q)}{(1+q^2)} +  R^2\frac{(1-q^2)}{(1+q^2)}\frac{(2q)}{(1+q^2)} )D^2 \Bigr\}
+\end{align}
+
+...................................
+
+\begin{align}
+    \cos\theta_1 &= \frac{(1-q^2)}{(1+q^2)}\\
+    \sin\theta_1 &= \frac{(2q)}{(1+q^2)}\\
+    \cos^2\theta_1 &= \frac{(1-q^2)^2}{(1+q^2)^2} = \frac{1-2q^2+q^4}{1+2q^2+q^4} = \frac{(1-2q^2+q^4)}{(1+q^2)^2}\\
+    \sin^2\theta_1 &= \frac{(2q)^2}{(1+q^2)^2} = \frac{4q^2}{1+2q^2+q^4} = \frac{(4q^2)}{(1+q^2)^2}\\
+    \cos^3\theta_1 &= \frac{(1-2q^2+q^4)}{(1+2q^2+q^4)}\frac{(1-q^2)}{(1+q^2)} = \frac{(1-3q^2+3q^4-q^6)}{(1+q^2)^3}\\
+    \sin^3\theta_1 &= \frac{(4q^2)}{(1+2q^2+q^4)}\frac{(2q)}{(1+q^2)} = \frac{(8q^3)}{(1+q^2)^3}\\
+    \cos^4\theta_1 &= \frac{(1-3q^2+3q^4-q^6)}{(1+q^2)^3}\frac{(1-q^2)}{(1+q^2)} =\frac{(1-4q^2+ 6q^4-4q^6+q^8)}{(1+q^2)^4}\\
+    \sin^4\theta_1 &= \frac{(8q^3)}{(1+q^2)^3}\frac{(2q)}{(1+q^2)} = \frac{(16q^4)}{(1+q^2)^4}\\
+    (1+q^2)^2 &= (1+2q^2+q^4)\\
+    (1+q^2)^3 &= (1+2q^2+q^4)(1+q^2) = (1+3q^2+3q^4+q^6)\\
+    (1+q^2)^4 &= (1+3q^2+3q^4+q^6)(1+q^2) = (1+4q^2+6q^4 +4q^6+q^8)
+\end{align}
+
+\begin{align}
+    L^2 =& [ (c_{sq} - 2y_{fc}R) + 4x_{fc}R(q)  + (2y_{fc}R+ c_{sq})(q^2)]\frac{1}{1+q^2}\\
+    L^4 =& \Bigl[ (4y_{fc}^2R^2 - 4c_{sq}y_{fc}R + c_{sq}^2)(1) +  (- 16x_{fc}y_{fc}R^2 +8c_{sq}x_{fc}R )(q) \nonumber\\
+    &+ (16x_{fc}^2R^2 - 8y_{fc}^2R^2 + 2c_{sq}^2)(q^2) + (16x_{fc}y_{fc}R^2 + 8c_{sq}x_{fc}R)(q^3) \nonumber\\
+    &+ (4y_{fc}^2R^2 + 4c_{sq}y_{fc}R + c_{sq}^2 )(q^4) \Bigr]\frac{1}{(1+q^2)^2}\\
+    D^2 =& \Bigl[ (x_{fc}^2 + y_{fc}^2 + R^2 - 2y_{fc}R - \rho^2) + 4x_{fc}R(q) \nonumber\\&+ (x_{fc}^2 + y_{fc}^2 + R^2 + 2y_{fc}R- \rho^2)(q^2)\Bigr]\frac{1}{1+q^2}
+\end{align}
+
+...................................
 
 \begin{align}
     &\Bigl[ \cos^2\theta_1(m_x^+)^2  + 2\cos\theta_1\sin\theta_1(m_x^+m_y^+)  +\sin^2\theta_1(m_y^+)^2 \Bigr] m_d^-\\
@@ -1294,6 +1361,9 @@ End of one of the 2 big terms in the theorem!
     &+ \frac{\rho}{L^2}(-2x_{fc}y_{fc}\cos\theta_1\sin\theta_1 + 2x_{fc}R\cos^2\theta_1\sin\theta_1 -2y_{fc}R\cos\theta_1\sin^2\theta_1 \nonumber\\
     &+  2R^2\cos^2\theta_1\sin^2\theta_1 )D^2 \Bigr]  \Bigl[ c_{c0} +c_{-1}\sin\theta_1 + c_{-2}\cos\theta_1 \Bigr]
 \end{align}
+
+
+....................................................
 
 Putting it all together:
 \begin{align}
