@@ -1512,6 +1512,24 @@ End of one of the 2 big terms in the theorem!
 
 Now, either make some constants, or start putting in the L's and the D2's (probably second option, THEN do the grouped constants).
 
+\begin{align}
+    &\cos^2\theta_1(m_x^+)^2  + 2\cos\theta_1\sin\theta_1(m_x^+m_y^+)  +\sin^2\theta_1(m_y^+)^2 \\
+    =& \frac{1}{L^4} \frac{1}{(1+q^2)^4} \Bigl\{ \nonumber\\
+    &+ [ L^4 -2\rho^2L^2 + \rho^4 ]\Bigl[ c_{a00}(1) + c_{a01}(q) + c_{a02}(q^2) + c_{a03}(q^3) + c_{a04}(q^4) + c_{a05}(q^5) \nonumber\\
+    &+ c_{a06}(q^6) + c_{a07}(q^7) +c_{a08}(q^8)  \Bigr] \nonumber\\
+    &+ [ L^2 - \rho^2 ]\Bigl[ c_{a11}(q) + c_{a12}(q^2) + c_{a13}(q^3) + c_{a15}(q^5) + c_{a16}(q^6) + c_{a17}(q^7) \Bigr] \nonumber\\
+    &+ L^2\Bigl[ c_{a22}(q^2) + c_{a24}(q^4)+ c_{a26}(q^6) \Bigr] \nonumber\\
+    &+ \Bigl[ c_{a32}(q^2) + c_{a34}(q^4) +c_{a36}(q^6) \Bigr] \nonumber\\
+    &+ [ L^2 - \rho^2 ]\Bigl[ c_{a40}(1) + c_{a42}(q^2) + c_{a43}(q^3) \nonumber\\
+    &+ c_{a44}(q^4) + c_{a45}(q^5) + c_{a46}(q^6) + c_{a48}(q^8)   \Bigr]D \nonumber\\
+    &+ L^2\Bigl[ c_{a51}(q) + c_{a52}(q^2)+  c_{a53}(q^3) + c_{a55}(q^5) + c_{a56}(q^6)+  c_{a57}(q^7) \Bigr]D \nonumber\\
+    &+ \Bigl[  c_{a61}(q)  + c_{a62}(q^2) +  c_{a63}(q^3) +c_{a65}(q^5) + c_{a66}(q^6) +c_{a67}(q^7)  \Bigr]D \nonumber\\
+    &+ \Bigl[ c_{a70}(1) + c_{a72}(q^2) + c_{a73}(q^3) + c_{a74}(q^4) + c_{a75}(q^5) +  c_{a76}(q^6) + c_{a78}(q^8) \Bigr]D^2 \nonumber\\
+    &+ L^2\Bigl[ c_{a81}(q) + c_{a82}(q^2) + c_{a83}(q^3) + c_{a84}(q^4) + c_{a85}(q^5) + c_{a86}(q^6) + c_{a87}(q^7) \Bigr]D^2 \Bigr\}
+\end{align}
+
+Subterms:
+
 
 \begin{align}
     [ L^2 - \rho^2 ] =& [ c_{L20}(1) + c_{L21}(q)  + c_{L22}(q^2)]\frac{(1+q^2)}{(1+q^2)^2} - \rho^2\\
@@ -1551,7 +1569,8 @@ Now, either make some constants, or start putting in the L's and the D2's (proba
     L^2 =& [ c_{L20}(1) + c_{L21}(q)  + c_{L22}(q^2)]\frac{1}{1+q^2}\\
     =& [ c_{L20}(1) + c_{L21}(q)  + c_{L22}(q^2)]\frac{(1+q^2)}{(1+q^2)^2}\\
     L^4 =&  \Bigl[ c_{L40}(1) +  c_{L41}(q) + c_{L42}(q^2) + c_{L43}(q^3) + c_{L44}(q^4) \Bigr]\frac{1}{(1+q^2)^2}\\
-    D^2 =& \Bigl[ c_{D20}(1) + c_{D21}(q) + c_{D22}(q^2)\Bigr]\frac{(1+2q^2+q^4)}{(1+q^2)^2}
+    D^2 =& \Bigl[ c_{D20}(1) + c_{D21}(q) + c_{D22}(q^2)\Bigr]\frac{(1+q^2)}{(1+q^2)^2}\\
+    =& \Bigl[ c_{D20}(1) + c_{D21}(q) + (c_{D22} + c_{D20})(q^2) + c_{D21}(q^3) + c_{D22}(q^4)\Bigr]\frac{1}{(1+q^2)^2}
 \end{align}
 
 \begin{align}
