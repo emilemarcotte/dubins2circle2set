@@ -1747,15 +1747,47 @@ Multiply some of the longer subterms:
 
 \begin{align}
     &\Bigl[ c_{a70}(1) + c_{a72}(q^2) + c_{a73}(q^3) + c_{a74}(q^4) + c_{a75}(q^5) +  c_{a76}(q^6) + c_{a78}(q^8) \Bigr]\Bigl[ c_{D20}(1) \nonumber\\
-    &+ c_{D21}(q) + (c_{D22} + c_{D20})(q^2) + c_{D21}(q^3) + c_{D22}(q^4)\Bigr]\\
-    =& 
+    &+ c_{D21}(q) + (c_{D22} + c_{D20})(q^2) + c_{D21}(q^3) + c_{D22}(q^4) \Bigr]\\
+    =& c_{D20}\Bigl[ c_{a70}(1) + c_{a72}(q^2) + c_{a73}(q^3) + c_{a74}(q^4) + c_{a75}(q^5) +  c_{a76}(q^6) + c_{a78}(q^8) \Bigr] \nonumber\\
+    &+ c_{D21}(q)\Bigl[ c_{a70}(1) + c_{a72}(q^2) + c_{a73}(q^3) + c_{a74}(q^4) + c_{a75}(q^5) +  c_{a76}(q^6) + c_{a78}(q^8) \Bigr] \nonumber\\
+    &+ (c_{D22} + c_{D20})(q^2)\Bigl[ c_{a70}(1) + c_{a72}(q^2) + c_{a73}(q^3) + c_{a74}(q^4) + c_{a75}(q^5) +  c_{a76}(q^6) + c_{a78}(q^8) \Bigr] \nonumber\\
+    &+ c_{D21}(q^3)\Bigl[ c_{a70}(1) + c_{a72}(q^2) + c_{a73}(q^3) + c_{a74}(q^4) + c_{a75}(q^5) +  c_{a76}(q^6) + c_{a78}(q^8) \Bigr] \nonumber\\
+    &+ c_{D22}(q^4)\Bigl[ c_{a70}(1) + c_{a72}(q^2) + c_{a73}(q^3) + c_{a74}(q^4) + c_{a75}(q^5) +  c_{a76}(q^6) + c_{a78}(q^8) \Bigr] \\
+    =&  c_{D20}c_{a70}(1) + c_{D20}c_{a72}(q^2) + c_{D20}c_{a73}(q^3) + c_{D20}c_{a74}(q^4) + c_{D20}c_{a75}(q^5) \nonumber\\
+    &+  c_{D20}c_{a76}(q^6) + c_{D20}c_{a78}(q^8)  \nonumber\\
+    &+  c_{D21}c_{a70}(q) + c_{D21}c_{a72}(q^3) + c_{D21}c_{a73}(q^4) + c_{D21}c_{a74}(q^5) + c_{D21}c_{a75}(q^6) \nonumber\\
+    &+  c_{D21}c_{a76}(q^7) + c_{D21}c_{a78}(q^9)  \nonumber\\
+    &+  (c_{D22} + c_{D20})c_{a70}(q^2) + (c_{D22} + c_{D20})c_{a72}(q^4) + (c_{D22} + c_{D20})c_{a73}(q^5) \nonumber\\
+    &+ (c_{D22} + c_{D20})c_{a74}(q^6) + (c_{D22} + c_{D20})c_{a75}(q^7) +  (c_{D22} + c_{D20})c_{a76}(q^8) + (c_{D22} + c_{D20})c_{a78}(q^{10})  \nonumber\\
+    &+  c_{D21}c_{a70}(q^3) + c_{D21}c_{a72}(q^5) + c_{D21}c_{a73}(q^6) + c_{D21}c_{a74}(q^7) + c_{D21}c_{a75}(q^8) \nonumber\\
+    &+  c_{D21}c_{a76}(q^9) + c_{D21}c_{a78}(q^{11}) \nonumber\\
+    &+  c_{D22}c_{a70}(q^4) + c_{D22}c_{a72}(q^6) + c_{D22}c_{a73}(q^7) + c_{D22}c_{a74}(q^8) + c_{D22}c_{a75}(q^9) \nonumber\\
+    &+  c_{D22}c_{a76}(q^{10}) + c_{D22}c_{a78}(q^{12})  \\
+    =& (c_{D20}c_{a70})(1) + (c_{D21}c_{a70})(q) + (c_{D20}c_{a72} + (c_{D22} + c_{D20})c_{a70})(q^2) \nonumber\\
+    &+ (c_{D20}c_{a73} + c_{D21}c_{a72} + c_{D21}c_{a70})(q^3) \nonumber\\
+    &+ (c_{D20}c_{a74} + c_{D21}c_{a73} + (c_{D22} + c_{D20})c_{a72} + c_{D22}c_{a70})(q^4) \nonumber\\
+    &+ (c_{D20}c_{a75} + c_{D21}c_{a74} + (c_{D22} + c_{D20})c_{a73} + c_{D21}c_{a72})(q^5) \nonumber\\
+    &+ (c_{D20}c_{a76} + c_{D21}c_{a75} + (c_{D22} + c_{D20})c_{a74} + c_{D21}c_{a73} + c_{D22}c_{a72})(q^6) \nonumber\\
+    &+ (c_{D21}c_{a76} + (c_{D22} + c_{D20})c_{a75} + c_{D21}c_{a74} + c_{D22}c_{a73})(q^7) \nonumber\\
+    &+ (c_{D20}c_{a78} + (c_{D22} + c_{D20})c_{a76} + c_{D21}c_{a75} +  c_{D22}c_{a74})(q^8) \nonumber\\
+    &+ (c_{D21}c_{a78} + c_{D21}c_{a76} + c_{D22}c_{a75})(q^9) + ((c_{D22} + c_{D20})c_{a78} + c_{D22}c_{a76})(q^{10}) \nonumber\\
+    &+ (c_{D21}c_{a78})(q^{11}) + (c_{D22}c_{a78})(q^{12}) \\
+    =& c_{k0}(1) + c_{k1}(q) + c_{k2}(q^2) + c_{k3}(q^3) + c_{k4}(q^4) + c_{k5}(q^5) + c_{k6}(q^6) + c_{k7}(q^7) + c_{k8}(q^8) \nonumber\\
+    &+ c_{k9}(q^9) + c_{k10}(q^{10}) + (c_{k11}(q^{12})
 \end{align}
 
 \begin{align}
     &\Bigl[ c_{a81}(q) + c_{a82}(q^2) + c_{a83}(q^3) + c_{a84}(q^4) + c_{a85}(q^5) + c_{a86}(q^6) + c_{a87}(q^7) \Bigr] \Bigl[  c_{L20}c_{D20}(1) \nonumber\\
     &+ (c_{L20}c_{D21} + c_{L21}c_{D20})(q) + (c_{L20}c_{D22} + c_{L21}c_{D21} + c_{L22}c_{D20})(q^2) \nonumber\\
     &+ (c_{L21}c_{D22} + c_{L22}c_{D21})(q^3) +  c_{L22}c_{D22}(q^4) \Bigr]\\
-    =& 
+    =& \Bigl[ c_{a81}(q) + c_{a82}(q^2) + c_{a83}(q^3) + c_{a84}(q^4) + c_{a85}(q^5) + c_{a86}(q^6) + c_{a87}(q^7) \Bigr] \nonumber\\
+    &+ \Bigl[ c_{a81}(q) + c_{a82}(q^2) + c_{a83}(q^3) + c_{a84}(q^4) + c_{a85}(q^5) + c_{a86}(q^6) + c_{a87}(q^7) \Bigr] \nonumber\\
+    &+ \Bigl[ c_{a81}(q) + c_{a82}(q^2) + c_{a83}(q^3) + c_{a84}(q^4) + c_{a85}(q^5) + c_{a86}(q^6) + c_{a87}(q^7) \Bigr] \nonumber\\
+    &+ \Bigl[ c_{a81}(q) + c_{a82}(q^2) + c_{a83}(q^3) + c_{a84}(q^4) + c_{a85}(q^5) + c_{a86}(q^6) + c_{a87}(q^7) \Bigr] \nonumber\\
+    &+ \Bigl[ c_{a81}(q) + c_{a82}(q^2) + c_{a83}(q^3) + c_{a84}(q^4) + c_{a85}(q^5) + c_{a86}(q^6) + c_{a87}(q^7) \Bigr] \\
+    &= \\
+    =& CDFTYHVCFTYHVFTY\\
+    =& ()(1) + ()(q) + ()(q^2) + ()(q^3) + ()(q^4) + ()(q^5) + ()(q^6) + ()(q^7) + ()(q^8) + ()(q^9) + ()(q^{10}) + ()(q^{11}) + ()(q^{12})
 \end{align}
 
 
