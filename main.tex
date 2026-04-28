@@ -1676,19 +1676,73 @@ Multiply some of the longer subterms:
 
 \begin{align}
     &[ c_{L20}(1) + c_{L21}(q)  + (c_{L22} +  c_{L20})(q^2) + c_{L21}(q^3)  + c_{L22}(q^4)]\Bigl[ c_{a22}(q^2) + c_{a24}(q^4)+ c_{a26}(q^6) \Bigr]\\
-    =& 
+    =& c_{L20}\Bigl[ c_{a22}(q^2) + c_{a24}(q^4)+ c_{a26}(q^6) \Bigr] \nonumber\\
+    &+ c_{L21}(q)\Bigl[ c_{a22}(q^2) + c_{a24}(q^4)+ c_{a26}(q^6) \Bigr] \nonumber\\
+    &+ (c_{L22} +  c_{L20})(q^2)\Bigl[ c_{a22}(q^2) + c_{a24}(q^4)+ c_{a26}(q^6) \Bigr] \nonumber\\
+    &+ c_{L21}(q^3)\Bigl[ c_{a22}(q^2) + c_{a24}(q^4)+ c_{a26}(q^6) \Bigr] \nonumber\\
+    &+ c_{L22}(q^4)\Bigl[ c_{a22}(q^2) + c_{a24}(q^4)+ c_{a26}(q^6) \Bigr] \\
+    =&  c_{L20}c_{a22}(q^2) + c_{L20}c_{a24}(q^4)+ c_{L20}c_{a26}(q^6)  \nonumber\\
+    &+  c_{L21}c_{a22}(q^3) + c_{L21}c_{a24}(q^5)+ c_{L21}c_{a26}(q^7)  \nonumber\\
+    &+  (c_{L22} +  c_{L20})c_{a22}(q^4) + (c_{L22} +  c_{L20})c_{a24}(q^6)+ (c_{L22} +  c_{L20})c_{a26}(q^8)  \nonumber\\
+    &+  c_{L21}c_{a22}(q^5) + c_{L21}c_{a24}(q^7)+ c_{L21}c_{a26}(q^9)  \nonumber\\
+    &+  c_{L22}c_{a22}(q^6) + c_{L22}c_{a24}(q^8)+ c_{L22}c_{a26}(q^{10}) \\
+    =& (c_{L20}c_{a22})(q^2) + (c_{L21}c_{a22})(q^3) + (c_{L20}c_{a24} + (c_{L22} +  c_{L20})c_{a22})(q^4) \nonumber\\
+    &+ (c_{L21}c_{a24} + c_{L21}c_{a22})(q^5) + (c_{L20}c_{a26} + (c_{L22} +  c_{L20})c_{a24} + c_{L22}c_{a22})(q^6) \nonumber\\
+    &+ (c_{L21}c_{a26} + c_{L21}c_{a24})(q^7) + ((c_{L22} +  c_{L20})c_{a26} + c_{L22}c_{a24})(q^8) \nonumber\\
+    &+ (c_{L21}c_{a26})(q^9) + (c_{L22}c_{a26})(q^{10})\\
+    =& c_{h2}(q^2) + c_{h3}(q^3) + c_{h4}(q^4) + c_{h5}(q^5) + c_{h6}(q^6) + c_{h7}(q^7) + c_{h8}(q^8) \nonumber\\
+    &+ c_{h9}(q^9) + c_{h10}(q^{10})
 \end{align}
 
 \begin{align}
     &\Bigl[ c_{Lm0}(1) + c_{Lm1}(q)  + c_{Lm2}(q^2) + c_{Lm3}(q^3) + c_{Lm4}(q^4)  \Bigr]\Bigl[ c_{a40}(1) + c_{a42}(q^2) + c_{a43}(q^3) \nonumber\\
-    &+ c_{a44}(q^4) + c_{a45}(q^5) + c_{a46}(q^6) + c_{a48}(q^8)   \Bigr]\\
-    =& 
+    &+ c_{a44}(q^4) + c_{a45}(q^5) + c_{a46}(q^6) + c_{a48}(q^8)  \Bigr]\\
+    =& c_{Lm0}c_{a40}(1) + c_{Lm0}c_{a42}(q^2) + c_{Lm0}c_{a43}(q^3) + c_{Lm0}c_{a44}(q^4)  + c_{Lm0}c_{a45}(q^5) \nonumber\\
+    &+ c_{Lm0}c_{a46}(q^6) + c_{Lm0}c_{a48}(q^8)  \nonumber\\
+    &+  c_{Lm1}c_{a40}(q) + c_{Lm1}c_{a42}(q^3) + c_{Lm1}c_{a43}(q^4) + c_{Lm1}c_{a44}(q^5) + c_{Lm1}c_{a45}(q^6) \nonumber\\
+    &+ c_{Lm1}c_{a46}(q^7) + c_{Lm1}c_{a48}(q^9)  \nonumber\\
+    &+  c_{Lm2}c_{a40}(q^2) + c_{Lm2}c_{a42}(q^4) + c_{Lm2}c_{a43}(q^5) + c_{Lm2}c_{a44}(q^6) + c_{Lm2}c_{a45}(q^7) \nonumber\\
+    &+ c_{Lm2}c_{a46}(q^8) + c_{Lm2}c_{a48}(q^{10})  \nonumber\\
+    &+  c_{Lm3}c_{a40}(q^3) + c_{Lm3}c_{a42}(q^5) + c_{Lm3}c_{a43}(q^6) + c_{Lm3}c_{a44}(q^7) + c_{Lm3}c_{a45}(q^8) \nonumber\\
+    &+ c_{Lm3}c_{a46}(q^9) + c_{Lm3}c_{a48}(q^{11})  \nonumber\\
+    &+  c_{Lm4}c_{a40}(q^4) + c_{Lm4}c_{a42}(q^6) + c_{Lm4}c_{a43}(q^7) + c_{Lm4}c_{a44}(q^8) + c_{Lm4}c_{a45}(q^9) \nonumber\\
+    &+ c_{Lm4}c_{a46}(q^{10}) + c_{Lm4}c_{a48}(q^{12})  \\
+    =& (c_{Lm0}c_{a40})(1) + (c_{Lm1}c_{a40})(q) + ( c_{Lm0}c_{a42} +  c_{Lm2}c_{a40})(q^2) \nonumber\\
+    &+ (c_{Lm0}c_{a43} + c_{Lm1}c_{a42} + c_{Lm3}c_{a40})(q^3) \nonumber\\
+    &+ (c_{Lm0}c_{a44} + c_{Lm1}c_{a43} +  c_{Lm2}c_{a42} + c_{Lm4}c_{a40})(q^4) \nonumber\\
+    &+ (c_{Lm0}c_{a45} + c_{Lm1}c_{a44} + c_{Lm2}c_{a43} + c_{Lm3}c_{a42} )(q^5) \nonumber\\
+    &+ (c_{Lm0}c_{a46} + c_{Lm1}c_{a45} + c_{Lm2}c_{a44} + c_{Lm3}c_{a43} + c_{Lm4}c_{a42}  )(q^6) \nonumber\\
+    &+ (c_{Lm1}c_{a46} + c_{Lm2}c_{a45} + c_{Lm3}c_{a44} + c_{Lm4}c_{a43})(q^7) \nonumber\\
+    &+ (c_{Lm0}c_{a48} + c_{Lm2}c_{a46} + c_{Lm3}c_{a45} + c_{Lm4}c_{a44})(q^8) \nonumber\\
+    &+ (c_{Lm1}c_{a48} + c_{Lm3}c_{a46} + c_{Lm4}c_{a45})(q^9) + (c_{Lm2}c_{a48} + c_{Lm4}c_{a46})(q^{10}) \nonumber\\
+    &+ (c_{Lm3}c_{a48})(q^{11}) + (c_{Lm4}c_{a48})(q^{12}) \\
+    =& c_{i0}(1) + c_{i1}(q) + c_{i2}(q^2) + c_{i3}(q^3) + c_{i4}(q^4) + c_{i5}(q^5) + c_{i6}(q^6) + c_{i7}(q^7) + c_{i8}(q^8) \nonumber\\
+    &+ c_{i9}(q^9) + c_{i10}(q^{10}) + c_{i11}(q^{11}) + c_{i12}(q^{12})
 \end{align}
 
 \begin{align}
     &[ c_{L20}(1) + c_{L21}(q)  + (c_{L22} +  c_{L20})(q^2) + c_{L21}(q^3)  + c_{L22}(q^4)]\Bigl[ c_{a51}(q) + c_{a52}(q^2) \nonumber\\
     &+  c_{a53}(q^3) + c_{a55}(q^5) + c_{a56}(q^6)+  c_{a57}(q^7) \Bigr]\\
-    =& 
+    =& c_{L20}\Bigl[ c_{a51}(q) + c_{a52}(q^2) +  c_{a53}(q^3) + c_{a55}(q^5) + c_{a56}(q^6)+  c_{a57}(q^7) \Bigr] \nonumber\\
+    &+ c_{L21}(q)\Bigl[ c_{a51}(q) + c_{a52}(q^2) +  c_{a53}(q^3) + c_{a55}(q^5) + c_{a56}(q^6)+  c_{a57}(q^7) \Bigr] \nonumber\\
+    &+ (c_{L22} +  c_{L20})(q^2)\Bigl[ c_{a51}(q) + c_{a52}(q^2) +  c_{a53}(q^3) + c_{a55}(q^5) + c_{a56}(q^6)+  c_{a57}(q^7) \Bigr] \nonumber\\
+    &+ c_{L21}(q^3)\Bigl[ c_{a51}(q) + c_{a52}(q^2) +  c_{a53}(q^3) + c_{a55}(q^5) + c_{a56}(q^6)+  c_{a57}(q^7) \Bigr] \nonumber\\
+    &+ c_{L22}(q^4)\Bigl[ c_{a51}(q) + c_{a52}(q^2) +  c_{a53}(q^3) + c_{a55}(q^5) + c_{a56}(q^6)+  c_{a57}(q^7) \Bigr] \\
+    =&  c_{L20}c_{a51}(q) + c_{L20}c_{a52}(q^2) +  c_{L20}c_{a53}(q^3) + c_{L20}c_{a55}(q^5) + c_{L20}c_{a56}(q^6)+  c_{L20}c_{a57}(q^7)  \nonumber\\
+    &+ c_{L21}c_{a51}(q^2) + c_{L21}c_{a52}(q^3) +  c_{L21}c_{a53}(q^4) + c_{L21}c_{a55}(q^6) + c_{L21}c_{a56}(q^7)+  c_{L21}c_{a57}(q^8) \nonumber\\
+    &+  (c_{L22} +  c_{L20})c_{a51}(q^3) + (c_{L22} +  c_{L20})c_{a52}(q^4) +  (c_{L22} +  c_{L20})c_{a53}(q^5) \nonumber\\
+    &+ (c_{L22} +  c_{L20})c_{a55}(q^7) + (c_{L22} +  c_{L20})c_{a56}(q^8)+  (c_{L22} +  c_{L20})c_{a57}(q^9)  \nonumber\\
+    &+  c_{L21}c_{a51}(q^4) + c_{L21}c_{a52}(q^5) +  c_{L21}c_{a53}(q^6) + c_{L21}c_{a55}(q^8) + c_{L21}c_{a56}(q^9)+  c_{L21}c_{a57}(q^{10})  \nonumber\\
+    &+  c_{L22}c_{a51}(q^5) + c_{L22}c_{a52}(q^6) +  c_{L22}c_{a53}(q^7) + c_{L22}c_{a55}(q^9) + c_{L22}c_{a56}(q^{10})+  c_{L22}c_{a57}(q^{11})  \\
+    =& (c_{L20}c_{a51})(q) + (c_{L20}c_{a52} + c_{L21}c_{a51})(q^2) + (c_{L20}c_{a53} + c_{L21}c_{a52} + (c_{L22} +  c_{L20})c_{a51})(q^3) \nonumber\\
+    &+ (c_{L21}c_{a53} + (c_{L22} +  c_{L20})c_{a52} + c_{L21}c_{a51})(q^4) \nonumber\\
+    &+ (c_{L20}c_{a55} + (c_{L22} +  c_{L20})c_{a53} + c_{L21}c_{a52} + c_{L22}c_{a51})(q^5) \nonumber\\
+    &+ (c_{L20}c_{a56} + c_{L21}c_{a55} + c_{L21}c_{a53} + c_{L22}c_{a52})(q^6) \nonumber\\
+    &+ (c_{L20}c_{a57} + c_{L21}c_{a56} + (c_{L22} +  c_{L20})c_{a55} + c_{L22}c_{a53})(q^7) \nonumber\\
+    &+ (c_{L21}c_{a57} + (c_{L22} +  c_{L20})c_{a56} + c_{L21}c_{a55})(q^8) \nonumber\\
+    &+ ((c_{L22} +  c_{L20})c_{a57} + c_{L21}c_{a56} + c_{L22}c_{a55})(q^9) + (c_{L21}c_{a57} + c_{L22}c_{a56})(q^{10}) + (c_{L22}c_{a57})(q^{11}) \\
+    =& c_{j1}(q) + c_{j2}(q^2) + c_{j3}(q^3) + c_{j4}(q^4) + c_{j5}(q^5) + c_{j6}(q^6) + c_{j7}(q^7) + c_{j8}(q^8) \nonumber\\
+    &+ c_{j9}(q^9) + c_{j10}(q^{10}) + c_{j11}(q^{11})
 \end{align}
 
 \begin{align}
