@@ -1555,6 +1555,27 @@ Subterms:
     =& \frac{1}{(1+q^2)^2}\Bigl[ c_{Lp0}(1) +  c_{Lp1}(q) + c_{Lp2}(q^2) + c_{Lp3}(q^3) + c_{Lp4}(q^4)  \Bigr]
 \end{align}
 
+\begin{align}
+    L^2D^2 =& [ c_{L20}(1) + c_{L21}(q)  + c_{L22}(q^2)]\frac{1}{1+q^2}\Bigl[ c_{D20}(1) + c_{D21}(q) + c_{D22}(q^2)\Bigr]\frac{1}{(1+q^2)}\\
+    =& \frac{1}{(1+q^2)^2}[   c_{L20}\Bigl[ c_{D20}(1) + c_{D21}(q) + c_{D22}(q^2)\Bigr] \nonumber\\
+    &+ c_{L21}(q)\Bigl[ c_{D20}(1) + c_{D21}(q) + c_{D22}(q^2)\Bigr] \nonumber\\
+    &+ c_{L22}(q^2)\Bigl[ c_{D20}(1) + c_{D21}(q) + c_{D22}(q^2)\Bigr] ] \\
+    =& \frac{1}{(1+q^2)^2} \Bigl[    c_{L20}c_{D20}(1) + c_{L20}c_{D21}(q) +c_{L20} c_{D22}(q^2) \nonumber\\
+    &+  c_{L21}c_{D20}(q) + c_{L21}c_{D21}(q^2) + c_{L21}c_{D22}(q^3) \nonumber\\
+    &+  c_{L22}c_{D20}(q^2) + c_{L22}c_{D21}(q^3) + c_{L22}c_{D22}(q^4) \Bigr]\\
+    =& \frac{1}{(1+q^2)^2} \Bigl[    c_{L20}c_{D20}(1) + (c_{L20}c_{D21} + c_{L21}c_{D20})(q) + (c_{L20}c_{D22} + c_{L21}c_{D21} + c_{L22}c_{D20})(q^2) \nonumber\\
+    &+ (c_{L21}c_{D22} + c_{L22}c_{D21})(q^3) +  c_{L22}c_{D22}(q^4) \Bigr]
+\end{align}
+
+\begin{align}
+    L^2 =& [ c_{L20}(1) + c_{L21}(q)  + c_{L22}(q^2)]\frac{1}{1+q^2}\\
+    =& [ c_{L20}(1) + c_{L21}(q)  + c_{L22}(q^2)]\frac{(1+q^2)}{(1+q^2)^2}\\
+    =& [ c_{L20}(1) + c_{L21}(q)  + (c_{L22} +  c_{L20})(q^2) + c_{L21}(q^3)  + c_{L22}(q^4)]\frac{1}{(1+q^2)^2}\\
+    L^4 =&  \Bigl[ c_{L40}(1) +  c_{L41}(q) + c_{L42}(q^2) + c_{L43}(q^3) + c_{L44}(q^4) \Bigr]\frac{1}{(1+q^2)^2}\\
+    D^2 =& \Bigl[ c_{D20}(1) + c_{D21}(q) + c_{D22}(q^2)\Bigr]\frac{(1+q^2)}{(1+q^2)^2}\\
+    =& \Bigl[ c_{D20}(1) + c_{D21}(q) + (c_{D22} + c_{D20})(q^2) + c_{D21}(q^3) + c_{D22}(q^4)\Bigr]\frac{1}{(1+q^2)^2}
+\end{align}
+
 Back to it:
 \begin{align}
     &\cos^2\theta_1(m_x^+)^2  + 2\cos\theta_1\sin\theta_1(m_x^+m_y^+)  +\sin^2\theta_1(m_y^+)^2 \\
@@ -1570,26 +1591,123 @@ Back to it:
     &+ [ c_{L20}(1) + c_{L21}(q)  + (c_{L22} +  c_{L20})(q^2) + c_{L21}(q^3)  + c_{L22}(q^4)]\Bigl[ c_{a51}(q) + c_{a52}(q^2) \nonumber\\
     &+  c_{a53}(q^3) + c_{a55}(q^5) + c_{a56}(q^6)+  c_{a57}(q^7) \Bigr]D \nonumber\\
     &+ (1+2q^2+q^4)\Bigl[  c_{a61}(q)  + c_{a62}(q^2) +  c_{a63}(q^3) +c_{a65}(q^5) + c_{a66}(q^6) +c_{a67}(q^7)  \Bigr]D \nonumber\\
-    &+ (1+2q^2+q^4)\Bigl[ c_{a70}(1) + c_{a72}(q^2) + c_{a73}(q^3) + c_{a74}(q^4) + c_{a75}(q^5) +  c_{a76}(q^6) + c_{a78}(q^8) \Bigr]D^2 \nonumber\\
-    &+ [ c_{L20}(1) + c_{L21}(q)  + (c_{L22} +  c_{L20})(q^2) + c_{L21}(q^3)  + c_{L22}(q^4)]\Bigl[ c_{a81}(q) + c_{a82}(q^2) \nonumber\\
-    &+ c_{a83}(q^3) + c_{a84}(q^4) + c_{a85}(q^5) + c_{a86}(q^6) + c_{a87}(q^7) \Bigr]D^2 \Bigr\}
+    &+ \Bigl[ c_{a70}(1) + c_{a72}(q^2) + c_{a73}(q^3) + c_{a74}(q^4) + c_{a75}(q^5) +  c_{a76}(q^6) + c_{a78}(q^8) \Bigr]\Bigl[ c_{D20}(1) \nonumber\\
+    &+ c_{D21}(q) + (c_{D22} + c_{D20})(q^2) + c_{D21}(q^3) + c_{D22}(q^4)\Bigr] \nonumber\\
+    &+ \Bigl[ c_{a81}(q) + c_{a82}(q^2) + c_{a83}(q^3) + c_{a84}(q^4) + c_{a85}(q^5) + c_{a86}(q^6) + c_{a87}(q^7) \Bigr] \Bigl[  c_{L20}c_{D20}(1) \nonumber\\
+    &+ (c_{L20}c_{D21} + c_{L21}c_{D20})(q) + (c_{L20}c_{D22} + c_{L21}c_{D21} + c_{L22}c_{D20})(q^2) \nonumber\\
+    &+ (c_{L21}c_{D22} + c_{L22}c_{D21})(q^3) +  c_{L22}c_{D22}(q^4) \Bigr] \Bigr\}
 \end{align}
 
 
+\begin{align}
+    &\cos^2\theta_1(m_x^+)^2  + 2\cos\theta_1\sin\theta_1(m_x^+m_y^+)  +\sin^2\theta_1(m_y^+)^2 \\
+    =& \frac{1}{L^4} \frac{1}{(1+q^2)^6} \Bigl\{ \nonumber\\
+    &+ \Bigl[ c_{Lp0}(1) +  c_{Lp1}(q) + c_{Lp2}(q^2) + c_{Lp3}(q^3) + c_{Lp4}(q^4)  \Bigr]\Bigl[ c_{a00}(1) + c_{a01}(q) + c_{a02}(q^2) + c_{a03}(q^3) \nonumber\\
+    &+ c_{a04}(q^4) + c_{a05}(q^5) + c_{a06}(q^6) + c_{a07}(q^7) +c_{a08}(q^8)  \Bigr] \nonumber\\
+    &+ \Bigl[ c_{Lm0}(1) + c_{Lm1}(q)  + c_{Lm2}(q^2) + c_{Lm3}(q^3) + c_{Lm4}(q^4)  \Bigr]\Bigl[ c_{a11}(q) + c_{a12}(q^2) + c_{a13}(q^3) \nonumber\\
+    &+ c_{a15}(q^5) + c_{a16}(q^6) + c_{a17}(q^7) \Bigr] \nonumber\\
+    &+ [ c_{L20}(1) + c_{L21}(q)  + (c_{L22} +  c_{L20})(q^2) + c_{L21}(q^3)  + c_{L22}(q^4)]\Bigl[ c_{a22}(q^2) + c_{a24}(q^4)+ c_{a26}(q^6) \Bigr] \nonumber\\
+    &+ \Bigl[ c_{a32}(q^2) + (c_{a34} + 2c_{a32})(q^4) + (c_{a36} + 2c_{a34}+ c_{a32})(q^6) + (2c_{a36} + c_{a34})(q^8) +  c_{a36}(q^{10}) \Bigr]\nonumber\\
+    &+ \Bigl[ c_{Lm0}(1) + c_{Lm1}(q)  + c_{Lm2}(q^2) + c_{Lm3}(q^3) + c_{Lm4}(q^4)  \Bigr]\Bigl[ c_{a40}(1) + c_{a42}(q^2) + c_{a43}(q^3) \nonumber\\
+    &+ c_{a44}(q^4) + c_{a45}(q^5) + c_{a46}(q^6) + c_{a48}(q^8)   \Bigr]D \nonumber\\
+    &+ [ c_{L20}(1) + c_{L21}(q)  + (c_{L22} +  c_{L20})(q^2) + c_{L21}(q^3)  + c_{L22}(q^4)]\Bigl[ c_{a51}(q) + c_{a52}(q^2) \nonumber\\
+    &+  c_{a53}(q^3) + c_{a55}(q^5) + c_{a56}(q^6)+  c_{a57}(q^7) \Bigr]D \nonumber\\
+    &+ \Bigl[  c_{a61}(q)  + c_{a62}(q^2) +  (c_{a63} + 2c_{a61})(q^3) + 2c_{a62}(q^4) +(c_{a65} + 2c_{a63} + c_{a61})(q^5) \nonumber\\
+    &+ (c_{a66} + c_{a62})(q^6) +(c_{a67} + 2c_{a65} + c_{a63})(q^7) +  2c_{a66}(q^8) +(2c_{a67} + c_{a65})(q^9) \nonumber\\
+    &+  c_{a66}(q^{10}) +c_{a67}(q^{11})  \Bigr]D \nonumber\\
+    &+ \Bigl[ c_{a70}(1) + c_{a72}(q^2) + c_{a73}(q^3) + c_{a74}(q^4) + c_{a75}(q^5) +  c_{a76}(q^6) + c_{a78}(q^8) \Bigr]\Bigl[ c_{D20}(1) \nonumber\\
+    &+ c_{D21}(q) + (c_{D22} + c_{D20})(q^2) + c_{D21}(q^3) + c_{D22}(q^4)\Bigr] \nonumber\\
+    &+ \Bigl[ c_{a81}(q) + c_{a82}(q^2) + c_{a83}(q^3) + c_{a84}(q^4) + c_{a85}(q^5) + c_{a86}(q^6) + c_{a87}(q^7) \Bigr] \Bigl[  c_{L20}c_{D20}(1) \nonumber\\
+    &+ (c_{L20}c_{D21} + c_{L21}c_{D20})(q) + (c_{L20}c_{D22} + c_{L21}c_{D21} + c_{L22}c_{D20})(q^2) \nonumber\\
+    &+ (c_{L21}c_{D22} + c_{L22}c_{D21})(q^3) +  c_{L22}c_{D22}(q^4) \Bigr] \Bigr\}
+\end{align}
 
+Multiply some of the longer subterms:
+\begin{align}
+    &\Bigl[ c_{Lp0}(1) +  c_{Lp1}(q) + c_{Lp2}(q^2) + c_{Lp3}(q^3) + c_{Lp4}(q^4)  \Bigr]\Bigl[ c_{a00}(1) + c_{a01}(q) + c_{a02}(q^2) + c_{a03}(q^3) \nonumber\\
+    &+ c_{a04}(q^4) + c_{a05}(q^5) + c_{a06}(q^6) + c_{a07}(q^7) +c_{a08}(q^8)  \Bigr] \nonumber\\
+    =& c_{Lp0}c_{a00}(1) + c_{Lp0}c_{a01}(q) + c_{Lp0}c_{a02}(q^2) + c_{Lp0}c_{a03}(q^3) \nonumber\\
+    &+ c_{Lp0}c_{a04}(q^4) + c_{Lp0}c_{a05}(q^5) + c_{Lp0}c_{a06}(q^6) + c_{Lp0}c_{a07}(q^7) +c_{Lp0}c_{a08}(q^8)  \nonumber\\
+    &+  c_{Lp1}c_{a00}(q) + c_{Lp1}c_{a01}(q^2) + c_{Lp1}c_{a02}(q^3) + c_{Lp1}c_{a03}(q^4) \nonumber\\
+    &+ c_{Lp1}c_{a04}(q^5) + c_{Lp1}c_{a05}(q^6) + c_{Lp1}c_{a06}(q^7) + c_{Lp1}c_{a07}(q^8) +c_{Lp1}c_{a08}(q^9)  \nonumber\\
+    &+ c_{Lp2}c_{a00}(q^2) + c_{Lp2}c_{a01}(q^3) + c_{Lp2}c_{a02}(q^4) + c_{Lp2}c_{a03}(q^5) \nonumber\\
+    &+ c_{Lp2}c_{a04}(q^6) + c_{Lp2}c_{a05}(q^7) + c_{Lp2}c_{a06}(q^8) + c_{Lp2}c_{a07}(q^9) +c_{Lp2}c_{a08}(q^{10})  \nonumber\\
+    &+ c_{Lp3}c_{a00}(q^3) + c_{Lp3}c_{a01}(q^4) + c_{Lp3}c_{a02}(q^5) + c_{Lp3}c_{a03}(q^6) \nonumber\\
+    &+ c_{Lp3}c_{a04}(q^7) + c_{Lp3}c_{a05}(q^8) + c_{Lp3}c_{a06}(q^9) + c_{Lp3}c_{a07}(q^{10}) +c_{Lp3}c_{a08}(q^{11})  \nonumber\\
+    &+ c_{Lp4}c_{a00}(q^4) + c_{Lp4}c_{a01}(q^5) + c_{Lp4}c_{a02}(q^6) + c_{Lp4}c_{a03}(q^7) \nonumber\\
+    &+ c_{Lp4}c_{a04}(q^8) + c_{Lp4}c_{a05}(q^9) + c_{Lp4}c_{a06}(q^{10}) + c_{Lp4}c_{a07}(q^{11}) +c_{Lp4}c_{a08}(q^{12}) \\
+    =& (c_{Lp0}c_{a00})(1)  + (c_{Lp0}c_{a01} + c_{Lp1}c_{a00})(q) + (c_{Lp0}c_{a02} + c_{Lp1}c_{a01} + c_{Lp2}c_{a00})(q^2) \nonumber\\
+    &+ (c_{Lp0}c_{a03} + c_{Lp1}c_{a02} + c_{Lp2}c_{a01} + c_{Lp3}c_{a00})(q^3) \nonumber\\
+    &+ (c_{Lp0}c_{a04} + c_{Lp1}c_{a03} + c_{Lp2}c_{a02} + c_{Lp3}c_{a01} + c_{Lp4}c_{a00} )(q^4) \nonumber\\
+    &+ (c_{Lp0}c_{a05} + c_{Lp1}c_{a04} + c_{Lp2}c_{a03} + c_{Lp3}c_{a02} + c_{Lp4}c_{a01})(q^5) \nonumber\\
+    &+ (c_{Lp0}c_{a06} + c_{Lp1}c_{a05} + c_{Lp2}c_{a04} + c_{Lp3}c_{a03} + c_{Lp4}c_{a02})(q^6) \nonumber\\
+    &+ (c_{Lp0}c_{a07} + c_{Lp1}c_{a06} + c_{Lp2}c_{a05} + c_{Lp3}c_{a04} + c_{Lp4}c_{a03})(q^7) \nonumber\\
+    &+ (c_{Lp0}c_{a08} + c_{Lp1}c_{a07} +  c_{Lp2}c_{a06} + c_{Lp3}c_{a05} + c_{Lp4}c_{a04})(q^8) \nonumber\\
+    &+ (c_{Lp1}c_{a08} + c_{Lp2}c_{a07} + c_{Lp3}c_{a06} + c_{Lp4}c_{a05})(q^9) \nonumber\\
+    &+ (c_{Lp2}c_{a08} + c_{Lp3}c_{a07} + c_{Lp4}c_{a06})(q^{10}) \nonumber\\
+    &+ (c_{Lp3}c_{a08} + c_{Lp4}c_{a07})(q^{11}) + (c_{Lp4}c_{a08})(q^{12})\\
+    =& c_{b0}(1)  + c_{b1}(q) + c_{b2}(q^2) + c_{b3}(q^3) + c_{b4}(q^4) + c_{b5}(q^5) + c_{b6}(q^6) + c_{b7}(q^7) + c_{b8}(q^8) \nonumber\\
+    &+ c_{b9}(q^9) + c_{b10}(q^{10}) + c_{b11}(q^{11}) + c_{b12}(q^{12})
+\end{align}
+\begin{align}
+    &\Bigl[ c_{Lm0}(1) + c_{Lm1}(q)  + c_{Lm2}(q^2) + c_{Lm3}(q^3) + c_{Lm4}(q^4)  \Bigr]\Bigl[ c_{a11}(q) + c_{a12}(q^2) + c_{a13}(q^3) \nonumber\\
+    &+ c_{a15}(q^5) + c_{a16}(q^6) + c_{a17}(q^7) \Bigr]\\
+    =& c_{Lm0}\Bigl[ c_{a11}(q) + c_{a12}(q^2) + c_{a13}(q^3) + c_{a15}(q^5) + c_{a16}(q^6) + c_{a17}(q^7) \Bigr] \nonumber\\
+    &+ c_{Lm1}(q)\Bigl[ c_{a11}(q) + c_{a12}(q^2) + c_{a13}(q^3) + c_{a15}(q^5) + c_{a16}(q^6) + c_{a17}(q^7) \Bigr] \nonumber\\
+    &+ c_{Lm2}(q^2)\Bigl[ c_{a11}(q) + c_{a12}(q^2) + c_{a13}(q^3) + c_{a15}(q^5) + c_{a16}(q^6) + c_{a17}(q^7) \Bigr] \nonumber\\
+    &+ c_{Lm3}(q^3)\Bigl[ c_{a11}(q) + c_{a12}(q^2) + c_{a13}(q^3) + c_{a15}(q^5) + c_{a16}(q^6) + c_{a17}(q^7) \Bigr] \nonumber\\
+    &+ c_{Lm4}(q^4)\Bigl[ c_{a11}(q) + c_{a12}(q^2) + c_{a13}(q^3) + c_{a15}(q^5) + c_{a16}(q^6) + c_{a17}(q^7) \Bigr] \\
+    =&  c_{Lm0}c_{a11}(q) + c_{Lm0}c_{a12}(q^2) + c_{Lm0}c_{a13}(q^3) + c_{Lm0}c_{a15}(q^5) + c_{Lm0}c_{a16}(q^6) + c_{Lm0}c_{a17}(q^7) \nonumber\\
+    &+ c_{Lm1}c_{a11}(q^2) + c_{Lm1}c_{a12}(q^3) + c_{Lm1}c_{a13}(q^4) + c_{Lm1}c_{a15}(q^6) + c_{Lm1}c_{a16}(q^7) + c_{Lm1}c_{a17}(q^8) \nonumber\\
+    &+  c_{Lm2}c_{a11}(q^3) + c_{Lm2}c_{a12}(q^4) + c_{Lm2}c_{a13}(q^5) + c_{Lm2}c_{a15}(q^7) + c_{Lm2}c_{a16}(q^8) + c_{Lm2}c_{a17}(q^9) \nonumber\\
+    &+  c_{Lm3}c_{a11}(q^4) + c_{Lm3}c_{a12}(q^5) + c_{Lm3}c_{a13}(q^6) + c_{Lm3}c_{a15}(q^8) + c_{Lm3}c_{a16}(q^9) + c_{Lm3}c_{a17}(q^{10})  \nonumber\\
+    &+  c_{Lm4}c_{a11}(q^5) + c_{Lm4}c_{a12}(q^6) + c_{Lm4}c_{a13}(q^7) + c_{Lm4}c_{a15}(q^9) + c_{Lm4}c_{a16}(q^{10}) + c_{Lm4}c_{a17}(q^{11}) \\
+    =& (c_{Lm0}c_{a11})(q) + (c_{Lm0}c_{a12} + c_{Lm1}c_{a11})(q^2) + (c_{Lm0}c_{a13} +  c_{Lm1}c_{a12} + c_{Lm2}c_{a11})(q^3) \nonumber\\
+    &+ (c_{Lm1}c_{a13} + c_{Lm2}c_{a12} + c_{Lm3}c_{a11})(q^4) \nonumber\\
+    &+ (c_{Lm0}c_{a15} + c_{Lm2}c_{a13} + c_{Lm3}c_{a12} + c_{Lm4}c_{a11})(q^5) \nonumber\\
+    &+ (c_{Lm0}c_{a16} + c_{Lm1}c_{a15} + c_{Lm3}c_{a13} + c_{Lm4}c_{a12})(q^6) \nonumber\\
+    &+ (c_{Lm0}c_{a17} +  c_{Lm1}c_{a16} +  c_{Lm2}c_{a15} + c_{Lm4}c_{a13})(q^7) \nonumber\\
+    &+ (c_{Lm1}c_{a17} + c_{Lm2}c_{a16} + c_{Lm3}c_{a15})(q^8) \nonumber\\
+    &+ (c_{Lm2}c_{a17} + c_{Lm3}c_{a16} + c_{Lm4}c_{a15})(q^9) + (c_{Lm3}c_{a17} + c_{Lm4}c_{a16})(q^{10}) \nonumber\\
+    &+ (c_{Lm4}c_{a17})(q^{11}) \\
+    =& c_{e1}(q) + c_{e2}(q^2) + c_{e3}(q^3) + c_{e4}(q^4) + c_{e5}(q^5) + c_{e6}(q^6) + c_{e7}(q^7) + c_{e8}(q^8) \nonumber\\
+    &+ c_{e9}(q^9) + c_{e10}(q^{10}) + c_{e11}(q^{11})
+\end{align}
 
+\begin{align}
+    &[ c_{L20}(1) + c_{L21}(q)  + (c_{L22} +  c_{L20})(q^2) + c_{L21}(q^3)  + c_{L22}(q^4)]\Bigl[ c_{a22}(q^2) + c_{a24}(q^4)+ c_{a26}(q^6) \Bigr]\\
+    =& 
+\end{align}
+
+\begin{align}
+    &\Bigl[ c_{Lm0}(1) + c_{Lm1}(q)  + c_{Lm2}(q^2) + c_{Lm3}(q^3) + c_{Lm4}(q^4)  \Bigr]\Bigl[ c_{a40}(1) + c_{a42}(q^2) + c_{a43}(q^3) \nonumber\\
+    &+ c_{a44}(q^4) + c_{a45}(q^5) + c_{a46}(q^6) + c_{a48}(q^8)   \Bigr]\\
+    =& 
+\end{align}
+
+\begin{align}
+    &[ c_{L20}(1) + c_{L21}(q)  + (c_{L22} +  c_{L20})(q^2) + c_{L21}(q^3)  + c_{L22}(q^4)]\Bigl[ c_{a51}(q) + c_{a52}(q^2) \nonumber\\
+    &+  c_{a53}(q^3) + c_{a55}(q^5) + c_{a56}(q^6)+  c_{a57}(q^7) \Bigr]\\
+    =& 
+\end{align}
+
+\begin{align}
+    &\Bigl[ c_{a70}(1) + c_{a72}(q^2) + c_{a73}(q^3) + c_{a74}(q^4) + c_{a75}(q^5) +  c_{a76}(q^6) + c_{a78}(q^8) \Bigr]\Bigl[ c_{D20}(1) \nonumber\\
+    &+ c_{D21}(q) + (c_{D22} + c_{D20})(q^2) + c_{D21}(q^3) + c_{D22}(q^4)\Bigr]\\
+    =& 
+\end{align}
+
+\begin{align}
+    &\Bigl[ c_{a81}(q) + c_{a82}(q^2) + c_{a83}(q^3) + c_{a84}(q^4) + c_{a85}(q^5) + c_{a86}(q^6) + c_{a87}(q^7) \Bigr] \Bigl[  c_{L20}c_{D20}(1) \nonumber\\
+    &+ (c_{L20}c_{D21} + c_{L21}c_{D20})(q) + (c_{L20}c_{D22} + c_{L21}c_{D21} + c_{L22}c_{D20})(q^2) \nonumber\\
+    &+ (c_{L21}c_{D22} + c_{L22}c_{D21})(q^3) +  c_{L22}c_{D22}(q^4) \Bigr]\\
+    =& 
+\end{align}
 
 
 ...................................
 
-\begin{align}
-    L^2 =& [ c_{L20}(1) + c_{L21}(q)  + c_{L22}(q^2)]\frac{1}{1+q^2}\\
-    =& [ c_{L20}(1) + c_{L21}(q)  + c_{L22}(q^2)]\frac{(1+q^2)}{(1+q^2)^2}\\
-    =& [ c_{L20}(1) + c_{L21}(q)  + (c_{L22} +  c_{L20})(q^2) + c_{L21}(q^3)  + c_{L22}(q^4)]\frac{1}{(1+q^2)^2}\\
-    L^4 =&  \Bigl[ c_{L40}(1) +  c_{L41}(q) + c_{L42}(q^2) + c_{L43}(q^3) + c_{L44}(q^4) \Bigr]\frac{1}{(1+q^2)^2}\\
-    D^2 =& \Bigl[ c_{D20}(1) + c_{D21}(q) + c_{D22}(q^2)\Bigr]\frac{(1+q^2)}{(1+q^2)^2}\\
-    =& \Bigl[ c_{D20}(1) + c_{D21}(q) + (c_{D22} + c_{D20})(q^2) + c_{D21}(q^3) + c_{D22}(q^4)\Bigr]\frac{1}{(1+q^2)^2}
-\end{align}
+
 
 \begin{align}
     \cos\theta_1 &= \frac{(1-q^2)}{(1+q^2)}\\
