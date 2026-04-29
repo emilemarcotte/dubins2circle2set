@@ -1844,8 +1844,65 @@ Back to our big equation:
     &+ c_{n9}(q^9) + c_{n10}(q^{10}) + c_{n11}(q^{11}) \Bigr] \Bigr\}
 \end{align}
 
-Now add and regroup the terms:
+Now add and regroup the terms... :
 
+Terms not multiplied by D:
+\begin{align}
+    =& (c_{b0} + c_{k0})(1) + (c_{b1} + c_{e1} + c_{k1} + c_{n1})(q) + (c_{b2} + c_{e2} +  c_{h2} + c_{a32} + c_{k2} + c_{n2})(q^2) \nonumber\\
+    &+ (c_{b3} + c_{e3} + c_{h3} + c_{k3} + c_{n3})(q^3) \nonumber\\
+    &+ [ c_{b4} + c_{e4} + c_{h4} + (c_{a34} + 2c_{a32}) + c_{k4} + c_{n4} ](q^4) \nonumber\\
+    &+ (c_{b5} + c_{e5} + c_{h5} + c_{k5} + c_{n5})(q^5) \nonumber\\
+    &+ [c_{b6} + c_{e6} + c_{h6} + (c_{a36} + 2c_{a34}+ c_{a32}) + c_{k6} +  c_{n6}](q^6) \nonumber\\
+    &+ (c_{b7} + c_{e7} + c_{h7} + c_{k7} + c_{n7})(q^7) \nonumber\\
+    &+ [ c_{b8} + c_{e8} + c_{h8} + (2c_{a36} + c_{a34}) + c_{k8} + c_{n8} ](q^8) \nonumber\\
+    &+ (c_{b9} + c_{e9} + c_{h9} + c_{k9} + c_{n9} )(q^9) \nonumber\\
+    &+ (c_{b10} + c_{e10} + c_{h10} +  c_{a36} + c_{k10} + c_{n10})(q^{10}) \nonumber\\
+    &+ (c_{b11} + c_{e11} + c_{n11})(q^{11}) + (c_{b12} + c_{k12})(q^{12}) \\
+    =& c_{TT0}(1) + c_{TT1}(q) + c_{TT2}(q^2) + c_{TT3}(q^3) + c_{TT4}(q^4) + c_{TT5}(q^5) + c_{TT6}(q^6) \nonumber\\
+    &+ c_{TT7}(q^7) + c_{TT8}(q^8) + c_{TT9}(q^9) + c_{TT10}(q^{10}) + c_{TT11}(q^{11}) + c_{TT12}(q^{12})
+\end{align}
+
+Terms multiplied by D:
+\begin{align}
+    =& (c_{i0})(1) + (c_{i1} + c_{j1} + c_{a61})(q) + (c_{i2} + c_{j2} + c_{a62})(q^2) \nonumber\\
+    &+ [c_{i3} + c_{j3} + (c_{a63} + 2c_{a61})](q^3) + (c_{i4} + c_{j4} + 2c_{a62})(q^4) \nonumber\\
+    &+ [c_{i5} + c_{j5} + (c_{a65} + 2c_{a63} + c_{a61})](q^5) + [c_{i6} + c_{j6} + (c_{a66} + c_{a62})](q^6) \nonumber\\
+    &+ [c_{i7} + c_{j7} + (c_{a67} + 2c_{a65} + c_{a63})](q^7) + (c_{i8} + c_{j8} + 2c_{a66})(q^8) \nonumber\\
+    &+ [c_{i9} + c_{j9} + (2c_{a67} + c_{a65})](q^9) + (c_{i10} + c_{j10} + c_{a66})(q^{10}) \nonumber\\
+    &+ (c_{i11} + c_{j11} + c_{a67})(q^{11}) + (c_{i12})(q^{12})\\
+    =& c_{TD0}(1) + c_{TD1}(q) + c_{TD2}(q^2) + c_{TD3}(q^3) + c_{TD4}(q^4) + c_{TD5}(q^5) + c_{TD6}(q^6) \nonumber\\
+    &+ c_{TD7}(q^7) + c_{TD8}(q^8) + c_{TD9}(q^9) + c_{TD10}(q^{10}) + c_{TD11}(q^{11}) + c_{TD12}(q^{12})
+\end{align}
+
+Back to the big equation:
+\begin{align}
+    &\cos^2\theta_1(m_x^+)^2  + 2\cos\theta_1\sin\theta_1(m_x^+m_y^+)  +\sin^2\theta_1(m_y^+)^2 \\
+    =& \frac{1}{L^4} \frac{1}{(1+q^2)^6} \Bigl\{ \nonumber\\
+    &+ \Bigl[ c_{TT0}(1) + c_{TT1}(q) + c_{TT2}(q^2) + c_{TT3}(q^3) + c_{TT4}(q^4) + c_{TT5}(q^5) + c_{TT6}(q^6) \nonumber\\
+    &+ c_{TT7}(q^7) + c_{TT8}(q^8) + c_{TT9}(q^9) + c_{TT10}(q^{10}) + c_{TT11}(q^{11}) + c_{TT12}(q^{12}) \Bigr] \nonumber\\
+    &+ \Bigl[ c_{TD0}(1) + c_{TD1}(q) + c_{TD2}(q^2) + c_{TD3}(q^3) + c_{TD4}(q^4) + c_{TD5}(q^5) + c_{TD6}(q^6) \nonumber\\
+    &+ c_{TD7}(q^7) + c_{TD8}(q^8) + c_{TD9}(q^9) + c_{TD10}(q^{10}) + c_{TD11}(q^{11}) + c_{TD12}(q^{12}) \Bigr]D  \Bigr\}
+\end{align}
+
+Now fix md-:
+\begin{align}
+    m_d^- =& c_{c0} +c_{-1}\sin\theta_1 + c_{-2}\cos\theta_1\\
+    =& c_{c0} +c_{-1}\frac{(2q)}{(1+q^2)} + c_{-2}\frac{(1-q^2)}{(1+q^2)}\\
+    =& \frac{1}{(1+q^2)} \Bigl[ c_{c0}(1+q^2) + (2c_{-1})(q) + (c_{-2}) + (-c_{-2})q^2) \Bigr]\\
+    =& \frac{1}{(1+q^2)} \Bigl[ (c_{c0} +c_{-2}) + (2c_{-1})(q) + (c_{c0} -c_{-2})q^2) \Bigr] \\
+    =& \frac{1}{(1+q^2)} \Bigl[ c_{-3} + c_{-4}(q) + c_{-5}(q^2) \Bigr]
+\end{align}
+
+Together:
+\begin{align}
+    &\Bigl[ \cos^2\theta_1(m_x^+)^2  + 2\cos\theta_1\sin\theta_1(m_x^+m_y^+)  +\sin^2\theta_1(m_y^+)^2 \Bigr] m_d^-\\
+    =&  \frac{1}{L^4} \frac{1}{(1+q^2)^6} \Bigl\{ \nonumber\\
+    &+ \Bigl[ c_{TT0}(1) + c_{TT1}(q) + c_{TT2}(q^2) + c_{TT3}(q^3) + c_{TT4}(q^4) + c_{TT5}(q^5) + c_{TT6}(q^6) \nonumber\\
+    &+ c_{TT7}(q^7) + c_{TT8}(q^8) + c_{TT9}(q^9) + c_{TT10}(q^{10}) + c_{TT11}(q^{11}) + c_{TT12}(q^{12}) \Bigr] \nonumber\\
+    &+ \Bigl[ c_{TD0}(1) + c_{TD1}(q) + c_{TD2}(q^2) + c_{TD3}(q^3) + c_{TD4}(q^4) + c_{TD5}(q^5) + c_{TD6}(q^6) \nonumber\\
+    &+ c_{TD7}(q^7) + c_{TD8}(q^8) + c_{TD9}(q^9) + c_{TD10}(q^{10}) + c_{TD11}(q^{11}) + c_{TD12}(q^{12}) \Bigr]D  \Bigr\}  \nonumber\\
+    &\times \frac{1}{(1+q^2)} \Bigl[ c_{-3} + c_{-4}(q) + c_{-5}(q^2) \Bigr]
+\end{align}
 
 
 ...................................
@@ -1887,6 +1944,7 @@ Now add and regroup the terms:
     &+ \frac{\rho}{L^2}(-2x_{fc}y_{fc}\cos\theta_1\sin\theta_1 + 2x_{fc}R\cos^2\theta_1\sin\theta_1 -2y_{fc}R\cos\theta_1\sin^2\theta_1 \nonumber\\
     &+  2R^2\cos^2\theta_1\sin^2\theta_1 )D^2 \Bigr]  \Bigl[ c_{c0} +c_{-1}\sin\theta_1 + c_{-2}\cos\theta_1 \Bigr]
 \end{align}
+
 
 
 ....................................................
