@@ -26,140 +26,294 @@ def get_thet1_LSLS(r_c, rho, thet0, x0, y0, xf, yf, xc, yc):
     x_fc = xf - xc
     y_fc = yf - yc
     c_c0 = x_c0**2 + y_c0**2 +2*x_c0*sin(thet0) -2*y_c0*cos(thet0) + r_c**2 + 2*rho**2 + 2*r_c*rho
+    c_sq = x_fc**2 + y_fc**2 + R**2 # Eq 48
 
-    c_v0 = 
-    c_v1 = 
-    c_v2 = 
-    c_v3 = 
-    c_v4 = 
-    c_v5 = 
-    c_v6 = 
-    c_v7 = 
-    c_v8 = 
-    c_v9 = 
-    c_v10 = 
-    c_v11 = 
-    c_v12 = 
-    c_v13 = 
-    c_v14 = 
-    c_v15 = 
-    c_v16 = 
-    c_v17 = 
-    c_v18 = 
-    c_v19 = 
-    c_v20 = 
-    c_v21 = 
-    c_v22 = 
-    c_v23 = 
-    c_v24 = 
-    c_v25 = 
-    c_v26 = 
-    c_v27 = 
-    c_v28 = 
-
-    # Eqs 317 and 318
-    c_TT0 = 
-    c_TT1 = 
-    c_TT2 = 
-    c_TT3 = 
-    c_TT4 = 
-    c_TT5 = 
-    c_TT6 = 
-    c_TT7 = 
-    c_TT8 = 
-    c_TT9 = 
-    c_TT10 = 
-    c_TT11 = 
-    c_TT12 = 
-
-    # Eqs 203 and 204
-    c_q0 = 
-    c_q1 = 
-    c_q2 = 
-    c_q3 = 
-    c_q4 = 
-    c_q5 = 
-    c_q6 = 
-    c_q7 = 
-    c_q8 = 
-
-    # Eqs 211 and 212
-    c_lambda0 = 
-    c_lambda1 = 
-    c_lambda2 = 
-    c_lambda3 = 
-    c_lambda4 = 
-    c_lambda5 = 
-    c_lambda6 = 
-    c_lambda7 = 
-    c_lambda8 = 
-    c_lambda9 = 
-    c_lambda10 = 
-    c_lambda11 = 
-    c_lambda12 = 
-
-    # Eqs 333 and 334
-    c_nd0 = 
-    c_nd1 = 
-    c_nd2 = 
-    c_nd3 = 
-    c_nd4 = 
-    c_nd5 = 
-    c_nd6 = 
-    c_nd7 = 
-    c_nd8 = 
-    c_nd9 = 
-    c_nd10 = 
-    c_nd11 = 
-    c_nd12 = 
-    c_nd13 = 
-    c_nd14 = 
-
-    # Eqs 222 and 224:
-    c_T0 = 
-    c_T1 = 
-    c_T2 = 
-    c_T3 = 
-    c_T4 = 
-    c_T5 = 
-    c_T6 = 
-    c_T7 = 
-    c_T8 = 
-    c_T9 = 
-    c_T10 = 
-    c_T11 = 
-    c_T12 = 
-
-    # Eqs 40 and 41
+    # Eqs 40 and 41:
     c__1 = - 2*x0*R - 2*rho*R*sin(thet0)
     c__2 = 2*y_c0*R -2*rho*R*cos(thet0)
+
+    # Eqs 72 and 73:
+    c_L20 = c_sq - 2*y_fc*R
+    c_L21 = 4*x_fc*R
+    c_L22 = 2*y_fc*R+ c_sq
+
+    # Eqs 74 and 75:
+    c_L40 = 4*(y_fc**2)*R**2 - 4*c_sq*y_fc*R + c_sq**2
+    c_L41 = - 16*x_fc*y_fc*R**2 +8*c_sq*x_fc*R
+    c_L42 = 16*(x_fc**2)*R**2 - 8*(y_fc**2)*R**2 + 2*c_sq**2
+    c_L43 = 16*x_fc*y_fc*R**2 + 8*c_sq*x_fc*R
+    c_L44 = 4*(y_fc**2)*R**2 + 4*c_sq*y_fc*R + c_sq**2
+
+    # Eqs 76 and 77:
+    c_D20 = (x_fc**2 + y_fc**2 + R**2 - 2*y_fc*R - rho**2)
+    c_D21 = 4*x_fc*R
+    c_D22 = (x_fc**2 + y_fc**2 + R**2 + 2*y_fc*R- rho**2)
+
+    # Eq 176:
+    c_xm = x_c0*y_c0 - x_c0*rho*cos(thet0) +  rho*y_c0*sin(thet0) - (rho**2)*cos(thet0)*sin(thet0)
+
+    # Between eqs 194 and 195:
+    c_d1 = (x_c0+ rho*sin(thet0))**2
+    c_d2 = (y_c0- rho*cos(thet0))**2
+
+    # Eqs 203 and 204:
+    c_q0 = (c_d1*c_sq -2*c_d1*y_fc*R) + (2*c_xm*c_sq -4*c_xm*y_fc*R )
+    c_q1 = 4*c_d1*x_fc*R + 8*c_xm*x_fc*R
+    c_q2 = (4*c_d1*y_fc*R) + (4*c_d2*c_sq -8*c_d2*y_fc) + (8*c_xm*c_sq- 8*c_xm*y_fc*R) + 16*y_c0*R*(c_sq-2*y_fc*R)
+    c_q3 = -4*c_d1*x_fc*R + 16*c_d2*x_fc*R + 24*c_xm*x_fc*R + 64*x_fc*y_c0*R**2
+    c_q4 = (-2*c_d1*c_sq ) + (8*c_d2*c_sq ) + (12*c_xm*c_sq) + 64*y_c0*y_fc*R**2
+    c_q5 = -4*c_d1*x_fc*R + 16*c_d2*x_fc*R + 24*c_xm*x_fc*R -64*x_fc*y_c0*R**2
+    c_q6 = (-4*c_d1*y_fc*R) + (4*c_d2*c_sq +8*c_d2*y_fc) + (8*c_xm*c_sq+ 8*c_xm*y_fc*R) + 16*y_c0*R*(-c_sq - 2*y_fc*R)
+    c_q7 = 4*c_d1*x_fc*R + 8*c_xm*x_fc*R
+    c_q8 = (c_d1*c_sq +2*c_d1*y_fc*R) + (2*c_xm*c_sq+ 4*c_xm*y_fc*R)
+
+    # Eqs 211 and 212
+    c_lambda0 = c_L40 + rho**4 -2*(rho**2)*c_L20 + (rho**2)*c_D20
+    c_lambda1 = c_L41 -2*(rho**2)*c_L21 + (rho**2)*c_D21
+    c_lambda2 = c_L42 + 2*rho**4 -2*(rho**2)*c_L22 -2*(rho**2)*c_L20 + (rho**2)*c_D22 + (rho**2)*c_D20
+    c_lambda3 = c_L43 -2*(rho**2)*c_L21 + (rho**2)*c_D21
+    c_lambda4 = c_L44 + rho**4 -2*(rho**2)*c_L22 + (rho**2)*c_D22
+
+    # Eqs 222 and 224:
+    c_T0 = c_lambda0*c_q0
+    c_T1 = c_lambda0*c_q1 + c_lambda1*c_q0
+    c_T2 = c_lambda0*c_q2 + c_lambda1*c_q1 + c_lambda2*c_q0
+    c_T3 = c_lambda0*c_q3 + c_lambda1*c_q2 + c_lambda2*c_q1 + c_lambda3*c_q0
+    c_T4 = c_lambda0*c_q4 + c_lambda1*c_q3 + c_lambda2*c_q2 + c_lambda3*c_q1 + c_lambda4*c_q0
+    c_T5 = c_lambda0*c_q5 + c_lambda1*c_q4 + c_lambda2*c_q3 + c_lambda3*c_q2 + c_lambda4*c_q1
+    c_T6 = c_lambda0*c_q6 + c_lambda1*c_q5 + c_lambda2*c_q4 + c_lambda3*c_q3 + c_lambda4*c_q2
+    c_T7 = c_lambda0*c_q7 + c_lambda1*c_q6 + c_lambda2*c_q5 + c_lambda3*c_q4 + c_lambda4*c_q3
+    c_T8 = c_lambda0*c_q8 + c_lambda1*c_q7 + c_lambda2*c_q6 + c_lambda3*c_q5 + c_lambda4*c_q4
+    c_T9 = c_lambda1*c_q8 + c_lambda2*c_q7 + c_lambda3*c_q6 + c_lambda4*c_q5
+    c_T10 = c_lambda2*c_q8 + c_lambda3*c_q7 + c_lambda4*c_q6
+    c_T11 = c_lambda3*c_q8 + c_lambda4*c_q7
+    c_T12 = c_lambda4*c_q8
+
+    # Eqs 257 and 259:
+    c_a00 = x_fc**2
+    c_a01 = 4*x_fc*y_fc
+    c_a02 = 2*(2*y_fc**2 -x_fc**2 + x_fc**2)
+    c_a03 = 4*x_fc*y_fc
+    c_a04 = 2*(-x_fc**2+ 4*y_fc**2)
+    c_a05 = -4*x_fc*y_fc
+    c_a06 = 4*y_fc**2
+    c_a07 = - 4*x_fc*y_fc
+    c_a08 = x_fc**2
+
+    c_a11 = 8(rho**2)*R*(x_fc)
+    c_a12 = 8(rho**2)*R*(2*y_fc)
+    c_a13 = 8(rho**2)*R*(-x_fc)
+    c_a15 = 8(rho**2)*R*(- x_fc)
+    c_a16 = 8(rho**2)*R*(- 2*y_fc)
+    c_a17 = 8(rho**2)*R*(x_fc)
+
+    c_a22 = 8(rho**2)*(R**2-R)*(1)
+    c_a24 = 8(rho**2)*(R**2-R)*(-2)
+    c_a26 = 8(rho**2)*(R**2-R)*(1)
+
+    c_a32 = 16(rho**4)*(R**2)*(1)
+    c_a34 = 16(rho**4)*(R**2)*(-2)
+    c_a36 = 16(rho**4)*(R**2)*(1)
+
+    c_a40 = 2*rho*(x_fc*(y_fc + R))
+    c_a42 = 2*rho*(2*x_fc*( - R + 3*y_fc ))
+    c_a43 = 2*rho*(8*y_fc*R)
+    c_a44 = 2*rho*( 10*x_fc*y_fc)
+    c_a45 = 2*rho*(8*y_fc*R)
+    c_a46 = 2*rho*(2*x_fc(R + 2*y_fc))
+    c_a48 = 2*rho*(x_fc*(-y_fc -R ))
+
+    c_a51 = 4*rho*( y_fc*R -y_fc**2 + x_fc**2 )
+    c_a52 = 4*rho*(2*x_fc*R)
+    c_a53 = 4*rho*(-y_fc*R -y_fc**2 + x_fc**2)
+    c_a55 = 4*rho*( -y_fc*R +y_fc**2 - x_fc**2 )
+    c_a56 = 4*rho*(- 2*x_fc*R)
+    c_a57 = 4*rho*(y_fc*R +y_fc**2 - x_fc**2)
+
+    c_a61 = 4*(rho**3)*(-3*y_fc*R + y_fc**2 +2*R**2 -x_fc**2)
+    c_a62 = 4*(rho**3)*(2*x_fc*R)
+    c_a63 = 4*(rho**3)*(y_fc**2 -x_fc**2 + 2*R**2 + 3*y_fc*R)
+    c_a65 = 4*(rho**3)*(-y_fc**2 +x_fc**2 + 3*y_fc*R -2*R**2)
+    c_a66 = 4*(rho**3)*(-2*x_fc*R)
+    c_a67 = 4*(rho**3)*(-y_fc**2 +x_fc**2 - 3*y_fc*R -2*R**2)
+
+    c_a70 = (rho**2)*(y_fc**2 -2*y_fc*R+ R**2)
+    c_a72 = (rho**2)*(4*(y_fc*R -R**2+ x_fc**2))
+    c_a73 = (rho**2)*(16*x_fc*R)
+    c_a74 = (rho**2)*(2*(-y_fc**2+ 4*x_fc**2 + 11*R**2))
+    c_a75 = (rho**2)*(16*x_fc*R)
+    c_a76 = (rho**2)*(4*(-y_fc*R-R**2 + x_fc**2))
+    c_a78 = (rho**2)*(y_fc**2 +2*y_fc*R +R**2)
+
+    c_a81 = 4*rho*(x_fc*(-y_fc + R))
+    c_a82 = 4*rho*(2*R*(-y_fc + R))
+    c_a83 = 4*rho*(x_fc*(-y_fc -R))
+    c_a84 = 4*rho*(-4*R**2)
+    c_a85 = 4*rho*(x_fc*(y_fc -R))
+    c_a86 = 4*rho*(2*R*(y_fc  +R))
+    c_a87 = 4*rho*(x_fc*(y_fc + R))
+
+    # Eqs 263 and 264:
+    c_Lm0 = c_L20- rho**2
+    c_Lm1 = c_L21
+    c_Lm2 = c_L22 + c_L20 -2*rho**2
+    c_Lm3 = c_L21
+    c_Lm4 = c_L22 -rho**2
+
+    # Eqs 267 and 268:
+    c_Lp0 = c_L40 -2*(rho**2)*c_L20 + rho**4
+    c_Lp1 = c_L41 -2*(rho**2)*c_L21
+    c_Lp2 = c_L42 -2*(rho**2)*c_L22 -2*(rho**2)*c_L20+ 2*rho**4
+    c_Lp3 = c_L43 -2*(rho**2)*c_L21
+    c_Lp4 = c_L44 -2*(rho**2)*c_L22 + rho**4
+
+    # Eqs 284 and 285:
+    c_b0 = c_Lp0*c_a00
+    c_b1 = c_Lp0*c_a01 + c_Lp1*c_a00
+    c_b2 = c_Lp0*c_a02 + c_Lp1*c_a01 + c_Lp2*c_a00
+    c_b3 = c_Lp0*c_a03 + c_Lp1*c_a02 + c_Lp2*c_a01 + c_Lp3*c_a00
+    c_b4 = c_Lp0*c_a04 + c_Lp1*c_a03 + c_Lp2*c_a02 + c_Lp3*c_a01 + c_Lp4*c_a00
+    c_b5 = c_Lp0*c_a05 + c_Lp1*c_a04 + c_Lp2*c_a03 + c_Lp3*c_a02 + c_Lp4*c_a01
+    c_b6 = c_Lp0*c_a06 + c_Lp1*c_a05 + c_Lp2*c_a04 + c_Lp3*c_a03 + c_Lp4*c_a02
+    c_b7 = c_Lp0*c_a07 + c_Lp1*c_a06 + c_Lp2*c_a05 + c_Lp3*c_a04 + c_Lp4*c_a03
+    c_b8 = c_Lp0*c_a08 + c_Lp1*c_a07 + c_Lp2*c_a06 + c_Lp3*c_a05 + c_Lp4*c_a04
+    c_b9 = c_Lp1*c_a08 + c_Lp2*c_a07 + c_Lp3*c_a06 + c_Lp4*c_a05
+    c_b10 = c_Lp2*c_a08 + c_Lp3*c_a07 + c_Lp4*c_a06
+    c_b11 = c_Lp3*c_a08 + c_Lp4*c_a07
+    c_b12 = c_Lp4*c_a08
+
+    # Eqs 289 and 290:
+    c_e1 = c_Lm0*c_a11
+    c_e2 = c_Lm0*c_a12 + c_Lm1*c_a11
+    c_e3 = c_Lm0*c_a13 +  c_Lm1*c_a12 + c_Lm2*c_a11
+    c_e4 = c_Lm1*c_a13 + c_Lm2*c_a12 + c_Lm3*c_a11
+    c_e5 = c_Lm0*c_a15 + c_Lm2*c_a13 + c_Lm3*c_a12 + c_Lm4*c_a11
+    c_e6 = c_Lm0*c_a16 + c_Lm1*c_a15 + c_Lm3*c_a13 + c_Lm4*c_a12
+    c_e7 = c_Lm0*c_a17 + c_Lm1*c_a16 + c_Lm2*c_a15 + c_Lm4*c_a13
+    c_e8 = c_Lm1*c_a17 + c_Lm2*c_a16 + c_Lm3*c_a15
+    c_e9 = c_Lm2*c_a17 + c_Lm3*c_a16 + c_Lm4*c_a15
+    c_e10 = c_Lm3*c_a17 + c_Lm4*c_a16
+    c_e11 = c_Lm4*c_a17
+
+    # Eqs 294 and 295:
+    c_h2 = c_L20*c_a22
+    c_h3 = c_L21*c_a22
+    c_h4 = c_L20*c_a24 + (c_L22 +  c_L20)*c_a22
+    c_h5 = c_L21*c_a24 + c_L21*c_a22
+    c_h6 = c_L20*c_a26 + (c_L22 +  c_L20)*c_a24 + c_L22*c_a22
+    c_h7 = c_L21*c_a26 + c_L21*c_a24
+    c_h8 = (c_L22 +  c_L20)*c_a26 + c_L22*c_a24
+    c_h9 = c_L21*c_a26
+    c_h10 = c_L22*c_a26
+
+    # Eqs 298 and 299:
+    c_i0 = c_Lm0*c_a40
+    c_i1 = c_Lm1*c_a40
+    c_i2 = c_Lm0*c_a42 +  c_Lm2*c_a40
+    c_i3 = c_Lm0*c_a43 + c_Lm1*c_a42 + c_Lm3*c_a40
+    c_i4 = c_Lm0*c_a44 + c_Lm1*c_a43 +  c_Lm2*c_a42 + c_Lm4*c_a40
+    c_i5 = c_Lm0*c_a45 + c_Lm1*c_a44 + c_Lm2*c_a43 + c_Lm3*c_a42
+    c_i6 = c_Lm0*c_a46 + c_Lm1*c_a45 + c_Lm2*c_a44 + c_Lm3*c_a43 + c_Lm4*c_a42
+    c_i7 = c_Lm1*c_a46 + c_Lm2*c_a45 + c_Lm3*c_a44 + c_Lm4*c_a43
+    c_i8 = c_Lm0*c_a48 + c_Lm2*c_a46 + c_Lm3*c_a45 + c_Lm4*c_a44
+    c_i9 = c_Lm1*c_a48 + c_Lm3*c_a46 + c_Lm4*c_a45
+    c_i10 = c_Lm2*c_a48 + c_Lm4*c_a46
+    c_i11 = c_Lm3*c_a48
+    c_i12 = c_Lm4*c_a48
+
+    # Eqs 303 and 304
+    c_j1 = c_L20*c_a51
+    c_j2 = c_L20*c_a52 + c_L21*c_a51
+    c_j3 = c_L20*c_a53 + c_L21*c_a52 + (c_L22 +  c_L20)*c_a51
+    c_j4 = c_L21*c_a53 + (c_L22 +  c_L20)*c_a52 + c_L21*c_a51
+    c_j5 = c_L20*c_a55 + (c_L22 +  c_L20)*c_a53 + c_L21*c_a52 + c_L22*c_a51
+    c_j6 = c_L20*c_a56 + c_L21*c_a55 + c_L21*c_a53 + c_L22*c_a52
+    c_j7 = c_L20*c_a57 + c_L21*c_a56 + (c_L22 +  c_L20)*c_a55 + c_L22*c_a53
+    c_j8 = c_L21*c_a57 + (c_L22 +  c_L20)*c_a56 + c_L21*c_a55
+    c_j9 = (c_L22 +  c_L20)*c_a57 + c_L21*c_a56 + c_L22*c_a55
+    c_j10 = c_L21*c_a57 + c_L22*c_a56
+    c_j11 = c_L22*c_a57
+
+    # Eqs 308 and 309:
+    c_k0 = c_D20*c_a70
+    c_k1 = c_D21*c_a70
+    c_k2 = c_D20*c_a72 + (c_D22 + c_D20)*c_a70
+    c_k3 = c_D20*c_a73 + c_D21*c_a72 + c_D21*c_a70
+    c_k4 = c_D20*c_a74 + c_D21*c_a73 + (c_D22 + c_D20)*c_a72 + c_D22*c_a70
+    c_k5 = c_D20*c_a75 + c_D21*c_a74 + (c_D22 + c_D20)*c_a73 + c_D21*c_a72
+    c_k6 = c_D20*c_a76 + c_D21*c_a75 + (c_D22 + c_D20)*c_a74 + c_D21*c_a73 + c_D22*c_a72
+    c_k7 = c_D21*c_a76 + (c_D22 + c_D20)*c_a75 + c_D21*c_a74 + c_D22*c_a73
+    c_k8 = c_D20*c_a78 + (c_D22 + c_D20)*c_a76 + c_D21*c_a75 +  c_D22*c_a74
+    c_k9 = c_D21*c_a78 + c_D21*c_a76 + c_D22*c_a75
+    c_k10 = (c_D22 + c_D20)*c_a78 + c_D22*c_a76
+    c_k11 = c_D21*c_a78
+    c_k12 = c_D22*c_a78
+
+    # Eqs 313 and 314:
+    c_n1 = c_L20*c_D20*c_a81
+    c_n2 = c_L20*c_D20*c_a82 + (c_L20*c_D21 + c_L21*c_D20)*c_a81
+    c_n3 = c_L20*c_D20*c_a83 + (c_L20*c_D21 + c_L21*c_D20)*c_a82 + (c_L20*c_D22 + c_L21*c_D21 + c_L22*c_D20)*c_a81
+    c_n4 = c_L20*c_D20*c_a84 + (c_L20*c_D21 + c_L21*c_D20)*c_a83 + (c_L20*c_D22 + c_L21*c_D21 + c_L22*c_D20)*c_a82 + (c_L21*c_D22 + c_L22*c_D21)*c_a81
+    c_n5 = c_L20*c_D20*c_a85 + (c_L20*c_D21 + c_L21*c_D20)*c_a84 + (c_L20*c_D22 + c_L21*c_D21 + c_L22*c_D20)*c_a83 + (c_L21*c_D22 + c_L22*c_D21)*c_a82 + c_L22*c_D22*c_a81
+    c_n6 = c_L20*c_D20*c_a86 + (c_L20*c_D21 + c_L21*c_D20)*c_a85 + (c_L20*c_D22 + c_L21*c_D21 + c_L22*c_D20)*c_a84 + (c_L21*c_D22 + c_L22*c_D21)*c_a83 + c_L22*c_D22*c_a82
+    c_n7 = c_L20*c_D20*c_a87 + (c_L20*c_D21 + c_L21*c_D20)*c_a86 + (c_L20*c_D22 + c_L21*c_D21 + c_L22*c_D20)*c_a85 + (c_L21*c_D22 + c_L22*c_D21)*c_a84 + c_L22*c_D22*c_a83
+    c_n8 = (c_L20*c_D21 + c_L21*c_D20)*c_a87 + (c_L20*c_D22 + c_L21*c_D21 + c_L22*c_D20)*c_a86 + (c_L21*c_D22 + c_L22*c_D21)*c_a85 + c_L22*c_D22*c_a84
+    c_n9 = (c_L20*c_D22 + c_L21*c_D21 + c_L22*c_D20)*c_a87 + (c_L21*c_D22 + c_L22*c_D21)*c_a86 + c_L22*c_D22*c_a85
+    c_n10 = (c_L21*c_D22 + c_L22*c_D21)*c_a87 + c_L22*c_D22*c_a86
+    c_n11 = c_L22*c_D22*c_a87
+
+    # Eqs 317 and 318:
+    c_TT0 = c_b0 + c_k0
+    c_TT1 = c_b1 + c_e1 + c_k1 + c_n1
+    c_TT2 = c_b2 + c_e2 +  c_h2 + c_a32 + c_k2 + c_n2
+    c_TT3 = c_b3 + c_e3 + c_h3 + c_k3 + c_n3
+    c_TT4 = c_b4 + c_e4 + c_h4 + (c_a34 + 2*c_a32) + c_k4 + c_n4
+    c_TT5 = c_b5 + c_e5 + c_h5 + c_k5 + c_n5
+    c_TT6 = c_b6 + c_e6 + c_h6 + (c_a36 + 2*c_a34+ c_a32) + c_k6 +  c_n6
+    c_TT7 = c_b7 + c_e7 + c_h7 + c_k7 + c_n7
+    c_TT8 = c_b8 + c_e8 + c_h8 + (2*c_a36 + c_a34) + c_k8 + c_n8
+    c_TT9 = c_b9 + c_e9 + c_h9 + c_k9 + c_n9
+    c_TT10 = c_b10 + c_e10 + c_h10 +  c_a36 + c_k10 + c_n10
+    c_TT11 = c_b11 + c_e11 + c_k11 + c_n11
+    c_TT12 = c_b12 + c_k12
+
+    # Eqs 319 and 320:
+    c_TD0 = c_i0
+    c_TD1 = c_i1 + c_j1 + c_a61
+    c_TD2 = c_i2 + c_j2 + c_a62
+    c_TD3 = c_i3 + c_j3 + (c_a63 + 2*c_a61)
+    c_TD4 = c_i4 + c_j4 + 2*c_a62
+    c_TD5 = c_i5 + c_j5 + (c_a65 + 2*c_a63 + c_a61)
+    c_TD6 = c_i6 + c_j6 + (c_a66 + c_a62)
+    c_TD7 = c_i7 + c_j7 + (c_a67 + 2*c_a65 + c_a63)
+    c_TD8 = c_i8 + c_j8 + 2*c_a66
+    c_TD9 = c_i9 + c_j9 + (2*c_a67 + c_a65)
+    c_TD10 = c_i10 + c_j10 + c_a66
+    c_TD11 = c_i11 + c_j11 + c_a67
+    c_TD12 = c_i12
 
     # Eqs 326 and 327:
     c__3 = c_c0 + c__2
     c__4 = 2*c__1
     c__5 = c_c0 - c__2
 
-    # Eqs 357 and 358:
-    c_u0 = c_T0-c_nd0
-    c_u1 = c_T1-c_nd1
-    c_u2 = c_T2+ c_T0-c_nd2
-    c_u3 = c_T3+c_T1-c_nd3
-    c_u4 = c_T4+c_T2-c_nd4
-    c_u5 = c_T5+c_T3-c_nd5
-    c_u6 = c_T6+c_T4-c_nd6
-    c_u7 = c_T7+c_T5-c_nd7
-    c_u8 = c_T8+c_T6-c_nd8
-    c_u9 = c_T9+c_T7-c_nd9
-    c_10 = c_T10+c_T8-c_nd10
-    c_u11 = c_T11+c_T9-c_nd11
-    c_u12 = c_T12+c_T10-c_nd12
-    c_u13 = c_T11-c_nd13
-    c_u14 = c_T12-c_nd14
 
-    # Eqs 76 and 77
-    c_D20 = (x_fc**2 + y_fc**2 + R**2 - 2*y_fc*R - rho**2)
-    c_D21 = 4*x_fc*R
-    c_D22 = (x_fc**2 + y_fc**2 + R**2 + 2*y_fc*R- rho**2)
+    # Eqs 333 and 334
+    c_nd0 = c__3*c_TT0
+    c_nd1 = c__3*c_TT1 + c__4*c_TT0
+    c_nd2 = c__3*c_TT2 + c__4*c_TT1 + c__5*c_TT0
+    c_nd3 = c__3*c_TT3 + c__4*c_TT2 + c__5*c_TT1
+    c_nd4 = c__3*c_TT4 + c__4*c_TT3 + c__5*c_TT2
+    c_nd5 = c__3*c_TT5 + c__4*c_TT4 + c__5*c_TT3
+    c_nd6 = c__3*c_TT6 + c__4*c_TT5 + c__5*c_TT4
+    c_nd7 = c__3*c_TT7 + c__4*c_TT6 + c__5*c_TT5
+    c_nd8 = c__3*c_TT8 + c__4*c_TT7 + c__5*c_TT6
+    c_nd9 = c__3*c_TT9 + c__4*c_TT8 + c__5*c_TT7
+    c_nd10 = c__3*c_TT10 + c__4*c_TT9 + c__5*c_TT8
+    c_nd11 = c__3*c_TT11 + c__4*c_TT10 + c__5*c_TT9
+    c_nd12 = c__3*c_TT12 +c__4*c_TT11 +  c__5*c_TT10
+    c_nd13 = c__4*c_TT12 + c__5*c_TT11
+    c_nd14 = c__5*c_TT12
 
     # Eqs 335 and 336:
     c_dd0 = c__3*c_TD0
@@ -177,6 +331,23 @@ def get_thet1_LSLS(r_c, rho, thet0, x0, y0, xf, yf, xc, yc):
     c_dd12 = c__3*c_TD12 + c__4*c_TD11 + c__5*c_TD10
     c_dd13 = c__4*c_TD12 + c__5*c_TD11
     c_dd14 = c__5*c_TD12
+
+    # Eqs 357 and 358:
+    c_u0 = c_T0-c_nd0
+    c_u1 = c_T1-c_nd1
+    c_u2 = c_T2+ c_T0-c_nd2
+    c_u3 = c_T3+c_T1-c_nd3
+    c_u4 = c_T4+c_T2-c_nd4
+    c_u5 = c_T5+c_T3-c_nd5
+    c_u6 = c_T6+c_T4-c_nd6
+    c_u7 = c_T7+c_T5-c_nd7
+    c_u8 = c_T8+c_T6-c_nd8
+    c_u9 = c_T9+c_T7-c_nd9
+    c_10 = c_T10+c_T8-c_nd10
+    c_u11 = c_T11+c_T9-c_nd11
+    c_u12 = c_T12+c_T10-c_nd12
+    c_u13 = c_T11-c_nd13
+    c_u14 = c_T12-c_nd14
 
     # Eqs 362 and 363:
     c_v0 = c_u0*c_u0
@@ -209,7 +380,7 @@ def get_thet1_LSLS(r_c, rho, thet0, x0, y0, xf, yf, xc, yc):
     c_v27 = c_u13*c_u14 + c_u14*c_u13
     c_v28 = c_u14*c_u14
 
-    # Eqs 366 and 267:
+    # Eqs 366 and 367:
     c_w0 = c_dd0*c_dd0
     c_w1 = c_dd0*c_dd1 + c_dd1*c_dd0
     c_w2 = c_dd0*c_dd2 + c_dd1*c_dd1 + c_dd2*c_dd0
@@ -272,6 +443,7 @@ def get_thet1_LSLS(r_c, rho, thet0, x0, y0, xf, yf, xc, yc):
     T_28 = c_v28 + c_v26 - c_D20*c_w28 - c_D21*c_w27 - c_D22*c_w26
     T_29 = c_v27 - c_D21*c_w28 - c_D22*c_w27
     T_30 = c_v28 - c_D22*c_w28
+
     # Build the companion matrix, the highest order coeff is 1
     coeffs = np.array([[T_0/T_6], [T_1/T_6], [T_2/T_6], [T_3/T_6], [T_4/T_6], [T_5/T_6]])
     n = 6 # order of the equation that we need to find the roots of
