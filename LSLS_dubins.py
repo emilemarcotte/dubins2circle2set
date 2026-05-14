@@ -13,7 +13,7 @@ y0 = 4
 xf = 1
 yf = 4
 xc = 1
-yc = -1
+yc = -1# + 3
 
 """
 LSLS case
@@ -486,43 +486,70 @@ def dist_points(x1, y1, x2, y2):
     """
     return ((x1 - x2)**2 + (y1 - y2)**2)**.5
 
-# Find the candidate values for the angle thet1
+# Calculate the total execution time
 start = perf_counter()
+
+# Find the candidate values for the angle thet1
 roots = get_thet1_LSLS(r_c, rho, thet0, x0, y0, xf, yf, xc, yc)
 print("Real roots:", roots)
-# thet1_candidates = [2*atan(half_angle)*180/pi for half_angle in roots]
 thet1_candidates = [2*atan(half_angle) for half_angle in roots]
-c_x0, c_y0 = get_circle_center(x0, y0, thet0, rho, "L")
-# c_xf, c_yf = get_circle_center(xf, yf, thetf, rho, "L")
+# Account for the fact that adding 180 degrees can also give the same tangent
 thet1_candidates_180 = []
 for angle in thet1_candidates:
     thet1_candidates_180.append(angle+pi)
-# Account for the fact that adding 180 degrees can also give the same tangent
 thet1_candidates += thet1_candidates_180
 c1_candidates = []
 for thet1 in thet1_candidates:
-    c_x1, c_y1 = get_circle_center(xc, yc, thet1, rho+r_c, "L")
-    c1_candidates.append((c_x1,c_y1))
-# Keep only the candidate value that gives the shortest distance between circles c0 and c1
-# THIS IS TECHNICALLY WRONG! I NEED TO KEEP SHORTEST FULL PATH! CHANGE IT! ######################################################
-distances = []
-for c_x1,c_y1 in c1_candidates:
-    dist = dist_points(c_x0, c_y0, c_x1, c_y1)
-    distances.append(dist)
-min_dist_idx = np.argmin(distances)
-c_x1, c_y1 = c1_candidates[min_dist_idx]
-thet1_t = thet1_candidates[min_dist_idx]
-# Get the final angle
-L = ( 2*(xf - xc)*(r_c + rho)*sin(thet1_t) - 2*(yf - yc)*(r_c + rho)*cos(thet1_t)
-    + (xf - xc)**2 + (yf - yc)**2 + (r_c + rho)**2 )**.5
-D = ( L**2 - rho**2 )**.5
-theta_ = acos(rho/L)
-# print(theta_)
-# theta_ = asin(D/L)
-# print(theta_)
-delta_ = acos((xf - xc + (r_c + rho)*sin(thet1_t))/L)
-# theta_f = delta_ + theta_ - pi/2
-theta_f = delta_ - theta_ + pi/2
+    c_x1_, c_y1_ = get_circle_center(xc, yc, thet1, rho+r_c, "L")
+    c1_candidates.append((c_x1_,c_y1_))
+# Keep only the candidate value that gives the shortest overall path length
+c_x0, c_y0 = get_circle_center(x0, y0, thet0, rho, "L")
+distance = -1
+min_dist_idx = None
+c_x1 = None
+c_y1 = None
+x_t0 = None
+y_t0 = None
+x_t1 = None
+y_t1 = None
+thet1_t = None
+phi = None
+theta_f = None
+for i, c1 in enumerate(c1_candidates):
+    _c_x1, _c_y1 = c1
+    _phi = atan2(c_y0-_c_y1, c_x0-_c_x1) # angle of segment joining the centers of c0 and c1 (same as S segment angle)
+    _x_t0, _y_t0 = get_circle_center(c_x0, c_y0, _phi, rho, "L") # point that starts the first S.
+    _x_t1, _y_t1 = get_circle_center(_c_x1, _c_y1, _phi, rho, "L") # point that ends the first S, and starts the 2nd L.
+    # arc1_length = abs(phi - (thet0 - pi))*rho # arc = theta*rho
+    straight1_length = ( (_x_t0 - _x_t1)**2 + (_y_t0 - _y_t1)**2 )**.5
+    arc1_length = abs(_phi - thet0)*rho # arc = theta*rho
+    # Get the final angle
+    _theta1_t = thet1_candidates[i]
+    L = ( 2*(xf - xc)*(r_c + rho)*sin(_theta1_t) - 2*(yf - yc)*(r_c + rho)*cos(_theta1_t)
+        + (xf - xc)**2 + (yf - yc)**2 + (r_c + rho)**2 )**.5
+    # D = ( L**2 - rho**2 )**.5
+    _theta= acos(rho/L)
+    _delta = acos((xf - xc + (r_c + rho)*sin(_theta1_t))/L)
+    _theta_f = _delta - _theta + pi/2
+    arc2_length = abs(_theta_f - _phi)*rho
+    _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "L") # point that starts the last S.
+    straight2_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
+    total_path_length = arc1_length + straight1_length + arc2_length + straight2_length
+    if (i == 0) or (total_path_length < distance):
+        # Only keep the parameters for the shortest path
+        distance = total_path_length
+        min_dist_idx = i
+        c_x1 = _c_x1
+        c_y1 = _c_y1
+        x_t0 = _x_t0
+        y_t0 = _y_t0
+        x_t1 = _x_t1
+        y_t1 = _y_t1
+        thet1_t = _theta1_t
+        phi = _phi
+        theta_f = _theta_f
+    print("total_path_length:", total_path_length)
+
 end = perf_counter() # To know how quick the code is
 print("time =", end-start)
 
@@ -551,79 +578,39 @@ p_xt, p_yt = get_circle_center(xc, yc, thet1_t, r_c, "L")
 plt.plot(p_xt, p_yt, "ro")
 plt.arrow(p_xt, p_yt, arrow_length*cos(thet1_t), arrow_length*sin(thet1_t), head_width=0.2)
 # Plot the point that starts the first S segment
-# First, angle of segment joining the centers of c0 and c1,
-# with an extra pi to get the second tangent point in the circle
-phi = pi + atan2(c_y1-c_y0, c_x1-c_x0)
-x_t0, y_t0 = get_circle_center(c_x0, c_y0, phi, rho, "L")
 plt.plot(x_t0, y_t0, "go")
-x_t1, y_t1 = get_circle_center(c_x1, c_y1, phi, rho, "L")
 plt.plot(x_t1, y_t1, "go")
-# Get the joining segment points
+# Get the points for the first curved segment
+angles0 = np.linspace(thet0-pi, phi, 10)
+x_L0 = []
+y_L0 = []
+for angle in angles0:
+    x, y = get_circle_center(c_x0, c_y0, angle, rho, "L")
+    x_L0.append(x)
+    y_L0.append(y)
+plt.plot(x_L0, y_L0, "g-")
+# Get the points for the first straight segment
 x_s01 = np.linspace(x_t0, x_t1, 10)
-slope = tan(phi)
-b = y_t0 - slope*x_t0
-y_s01 = slope*x_s01 + b
+y_s01 = np.linspace(y_t0, y_t1, 10)
 plt.plot(x_s01, y_s01, "g-")
-# Do the same thing for the other segment
-# phi2 = pi + atan2(c_yf-c_y1, c_xf-c_x1)
-# x_t2, y_t2 = get_circle_center(c_x1, c_y1, phi2, rho, "L")
-# plt.plot(x_t2, y_t2, "go")
-# x_tf, y_tf = get_circle_center(c_xf, c_yf, phi2, rho, "L")
-# plt.plot(x_tf, y_tf, "go")
-# x_s1f = np.linspace(x_t2, x_tf, 10)
-# slope2 = tan(phi2)
-# b2 = y_t2 - slope2*x_t2
-# y_s1f = slope2*x_s1f + b2
-# plt.plot(x_s1f, y_s1f, "g-")
-# # Get the points for the first curved segment
-# angles0 = np.linspace(thet0-pi, phi, 10)
-# x_L0 = []
-# y_L0 = []
-# for angle in angles0:
-#     x, y = get_circle_center(c_x0, c_y0, angle, rho, "L")
-#     x_L0.append(x)
-#     y_L0.append(y)
-# plt.plot(x_L0, y_L0, "g-")
-# # Get the points for the second curved segment
-# angles1 = np.linspace(phi, phi2, 10)
-# x_L1 = []
-# y_L1 = []
-# for angle in angles1:
-#     x, y = get_circle_center(c_x1, c_y1, angle, rho, "L")
-#     x_L1.append(x)
-#     y_L1.append(y)
-# plt.plot(x_L1, y_L1, "g-")
-# # # Get the points for the third curved segment
-# # anglesf = np.linspace(phi2, thetf+pi, 10)
-# # x_Lf = []
-# # y_Lf = []
-# # for angle in anglesf:
-# #     x, y = get_circle_center(c_xf, c_yf, angle, rho, "L")
-# #     x_Lf.append(x)
-# #     y_Lf.append(y)
-# # plt.plot(x_Lf, y_Lf, "g-")
+# Get the points for the second curved segment
+angles1 = np.linspace(phi, theta_f+pi, 10)
+x_L1 = []
+y_L1 = []
+for angle in angles1:
+    x, y = get_circle_center(c_x1, c_y1, angle, rho, "L")
+    x_L1.append(x)
+    y_L1.append(y)
+plt.plot(x_L1, y_L1, "g-")
+plt.plot(x_L1[-1], y_L1[-1], "go")
+# Get the points for the last straight segment
+x_S_f = np.linspace(x_L1[-1], xf, 10)
+y_S_f = np.linspace(y_L1[-1], yf, 10)
+plt.plot(x_S_f, y_S_f, "g-")
 
-# # all_x_trajectory = x_L0 + x_s01.tolist()[1:-1] + x_L1 + x_s1f.tolist()[1:-1] + x_Lf
-# # all_y_trajectory = y_L0 + y_s01.tolist()[1:-1] + y_L1 + y_s1f.tolist()[1:-1] + y_Lf
-# all_x_trajectory = x_L0 + x_s01.tolist()[1:-1] + x_L1 + x_s1f.tolist()[1:-1]
-# all_y_trajectory = y_L0 + y_s01.tolist()[1:-1] + y_L1 + y_s1f.tolist()[1:-1]
-# # print(all_x_trajectory)
-# # print(all_y_trajectory)
-# plt.plot(all_x_trajectory, all_y_trajectory, "c-")
-
-# arc1_length = abs(phi - (thet0 - pi))*rho # arc = theta*rho
-# straight1_length = ( (x_t0 - x_t1)**2 + (y_t0 - y_t1)**2 )**.5
-# arc2_length = abs(phi2 - phi)*rho
-# straight2_length = ( (x_t2 - x_tf)**2 + (y_t2 - y_tf)**2 )**.5
-# # arc3_length = abs(thetf+pi - phi2)*rho
-# total_path_length = arc1_length + straight1_length + arc2_length + straight2_length + arc3_length
-# total_path_length = arc1_length + straight1_length + arc2_length + straight2_length
-# print("arc1_length", arc1_length)
-# print("straight1_length", straight1_length)
-# print("arc2_length", arc2_length)
-# print("straight2_length", straight2_length)
-# # print("arc3_length", arc3_length)
-# print("total_path_length", total_path_length)
+all_x_trajectory = x_L0 + x_s01.tolist()[1:-1] + x_L1 + x_S_f.tolist()[1:]
+all_y_trajectory = y_L0 + y_s01.tolist()[1:-1] + y_L1 + y_S_f.tolist()[1:]
+plt.plot(all_x_trajectory, all_y_trajectory, "c-")
 
 plt.grid(False)
 plt.axis("equal")
