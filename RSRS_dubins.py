@@ -20,7 +20,6 @@ RSRS case
 """
 
 def get_thet1_RSRS(r_c, rho, theta0, x_0, y_0, x_f, y_f, x_c, y_c):
-    # R = r_c + rho
 
     c_mdp2 = r_c**2 + 2*r_c*rho + 2*r_c*y_c - 2*r_c*y_f + rho**2 + 2*rho*y_c - 2*rho*y_f + x_c**2 - 2*x_c*x_f + x_f**2 + y_c**2 - 2*y_c*y_f + y_f**2
     c_mdp1 = 4*r_c*x_c - 4*r_c*x_f + 4*rho*x_c - 4*rho*x_f
@@ -357,8 +356,8 @@ thet1_t = None
 phi = None
 theta_f = None
 for i, c1 in enumerate(c1_candidates):
-    if i == 0:
-        first_idx = i
+    # if i == 0:
+    #     first_idx = i
     _c_x1, _c_y1 = c1
     _phi = atan2(c_y0-_c_y1, c_x0-_c_x1) # angle of segment joining the centers of c0 and c1 (same as S segment angle)
     _x_t0, _y_t0 = get_circle_center(c_x0, c_y0, _phi, rho, "R") # point that starts the first S.
@@ -377,11 +376,11 @@ for i, c1 in enumerate(c1_candidates):
     L = ( (_c_x1 - xf)**2 + (_c_y1 - yf)**2 )**.5
     # L = ( 2*(xf - xc)*(r_c + rho)*sin(_theta1_t) - 2*(yf - yc)*(r_c + rho)*cos(_theta1_t)
     #     + (xf - xc)**2 + (yf - yc)**2 + (r_c + rho)**2 )**.5
-    if L == 0:
-        if first_idx == i:
-            first_idx == i+1
-            continue
-        continue
+    # if L == 0:
+    #     if first_idx == i:
+    #         first_idx == i+1
+    #         continue
+    #     continue
     # print(L)
     # D = ( L**2 - rho**2 )**.5
     _theta = acos(rho/L)
@@ -391,7 +390,7 @@ for i, c1 in enumerate(c1_candidates):
     _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "R") # point that starts the last S.
     straight2_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
     total_path_length = arc1_length + straight1_length + arc2_length + straight2_length
-    if (i == first_idx) or (total_path_length < distance):
+    if (i == 0) or (total_path_length < distance):
     # if (i == 1):
         # Only keep the parameters for the shortest path
         distance = total_path_length
