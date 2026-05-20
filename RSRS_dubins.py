@@ -283,13 +283,13 @@ def get_thet1_RSRS(r_c, rho, theta0, x_0, y_0, x_f, y_f, x_c, y_c):
     T_28 = (c_L22**4*c_q10_L4**2 - c_L22**3*c_dL_10**2 + 2*c_L22**3*c_q10_D2*c_q10_L4 + 2*c_L22**3*c_q10_L2*c_q10_L4 + c_L22**2*c_dL_10**2*rho**2 - 2*c_L22**2*c_dL_10*c_d_10 + c_L22**2*c_q10_D2**2 + 2*c_L22**2*c_q10_D2*c_q10_L2 - 2*c_L22**2*c_q10_D2*c_q10_L4*rho**2 + 2*c_L22**2*c_q10_L0*c_q10_L4 + c_L22**2*c_q10_L2**2 + 2*c_L22*c_dL_10*c_d_10*rho**2 - c_L22*c_d_10**2 - 2*c_L22*c_q10_D2**2*rho**2 + 2*c_L22*c_q10_D2*c_q10_L0 - 2*c_L22*c_q10_D2*c_q10_L2*rho**2 + 2*c_L22*c_q10_L0*c_q10_L2 + c_d_10**2*rho**2 + c_q10_D2**2*rho**4 - 2*c_q10_D2*c_q10_L0*rho**2 + c_q10_L0**2)
 
     # Build the companion matrix, the highest order coeff is 1
-    coeffs = np.array([[T_0/T_30], [T_1/T_30], [T_2/T_30], [T_3/T_30], [T_4/T_30],
-                       [T_5/T_30], [T_6/T_30], [T_7/T_30], [T_8/T_30], [T_9/T_30],
-                       [T_10/T_30], [T_11/T_30], [T_12/T_30], [T_13/T_30], [T_14/T_30],
-                       [T_15/T_30], [T_16/T_30], [T_17/T_30], [T_18/T_30], [T_19/T_30],
-                       [T_20/T_30], [T_21/T_30], [T_22/T_30], [T_23/T_30], [T_24/T_30],
-                       [T_25/T_30], [T_26/T_30], [T_27/T_30], [T_28/T_30], [T_29/T_30]])
-    n = 30 # order of the equation that we need to find the roots of
+    coeffs = np.array([[T_0/T_28], [T_1/T_28], [T_2/T_28], [T_3/T_28], [T_4/T_28],
+                       [T_5/T_28], [T_6/T_28], [T_7/T_28], [T_8/T_28], [T_9/T_28],
+                       [T_10/T_28], [T_11/T_28], [T_12/T_28], [T_13/T_28], [T_14/T_28],
+                       [T_15/T_28], [T_16/T_28], [T_17/T_28], [T_18/T_28], [T_19/T_28],
+                       [T_20/T_28], [T_21/T_28], [T_22/T_28], [T_23/T_28], [T_24/T_28],
+                       [T_25/T_28], [T_26/T_28], [T_27/T_28]])
+    n = 28 # order of the equation that we need to find the roots of
     sub_mat = np.eye(n-1)
     upp_mat = np.zeros((1,n-1))
     left_mat = np.vstack((upp_mat, sub_mat))
@@ -328,8 +328,12 @@ def dist_points(x1, y1, x2, y2):
 start = perf_counter()
 
 # Find the candidate values for the angle thet1
-roots = get_thet1_LSLS(r_c, rho, thet0, x0, y0, xf, yf, xc, yc)
+roots = get_thet1_RSRS(r_c, rho, thet0, x0, y0, xf, yf, xc, yc)
 print("Real roots:", roots)
+end = perf_counter() # To know how quick the code is
+print("time =", end-start)
+raise AssertionError
+
 thet1_candidates = [2*atan(half_angle) for half_angle in roots]
 # Account for the fact that adding 180 degrees can also give the same tangent
 thet1_candidates_180 = []
