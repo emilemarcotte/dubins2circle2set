@@ -330,9 +330,8 @@ start = perf_counter()
 # Find the candidate values for the angle thet1
 roots = get_thet1_RSRS(r_c, rho, thet0, x0, y0, xf, yf, xc, yc)
 print("Real roots:", roots)
-end = perf_counter() # To know how quick the code is
-print("time =", end-start)
-raise AssertionError
+# end = perf_counter() # To know how quick the code is
+# print("time =", end-start)
 
 thet1_candidates = [2*atan(half_angle) for half_angle in roots]
 # Account for the fact that adding 180 degrees can also give the same tangent
@@ -342,10 +341,10 @@ for angle in thet1_candidates:
 thet1_candidates += thet1_candidates_180
 c1_candidates = []
 for thet1 in thet1_candidates:
-    c_x1_, c_y1_ = get_circle_center(xc, yc, thet1, rho+r_c, "L")
+    c_x1_, c_y1_ = get_circle_center(xc, yc, thet1, rho+r_c, "R")
     c1_candidates.append((c_x1_,c_y1_))
 # Keep only the candidate value that gives the shortest overall path length
-c_x0, c_y0 = get_circle_center(x0, y0, thet0, rho, "L")
+c_x0, c_y0 = get_circle_center(x0, y0, thet0, rho, "R")
 distance = -1
 min_dist_idx = None
 c_x1 = None
@@ -362,33 +361,34 @@ for i, c1 in enumerate(c1_candidates):
         first_idx = i
     _c_x1, _c_y1 = c1
     _phi = atan2(c_y0-_c_y1, c_x0-_c_x1) # angle of segment joining the centers of c0 and c1 (same as S segment angle)
-    _x_t0, _y_t0 = get_circle_center(c_x0, c_y0, _phi, rho, "L") # point that starts the first S.
-    _x_t1, _y_t1 = get_circle_center(_c_x1, _c_y1, _phi, rho, "L") # point that ends the first S, and starts the 2nd L.
+    _x_t0, _y_t0 = get_circle_center(c_x0, c_y0, _phi, rho, "R") # point that starts the first S.
+    _x_t1, _y_t1 = get_circle_center(_c_x1, _c_y1, _phi, rho, "R") # point that ends the first S, and starts the 2nd L.
     # arc1_length = abs(phi - (thet0 - pi))*rho # arc = theta*rho
     straight1_length = ( (_x_t0 - _x_t1)**2 + (_y_t0 - _y_t1)**2 )**.5
     arc1_length = abs(_phi - thet0)*rho # arc = theta*rho
     # Get the final angle
     _theta1_t = thet1_candidates[i]
-    print(_theta1_t)
-    print(xf)
-    print(xc)
-    print(yf-yc)
-    print(2*(yf - yc)*(r_c + rho))
-    print((yf - yc)**2 + (r_c + rho)**2)
-    L = ( 2*(xf - xc)*(r_c + rho)*sin(_theta1_t) - 2*(yf - yc)*(r_c + rho)*cos(_theta1_t)
-        + (xf - xc)**2 + (yf - yc)**2 + (r_c + rho)**2 )**.5
+    # print(_theta1_t)
+    # print(xf)
+    # print(xc)
+    # print(yf-yc)
+    # print(2*(yf - yc)*(r_c + rho))
+    # print((yf - yc)**2 + (r_c + rho)**2)
+    L = ( (_c_x1 - xf)**2 + (_c_y1 - yf)**2 )**.5
+    # L = ( 2*(xf - xc)*(r_c + rho)*sin(_theta1_t) - 2*(yf - yc)*(r_c + rho)*cos(_theta1_t)
+    #     + (xf - xc)**2 + (yf - yc)**2 + (r_c + rho)**2 )**.5
     if L == 0:
         if first_idx == i:
             first_idx == i+1
             continue
         continue
-    print(L)
+    # print(L)
     # D = ( L**2 - rho**2 )**.5
     _theta = acos(rho/L)
-    _delta = acos((xf - xc + (r_c + rho)*sin(_theta1_t))/L)
-    _theta_f = _delta - _theta + pi/2
+    _delta = acos((xf - xc - (r_c + rho)*sin(_theta1_t))/L) # changed for R
+    _theta_f = _delta + _theta - pi/2 # changed for R
     arc2_length = abs(_theta_f - _phi)*rho
-    _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "L") # point that starts the last S.
+    _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "R") # point that starts the last S.
     straight2_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
     total_path_length = arc1_length + straight1_length + arc2_length + straight2_length
     if (i == first_idx) or (total_path_length < distance):
@@ -405,7 +405,7 @@ for i, c1 in enumerate(c1_candidates):
         thet1_t = _theta1_t
         phi = _phi
         theta_f = _theta_f
-    print("total_path_length:", total_path_length)
+    # print("total_path_length:", total_path_length)
 
 end = perf_counter() # To know how quick the code is
 print("time =", end-start)
@@ -431,7 +431,7 @@ plt.arrow(xf, yf, arrow_length*cos(theta_f), arrow_length*sin(theta_f), head_wid
 circle1 = plt.Circle((c_x1,c_y1), rho, fill=False, linestyle="--", color="k")
 ax.add_patch(circle1)
 # Get and plot the tangent point
-p_xt, p_yt = get_circle_center(xc, yc, thet1_t, r_c, "L")
+p_xt, p_yt = get_circle_center(xc, yc, thet1_t, r_c, "R")
 plt.plot(p_xt, p_yt, "ro")
 plt.arrow(p_xt, p_yt, arrow_length*cos(thet1_t), arrow_length*sin(thet1_t), head_width=0.2)
 # Plot the point that starts the first S segment
@@ -442,7 +442,7 @@ angles0 = np.linspace(thet0-pi, phi, 10)
 x_L0 = []
 y_L0 = []
 for angle in angles0:
-    x, y = get_circle_center(c_x0, c_y0, angle, rho, "L")
+    x, y = get_circle_center(c_x0, c_y0, angle, rho, "R")
     x_L0.append(x)
     y_L0.append(y)
 plt.plot(x_L0, y_L0, "g-")
@@ -455,7 +455,7 @@ angles1 = np.linspace(phi, theta_f+pi, 10)
 x_L1 = []
 y_L1 = []
 for angle in angles1:
-    x, y = get_circle_center(c_x1, c_y1, angle, rho, "L")
+    x, y = get_circle_center(c_x1, c_y1, angle, rho, "R")
     x_L1.append(x)
     y_L1.append(y)
 plt.plot(x_L1, y_L1, "g-")

@@ -533,13 +533,14 @@ for i, c1 in enumerate(c1_candidates):
     print(yf-yc)
     print(2*(yf - yc)*(r_c + rho))
     print((yf - yc)**2 + (r_c + rho)**2)
-    L = ( 2*(xf - xc)*(r_c + rho)*sin(_theta1_t) - 2*(yf - yc)*(r_c + rho)*cos(_theta1_t)
-        + (xf - xc)**2 + (yf - yc)**2 + (r_c + rho)**2 )**.5
-    if L == 0:
-        if first_idx == i:
-            first_idx == i+1
-            continue
-        continue
+    # L = ( 2*(xf - xc)*(r_c + rho)*sin(_theta1_t) - 2*(yf - yc)*(r_c + rho)*cos(_theta1_t)
+    #     + (xf - xc)**2 + (yf - yc)**2 + (r_c + rho)**2 )**.5
+    L = ( (_c_x1 - xf)**2 + (_c_y1 - yf)**2 )**.5
+    # if L == 0:
+    #     if first_idx == i:
+    #         first_idx == i+1
+    #         continue
+    #     continue
     print(L)
     # D = ( L**2 - rho**2 )**.5
     _theta = acos(rho/L)
