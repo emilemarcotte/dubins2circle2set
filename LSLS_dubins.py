@@ -535,7 +535,7 @@ for i, c1 in enumerate(c1_candidates):
     straight2_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
     total_path_length = arc1_length + straight1_length + arc2_length + straight2_length
     if (i == 0) or (total_path_length < distance):
-    # if (i == 1):
+    # if (i == 1): # for testing purposes
         # Only keep the parameters for the shortest path
         distance = total_path_length
         min_dist_idx = i

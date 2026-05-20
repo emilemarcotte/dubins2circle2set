@@ -375,7 +375,7 @@ for i, c1 in enumerate(c1_candidates):
     straight2_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
     total_path_length = arc1_length + straight1_length + arc2_length + straight2_length
     if (i == 0) or (total_path_length < distance):
-    # if (i == 1):
+    # if (i == 0): # for testing purposes
         # Only keep the parameters for the shortest path
         distance = total_path_length
         min_dist_idx = i
@@ -421,7 +421,7 @@ plt.arrow(p_xt, p_yt, arrow_length*cos(thet1_t), arrow_length*sin(thet1_t), head
 plt.plot(x_t0, y_t0, "go")
 plt.plot(x_t1, y_t1, "go")
 # Get the points for the first curved segment
-angles0 = np.linspace(thet0-pi, phi, 10)
+angles0 = np.linspace(thet0+pi, phi, 10) # changed for R
 x_L0 = []
 y_L0 = []
 for angle in angles0:
@@ -434,7 +434,7 @@ x_s01 = np.linspace(x_t0, x_t1, 10)
 y_s01 = np.linspace(y_t0, y_t1, 10)
 plt.plot(x_s01, y_s01, "g-")
 # Get the points for the second curved segment
-angles1 = np.linspace(phi, theta_f+pi, 10)
+angles1 = np.linspace(phi, theta_f-pi, 10) # changed for R
 x_L1 = []
 y_L1 = []
 for angle in angles1:
