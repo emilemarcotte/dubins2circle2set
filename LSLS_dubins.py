@@ -516,8 +516,6 @@ thet1_t = None
 phi = None
 theta_f = None
 for i, c1 in enumerate(c1_candidates):
-    if i == 0:
-        first_idx = i
     _c_x1, _c_y1 = c1
     _phi = atan2(c_y0-_c_y1, c_x0-_c_x1) # angle of segment joining the centers of c0 and c1 (same as S segment angle)
     _x_t0, _y_t0 = get_circle_center(c_x0, c_y0, _phi, rho, "L") # point that starts the first S.
@@ -527,20 +525,7 @@ for i, c1 in enumerate(c1_candidates):
     arc1_length = abs(_phi - thet0)*rho # arc = theta*rho
     # Get the final angle
     _theta1_t = thet1_candidates[i]
-    print(_theta1_t)
-    print(xf)
-    print(xc)
-    print(yf-yc)
-    print(2*(yf - yc)*(r_c + rho))
-    print((yf - yc)**2 + (r_c + rho)**2)
-    L = ( 2*(xf - xc)*(r_c + rho)*sin(_theta1_t) - 2*(yf - yc)*(r_c + rho)*cos(_theta1_t)
-        + (xf - xc)**2 + (yf - yc)**2 + (r_c + rho)**2 )**.5
-    if L == 0:
-        if first_idx == i:
-            first_idx == i+1
-            continue
-        continue
-    print(L)
+    L = ( (_c_x1 - xf)**2 + (_c_y1 - yf)**2 )**.5
     # D = ( L**2 - rho**2 )**.5
     _theta = acos(rho/L)
     _delta = acos((xf - xc + (r_c + rho)*sin(_theta1_t))/L)
@@ -549,8 +534,8 @@ for i, c1 in enumerate(c1_candidates):
     _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "L") # point that starts the last S.
     straight2_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
     total_path_length = arc1_length + straight1_length + arc2_length + straight2_length
-    if (i == first_idx) or (total_path_length < distance):
-    # if (i == 1):
+    if (i == 0) or (total_path_length < distance):
+    # if (i == 1): # for testing purposes
         # Only keep the parameters for the shortest path
         distance = total_path_length
         min_dist_idx = i
@@ -563,7 +548,7 @@ for i, c1 in enumerate(c1_candidates):
         thet1_t = _theta1_t
         phi = _phi
         theta_f = _theta_f
-    print("total_path_length:", total_path_length)
+    # print("total_path_length:", total_path_length)
 
 end = perf_counter() # To know how quick the code is
 print("time =", end-start)
