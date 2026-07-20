@@ -21,7 +21,6 @@ LSLS case
 
 def get_thet1_LSLS(r_c, rho, thet0, x0, y0, xf, yf, xc, yc):
     R = r_c + rho
-
     x_c0 = xc - x0
     y_c0 = yc - y0
     x_fc = xf - xc
