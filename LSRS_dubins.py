@@ -490,7 +490,7 @@ def get_thet1_LSRS(r_c, rho, theta0, x_0, y_0, x_f, y_f, x_c, y_c):
     # Get the roots by finding the eigenvalues of the comp matrix
     roots, _ = np.linalg.eig(companion)
     real_roots = [np.real(root) for root in roots if np.imag(root) == 0]
-    return real_roots
+    return real_roots, c_mdm0, c_mdm1, c_mdm2
 
 def get_circle_center(x, y, thet, rho, turn):
     """
@@ -521,7 +521,7 @@ def dist_points(x1, y1, x2, y2):
 start = perf_counter()
 
 # Find the candidate values for the angle thet1
-roots = get_thet1_LSRS(r_c, rho, thet0, x0, y0, xf, yf, xc, yc)
+roots, c_mdm0, c_mdm1, c_mdm2 = get_thet1_LSRS(r_c, rho, thet0, x0, y0, xf, yf, xc, yc)
 print("Real roots:", roots)
 # end = perf_counter() # To know how quick the code is
 # print("time =", end-start)
@@ -552,14 +552,17 @@ phi = None
 theta_f = None
 for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
-    _phi = atan2(c_y0-_c_y1, c_x0-_c_x1) # angle of segment joining the centers of c0 and c1 (same as S segment angle)
+    _theta1_t = thet1_candidates[i]
+    q = tan(_theta1_t/2)
+    md_minus = (c_mdm0 + c_mdm1*q + c_mdm2*q**2)/(q**2 + 1)
+    gamma = 2*rho/(md_minus**.5)
+    _phi = atan2(c_y0-_c_y1, c_x0-_c_x1) + gamma # angle of segment joining the centers of c0 and c1 (same as S segment angle)
     _x_t0, _y_t0 = get_circle_center(c_x0, c_y0, _phi, rho, "L") # point that starts the first S.
     _x_t1, _y_t1 = get_circle_center(_c_x1, _c_y1, _phi, rho, "R") # point that ends the first S, and starts the R.
     # arc1_length = abs(phi - (thet0 - pi))*rho # arc = theta*rho
     straight1_length = ( (_x_t0 - _x_t1)**2 + (_y_t0 - _y_t1)**2 )**.5
     arc1_length = abs(_phi - thet0)*rho # arc = theta*rho
     # Get the final angle
-    _theta1_t = thet1_candidates[i]
     L = ( (_c_x1 - xf)**2 + (_c_y1 - yf)**2 )**.5
     # D = ( L**2 - rho**2 )**.5
     # print("rho/L", rho/L)
