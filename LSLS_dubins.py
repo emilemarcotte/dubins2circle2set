@@ -25,6 +25,7 @@ def get_thet1_LSLS(r_c, rho, thet0, x0, y0, xf, yf, xc, yc):
     y_c0 = yc - y0
     x_fc = xf - xc
     y_fc = yf - yc
+
     c_c0 = x_c0**2 + y_c0**2 +2*x_c0*sin(thet0) -2*y_c0*cos(thet0) + r_c**2 + 2*(rho**2) + 2*r_c*rho
     c_sq = x_fc**2 + y_fc**2 + R**2 # Eq 48
 
