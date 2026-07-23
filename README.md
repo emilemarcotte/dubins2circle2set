@@ -1,0 +1,3 @@
+- Reference the article;
+- Talk about potential notation differences with the article;
+- Explain which files do what, and how to use them;
