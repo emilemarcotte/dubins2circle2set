@@ -7,8 +7,10 @@ from time import perf_counter
 r_c = 2
 rho = 1
 thet0 = 260*pi/180
-x0 = -4
-y0 = 4
+# x0 = -4
+# y0 = 4
+x0 = -2
+y0 = 2
 # thetf = 105*pi/180
 xf = 1
 yf = 4
@@ -416,72 +418,97 @@ print("Real roots:", roots)
 # print("time =", end-start)
 
 thet1_candidates = [2*atan(half_angle) for half_angle in roots]
-# # Account for the fact that adding 180 degrees can also give the same tangent
-# thet1_candidates_180 = []
-# for angle in thet1_candidates:
-#     thet1_candidates_180.append(angle+pi)
-# thet1_candidates += thet1_candidates_180
-# # print(thet1_candidates)
-# c1_candidates = []
-# for thet1 in thet1_candidates:
-#     c_x1_, c_y1_ = get_circle_center(xc, yc, thet1, rho+r_c, "R")
-#     c1_candidates.append((c_x1_,c_y1_))
-# # Keep only the candidate value that gives the shortest overall path length
-# c_x0, c_y0 = get_circle_center(x0, y0, thet0, rho, "L")
-# distance = -1
-# min_dist_idx = None
-# c_x1 = None
-# c_y1 = None
-# x_t0 = None
-# y_t0 = None
-# x_t1 = None
-# y_t1 = None
-# thet1_t = None
-# phi = None
-# theta_f = None
-# for i, c1 in enumerate(c1_candidates):
-#     _c_x1, _c_y1 = c1
-#     _theta1_t = thet1_candidates[i]
-#     q = tan(_theta1_t/2)
-#     md_minus = (c_mdm0 + c_mdm1*q + c_mdm2*q**2)/(q**2 + 1)
-#     # gamma = asin(2*rho/(md_minus**.5))
-#     _phi = atan2(c_y0-_c_y1, c_x0-_c_x1) + gamma # angle of segment joining the centers of c0 and c1 (same as S segment angle)
-#     _x_t0, _y_t0 = get_circle_center(c_x0, c_y0, _phi, rho, "L") # point that starts the first S.
-#     _x_t1, _y_t1 = get_circle_center(_c_x1, _c_y1, _phi, rho, "R") # point that ends the first S, and starts the R.
-#     # arc1_length = abs(phi - (thet0 - pi))*rho # arc = theta*rho
-#     straight1_length = ( (_x_t0 - _x_t1)**2 + (_y_t0 - _y_t1)**2 )**.5
-#     arc1_length = abs(_phi - thet0)*rho # arc = theta*rho
-#     # Get the final angle
-#     L = ( (_c_x1 - xf)**2 + (_c_y1 - yf)**2 )**.5
-#     # D = ( L**2 - rho**2 )**.5
-#     # print("rho/L", rho/L)
-#     _theta = acos(rho/L)
-#     # _theta = asin(D/L)
-#     # _theta = atan2(D, rho)
-#     _delta = acos((xf - xc - (r_c + rho)*sin(_theta1_t))/L) # changed for R
-#     _theta_f = _delta + _theta - pi/2 # changed for R
-#     arc2_length = abs(_theta_f - _phi)*rho
-#     _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "R") # point that starts the last S.
-#     straight2_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
-#     total_path_length = arc1_length + straight1_length + arc2_length + straight2_length
-#     if (i == 0) or (total_path_length < distance):
-#     # if (i == 1): # for testing purposes
-#         # Only keep the parameters for the shortest path
-#         distance = total_path_length
-#         min_dist_idx = i
-#         c_x1 = _c_x1
-#         c_y1 = _c_y1
-#         x_t0 = _x_t0
-#         y_t0 = _y_t0
-#         x_t1 = _x_t1
-#         y_t1 = _y_t1
-#         thet1_t = _theta1_t
-#         phi = _phi
-#         theta_f = _theta_f
-#     # print("total_path_length:", total_path_length)
+# Account for the fact that adding 180 degrees can also give the same tangent
+thet1_candidates_180 = []
+for angle in thet1_candidates:
+    thet1_candidates_180.append(angle+pi)
+thet1_candidates += thet1_candidates_180
+# print(thet1_candidates)
+c1_candidates = []
+for thet1 in thet1_candidates:
+    c_x1_, c_y1_ = get_circle_center(xc, yc, thet1, rho+r_c, "R")
+    c1_candidates.append((c_x1_,c_y1_))
+# Keep only the candidate value that gives the shortest overall path length
+c_x0, c_y0 = get_circle_center(x0, y0, thet0, rho, "L")
+distance = -1
+min_dist_idx = None
+c_x1 = None
+c_y1 = None
+x_t0 = None
+y_t0 = None
+x_t1 = None
+y_t1 = None
+thet1_t = None
+phi = None
+theta_f = None
+c_x01 = None
+c_y01 = None
+for i, c1 in enumerate(c1_candidates):
+    _c_x1, _c_y1 = c1
+    alpha = acos()
+    _theta1_t = thet1_candidates[i]
+    q = tan(_theta1_t/2)
+    md_minus = (c_mdm0 + c_mdm1*q + c_mdm2*q**2)/(q**2 + 1)
+    # gamma = asin(2*rho/(md_minus**.5))
+    # alpha will be between pi and 2pi, but acos(alpha) will be between 0 and pi... [Boissonat et al.]
+    # so alpha/2 will be between 
+    # cos_alpha = (8*rho**2 - md_minus)/(8*rho**2)
+    cos_alpha_2 = (1/(4*rho))*(16*rho**2 - md_minus)**.5
+    alpha_2_1 = acos(cos_alpha_2)
+    alpha_2_2 = acos(-cos_alpha_2)
+    alpha_1 = 2*alpha_2_1
+    alpha_2 = 2*alpha_2_2
+    alpha = None
+    # 3 cases: alpha_1 and alpha_2 between pi and 2pi, one of them is, or none of them is. NEED TO MANAGE THAT!
+    alphas = [alpha_1, alpha_2]
+    for alpha_ in alphas:
+        pass
+    if (pi < alpha < 2*pi):
+        # alpha_1 is between pi and 2pi
+        pass
+    elif (pi < alpha_2 < 2*pi):
+        # alpha_2 is between pi and 2pi
+        pass
+    else:
+        # none of these angles are in the right range, go to next candidate solution
+        continue
+    _phi = atan2(c_y0-_c_y1, c_x0-_c_x1) + gamma # angle of segment joining the centers of c0 and c1 (same as S segment angle)
+    _x_t0, _y_t0 = get_circle_center(c_x0, c_y0, _phi, rho, "L") # point that starts the first S.
+    _x_t1, _y_t1 = get_circle_center(_c_x1, _c_y1, _phi, rho, "R") # point that ends the first S, and starts the R.
+    # arc1_length = abs(phi - (thet0 - pi))*rho # arc = theta*rho
+    straight1_length = ( (_x_t0 - _x_t1)**2 + (_y_t0 - _y_t1)**2 )**.5
+    arc1_length = abs(_phi - thet0)*rho # arc = theta*rho
+    # Get the final angle
+    L = ( (_c_x1 - xf)**2 + (_c_y1 - yf)**2 )**.5
+    # D = ( L**2 - rho**2 )**.5
+    # print("rho/L", rho/L)
+    _theta = acos(rho/L)
+    # _theta = asin(D/L)
+    # _theta = atan2(D, rho)
+    _delta = acos((xf - xc - (r_c + rho)*sin(_theta1_t))/L) # changed for R
+    _theta_f = _delta + _theta - pi/2 # changed for R
+    arc2_length = abs(_theta_f - _phi)*rho
+    _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "R") # point that starts the last S.
+    straight2_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
+    total_path_length = arc1_length + straight1_length + arc2_length + straight2_length
+    if (i == 0) or (total_path_length < distance):
+    # if (i == 1): # for testing purposes
+        # Only keep the parameters for the shortest path
+        distance = total_path_length
+        min_dist_idx = i
+        c_x1 = _c_x1
+        c_y1 = _c_y1
+        x_t0 = _x_t0
+        y_t0 = _y_t0
+        x_t1 = _x_t1
+        y_t1 = _y_t1
+        thet1_t = _theta1_t
+        phi = _phi
+        theta_f = _theta_f
+    # print("total_path_length:", total_path_length)
 
-# end = perf_counter() # To know how quick the code is
-# print("time =", end-start)
+end = perf_counter() # To know how quick the code is
+print("time =", end-start)
 
 # # Plot the results
 # fig, ax = plt.subplots() # note we must use plt.subplots, not plt.subplot
