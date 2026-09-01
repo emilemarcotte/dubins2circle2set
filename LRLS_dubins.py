@@ -1,6 +1,6 @@
 import numpy as np
 np.set_printoptions(precision=3)
-from math import sin, cos, tan, pi, atan, atan2, acos, asin
+from math import sin, cos, tan, pi, atan, atan2, acos, asin, sqrt
 import matplotlib.pyplot as plt
 from time import perf_counter
 
@@ -418,7 +418,7 @@ print("Real roots:", roots)
 # print("time =", end-start)
 
 thet1_candidates = [2*atan(half_angle) for half_angle in roots]
-# Account for the fact that adding 180 degrees can also give the same tangent
+# Account for the fact that adding 180 degrees can also give the same tangent, I MIGHT BE ABLE TO REMOVE THAT!
 thet1_candidates_180 = []
 for angle in thet1_candidates:
     thet1_candidates_180.append(angle+pi)
@@ -434,6 +434,8 @@ distance = -1
 min_dist_idx = None
 c_x1 = None
 c_y1 = None
+c_xa = None # middle of the middle R circle
+c_ya = None # middle of the middle R circle
 x_t0 = None
 y_t0 = None
 x_t1 = None
@@ -445,30 +447,32 @@ c_x01 = None
 c_y01 = None
 for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
-    alpha = acos()
     _theta1_t = thet1_candidates[i]
     q = tan(_theta1_t/2)
     md_minus = (c_mdm0 + c_mdm1*q + c_mdm2*q**2)/(q**2 + 1)
-    # gamma = asin(2*rho/(md_minus**.5))
+
     # alpha will be between pi and 2pi, but acos(alpha) will be between 0 and pi... [Boissonat et al.]
     # so alpha/2 will be between 
     # cos_alpha = (8*rho**2 - md_minus)/(8*rho**2)
     cos_alpha_2 = (1/(4*rho))*(16*rho**2 - md_minus)**.5
-    alpha_2_1 = acos(cos_alpha_2)
-    alpha_2_2 = acos(-cos_alpha_2)
-    alpha_1 = 2*alpha_2_1
-    alpha_2 = 2*alpha_2_2
+    alpha_1 = 2*acos(cos_alpha_2)
+    alpha_2 = 2*acos(-cos_alpha_2)
     alphas_ok = []
     # 3 cases: alpha_1 and alpha_2 between pi and 2pi, one of them is, or none of them is. NEED TO MANAGE THAT!
     alphas = [alpha_1, alpha_2]
     for alpha_ in alphas:
+        if alpha_ < 0:
+            alpha_ += pi
         if (pi < alpha_ < 2*pi):
             # alpha_1 is between pi and 2pi
             alphas_ok.append(alpha_)
-        else:
-            # none of these angles are in the right range, go to next candidate solution
-            continue
-    _psi = atan2(c_y0-_c_y1, c_x0-_c_x1) + gamma # angle of segment joining the centers of c0 and c1 (same as S segment angle)
+    if len(alphas_ok) == 0:
+        # none of these angles are in the right range, go to next candidate solution
+        continue
+    _c_xa = c_x0 + 2*rho*cos( atan2(_c_y1-c_y0,_c_x1-c_x0) + (alpha - pi)/2 )
+    _c_ya = c_y0 + 2*rho*sin( atan2(_c_y1-c_y0,_c_x1-c_x0) + (alpha - pi)/2 )
+    ############### This is where I'm at ####################################################################################################################################
+    _psi = atan2(c_y0-_c_y1, c_x0-_c_x1)#+ gamma # angle of segment joining the centers of c0 and c1 (same as S segment angle)
     _x_t0, _y_t0 = get_circle_center(c_x0, c_y0, _psi, rho, "L") # point that starts the first S.
     _x_t1, _y_t1 = get_circle_center(_c_x1, _c_y1, _psi, rho, "R") # point that ends the first S, and starts the R.
     # arc1_length = abs(psi - (thet0 - pi))*rho # arc = theta*rho
@@ -494,6 +498,8 @@ for i, c1 in enumerate(c1_candidates):
         min_dist_idx = i
         c_x1 = _c_x1
         c_y1 = _c_y1
+        c_xa = _c_xa
+        c_ya = _c_ya
         x_t0 = _x_t0
         y_t0 = _y_t0
         x_t1 = _x_t1
