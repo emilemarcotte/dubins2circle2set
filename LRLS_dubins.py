@@ -426,8 +426,9 @@ thet1_candidates += thet1_candidates_180
 # print(thet1_candidates)
 c1_candidates = []
 for thet1 in thet1_candidates:
-    c_x1_, c_y1_ = get_circle_center(xc, yc, thet1, rho+r_c, "R")
+    c_x1_, c_y1_ = get_circle_center(xc, yc, thet1, rho+r_c, "L")
     c1_candidates.append((c_x1_,c_y1_))
+
 # Keep only the candidate value that gives the shortest overall path length
 c_x0, c_y0 = get_circle_center(x0, y0, thet0, rho, "L")
 distance = -1
@@ -445,49 +446,62 @@ psi = None
 theta_f = None
 c_x01 = None
 c_y01 = None
+"""
+What I need:
+x Initial point
+x Middle of c_0
+x Middle of c_1
+x Angle alpha
+x Middle point of middle curve (center of alpha, c_alpha = c_a)
+x Angle of final S segment
+- Final point of 1st curve (= first point of 2nd curve)
+- Final point of 2nd curve (= first point of 3nd curve)
+- Final point of 3rd curve (= first point of final S segment)
+- Length of 1st curve
+- Length of 2st curve
+- Length of 3st curve
+- Length of last S segment
+"""
 for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
     _theta1_t = thet1_candidates[i]
     q = tan(_theta1_t/2)
     md_minus = (c_mdm0 + c_mdm1*q + c_mdm2*q**2)/(q**2 + 1)
 
-    """
-    What I need:
-    - Initial point
-    - Middle of c_0
-    - Angle alpha
-    - Middle point of middle curve (center of alpha, c_alpha = c_a)
-    - Middle of c_1
-    - Angle of final S segment
-    - Final point of 1st curve (= first point of 2nd curve)
-    - Final point of 2nd curve (= first point of 3nd curve)
-    - Final point of 3rd curve (= first point of final S segment)
-    - Length of 1st curve
-    - Length of 2st curve
-    - Length of 3st curve
-    - Length of last S segment
-    """
-
-    # alpha will be between pi and 2pi, but acos(alpha) will be between 0 and pi... [Boissonat et al.]
-    # so alpha/2 will be between 
-    # cos_alpha = (8*rho**2 - md_minus)/(8*rho**2)
+    # Get the angle span "alpha" for the middle turn
     cos_alpha_2 = (1/(4*rho))*(16*rho**2 - md_minus)**.5
     alpha_1 = 2*acos(cos_alpha_2)
     alpha_2 = 2*acos(-cos_alpha_2)
-    alphas_ok = []
-    # 3 cases: alpha_1 and alpha_2 between pi and 2pi, one of them is, or none of them is. NEED TO MANAGE THAT!
     alphas = [alpha_1, alpha_2]
+    alphas_ok = []
+    # alpha has to be between pi and 2pi, let's verify that.
     for alpha_ in alphas:
         if alpha_ < 0:
-            alpha_ += pi
+            # Keep angles between [0,2pi]
+            alpha_ += 2*pi
         if (pi < alpha_ < 2*pi):
-            # alpha_1 is between pi and 2pi
+            # alpha_ is between pi and 2pi
             alphas_ok.append(alpha_)
     if len(alphas_ok) == 0:
         # none of these angles are in the right range, go to next candidate solution
         continue
-    _c_xa = c_x0 + 2*rho*cos( atan2(_c_y1-c_y0,_c_x1-c_x0) + (alpha - pi)/2 )
-    _c_ya = c_y0 + 2*rho*sin( atan2(_c_y1-c_y0,_c_x1-c_x0) + (alpha - pi)/2 )
+    # We have at least one good angle alpha, let's keep going.
+
+    # Get the coordinates of the middle point of the alpha circle
+    _c_xa = c_x0 + 2*rho*cos( atan2(_c_y1-c_y0,_c_x1-c_x0) + (alphas_ok[0] - pi)/2 )
+    _c_ya = c_y0 + 2*rho*sin( atan2(_c_y1-c_y0,_c_x1-c_x0) + (alphas_ok[0] - pi)/2 )
+    _c_xa2 = False
+    _c_ya2 = False
+    if len(alphas_ok) > 1:
+        # Both alpha candidates were fine
+        _c_xa2 = c_x0 + 2*rho*cos( atan2(_c_y1-c_y0,_c_x1-c_x0) + (alphas_ok[1] - pi)/2 )
+        _c_ya2 = c_y0 + 2*rho*sin( atan2(_c_y1-c_y0,_c_x1-c_x0) + (alphas_ok[1] - pi)/2 )
+
+    # Get the angle of the last S segment
+    L = ( (_c_x1 - xf)**2 + (_c_y1 - yf)**2 )**.5
+    _delta = acos((xf - xc + (r_c + rho)*sin(_theta1_t))/L) # changed for L
+    _theta = acos(rho/L)
+    _theta_f = _delta - _theta + pi/2 # changed for L
     ############### This is where I'm at ####################################################################################################################################
     _psi = atan2(c_y0-_c_y1, c_x0-_c_x1)#+ gamma # angle of segment joining the centers of c0 and c1 (same as S segment angle)
     _x_t0, _y_t0 = get_circle_center(c_x0, c_y0, _psi, rho, "L") # point that starts the first S.
@@ -495,15 +509,6 @@ for i, c1 in enumerate(c1_candidates):
     # arc1_length = abs(psi - (thet0 - pi))*rho # arc = theta*rho
     straight1_length = ( (_x_t0 - _x_t1)**2 + (_y_t0 - _y_t1)**2 )**.5
     arc1_length = abs(_psi - thet0)*rho # arc = theta*rho
-    # Get the final angle
-    L = ( (_c_x1 - xf)**2 + (_c_y1 - yf)**2 )**.5
-    # D = ( L**2 - rho**2 )**.5
-    # print("rho/L", rho/L)
-    _theta = acos(rho/L)
-    # _theta = asin(D/L)
-    # _theta = atan2(D, rho)
-    _delta = acos((xf - xc - (r_c + rho)*sin(_theta1_t))/L) # changed for R
-    _theta_f = _delta + _theta - pi/2 # changed for R
     arc2_length = abs(_theta_f - _psi)*rho
     _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "R") # point that starts the last S.
     straight2_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
