@@ -6,7 +6,7 @@ from time import perf_counter
 
 r_c = 2
 rho = 1
-thet0 = 260*pi/180
+thet0 = 260*pi/180 # given between [0,2pi]
 # x0 = -4
 # y0 = 4
 x0 = -2
@@ -441,6 +441,8 @@ x_t0 = None # point that ends the first curve
 y_t0 = None # point that ends the first curve
 x_t1 = None # point that ends the second curve
 y_t1 = None # point that ends the second curve
+x_tf = None # point that starts the last S segment
+y_tf = None # point that starts the last S segment
 thet1_t = None
 psi = None
 theta_f = None
@@ -456,11 +458,12 @@ x Middle point of middle curve (center of alpha, c_alpha = c_a)
 x Angle of final S segment
 x Final point of 1st curve (= first point of 2nd curve)
 x Final point of 2nd curve (= first point of 3nd curve)
-- Final point of 3rd curve (= first point of final S segment)
-- Length of 1st curve
+x Final point of 3rd curve (= first point of final S segment)
+x Length of 1st curve
 - Length of 2st curve
 - Length of 3st curve
-- Length of last S segment
+x Length of last S segment
+- Get the total path length
 """
 for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
@@ -523,16 +526,23 @@ for i, c1 in enumerate(c1_candidates):
         _x_t1_2 = _c_xa2 + rho*cos(beta_2_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
         _y_t1_2 = _c_ya2 + rho*sin(beta_2_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
 
-
     # Get the first point of the final S segment
+    _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "L") # point that starts the last S, CHANGE L FOR RLRS.
 
-    # Get the length of the first curved segment
+    # Get the length of the first curved segment, length = theta*rho
+    arc1_length = (beta_1 - thet0)*rho
 
-    # Get the length of the second curved segment
+    # Get the length of the second curved segment, length = theta*rho
+    arc2_length = None
 
-    # Get the length of the third curved segment
+    # Get the length of the third curved segment, length = theta*rho
+    arc3_length = None
 
     # Get the length of the final S segment
+    S_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
+
+    # Get the total path length
+
 
     ############### This is where I'm at ####################################################################################################################################
     _psi = atan2(c_y0-_c_y1, c_x0-_c_x1)#+ gamma # angle of segment joining the centers of c0 and c1 (same as S segment angle)
@@ -558,6 +568,8 @@ for i, c1 in enumerate(c1_candidates):
         y_t0 = _y_t0
         x_t1 = _x_t1
         y_t1 = _y_t1
+        x_tf = _x_tf
+        y_tf = _y_tf
         thet1_t = _theta1_t
         psi = _psi
         theta_f = _theta_f
