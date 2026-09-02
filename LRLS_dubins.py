@@ -436,10 +436,10 @@ c_x1 = None
 c_y1 = None
 c_xa = None # middle of the middle R circle
 c_ya = None # middle of the middle R circle
-x_t0 = None
-y_t0 = None
-x_t1 = None
-y_t1 = None
+x_t0 = None # point that starts the first S.
+y_t0 = None # point that starts the first S.
+x_t1 = None # point that ends the first S for CSCS paths
+y_t1 = None # point that ends the first S for CSCS paths
 thet1_t = None
 psi = None
 theta_f = None
@@ -450,6 +450,23 @@ for i, c1 in enumerate(c1_candidates):
     _theta1_t = thet1_candidates[i]
     q = tan(_theta1_t/2)
     md_minus = (c_mdm0 + c_mdm1*q + c_mdm2*q**2)/(q**2 + 1)
+
+    """
+    What I need:
+    - Initial point
+    - Middle of c_0
+    - Angle alpha
+    - Middle point of middle curve (center of alpha, c_alpha = c_a)
+    - Middle of c_1
+    - Angle of final S segment
+    - Final point of 1st curve (= first point of 2nd curve)
+    - Final point of 2nd curve (= first point of 3nd curve)
+    - Final point of 3rd curve (= first point of final S segment)
+    - Length of 1st curve
+    - Length of 2st curve
+    - Length of 3st curve
+    - Length of last S segment
+    """
 
     # alpha will be between pi and 2pi, but acos(alpha) will be between 0 and pi... [Boissonat et al.]
     # so alpha/2 will be between 
