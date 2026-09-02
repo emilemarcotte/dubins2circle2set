@@ -435,12 +435,12 @@ distance = -1
 min_dist_idx = None
 c_x1 = None
 c_y1 = None
-c_xa = None # middle of the middle R circle
-c_ya = None # middle of the middle R circle
-x_t0 = None # point that starts the first S.
-y_t0 = None # point that starts the first S.
-x_t1 = None # point that ends the first S for CSCS paths
-y_t1 = None # point that ends the first S for CSCS paths
+c_xa = None # middle of the alpha circle
+c_ya = None # middle of the alpha circle
+x_t0 = None # point that ends the first curve
+y_t0 = None # point that ends the first curve
+x_t1 = None # point that ends the second curve
+y_t1 = None # point that ends the second curve
 thet1_t = None
 psi = None
 theta_f = None
@@ -454,8 +454,8 @@ x Middle of c_1
 x Angle alpha
 x Middle point of middle curve (center of alpha, c_alpha = c_a)
 x Angle of final S segment
-- Final point of 1st curve (= first point of 2nd curve)
-- Final point of 2nd curve (= first point of 3nd curve)
+x Final point of 1st curve (= first point of 2nd curve)
+x Final point of 2nd curve (= first point of 3nd curve)
 - Final point of 3rd curve (= first point of final S segment)
 - Length of 1st curve
 - Length of 2st curve
@@ -502,6 +502,38 @@ for i, c1 in enumerate(c1_candidates):
     _delta = acos((xf - xc + (r_c + rho)*sin(_theta1_t))/L) # changed for L
     _theta = acos(rho/L)
     _theta_f = _delta - _theta + pi/2 # changed for L
+
+    # Get the final point of the first curve
+    # The heading at the intersection with the second curve is beta_1
+    beta_1 = atan2(_c_ya-c_y0,_c_xa-c_x0) + pi/2 # CHANGE THIS SIGN FOR RLRS
+    if beta_1 < thet0:
+        beta_1 += 2*pi
+    # Point of intersection:
+    _x_t0 = c_x0 + rho*cos(beta_1-pi/2) # CHANGE THIS SIGN FOR RLRS
+    _y_t0 = c_y0 + rho*sin(beta_1-pi/2) # CHANGE THIS SIGN FOR RLRS
+
+    # Get the final point of the second curve
+    # The heading at the intersection with the third curve is beta_2
+    beta_2 = beta_1 - alphas_ok[0] # CHANGE THIS SIGN FOR RLRS
+    # Point of intersection:
+    _x_t1 = _c_xa + rho*cos(beta_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
+    _y_t1 = _c_ya + rho*sin(beta_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
+    if len(alphas_ok) > 1:
+        beta_2_2 = beta_1 - alphas_ok[1] # CHANGE THIS SIGN FOR RLRS
+        _x_t1_2 = _c_xa2 + rho*cos(beta_2_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
+        _y_t1_2 = _c_ya2 + rho*sin(beta_2_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
+
+
+    # Get the first point of the final S segment
+
+    # Get the length of the first curved segment
+
+    # Get the length of the second curved segment
+
+    # Get the length of the third curved segment
+
+    # Get the length of the final S segment
+
     ############### This is where I'm at ####################################################################################################################################
     _psi = atan2(c_y0-_c_y1, c_x0-_c_x1)#+ gamma # angle of segment joining the centers of c0 and c1 (same as S segment angle)
     _x_t0, _y_t0 = get_circle_center(c_x0, c_y0, _psi, rho, "L") # point that starts the first S.
