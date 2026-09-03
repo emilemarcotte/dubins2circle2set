@@ -566,10 +566,14 @@ for i, c1 in enumerate(c1_candidates):
     L = ( (_c_x1 - xf)**2 + (_c_y1 - yf)**2 )**.5
     # D = ( L**2 - rho**2 )**.5
     # print("rho/L", rho/L)
-    _theta = acos(rho/L)
-    # _theta = asin(D/L)
-    # _theta = atan2(D, rho)
-    _delta = acos((xf - xc + (r_c + rho)*sin(_theta1_t))/L) # changed for L
+    try:
+        _theta = acos(rho/L)
+        # _theta = asin(D/L)
+        # _theta = atan2(D, rho)
+        _delta = acos((xf - xc + (r_c + rho)*sin(_theta1_t))/L) # changed for L
+    except ValueError:
+        # The separation distance L is too short
+        continue
     _theta_f = _delta - _theta + pi/2 # changed for L
     arc2_length = abs(_theta_f - _psi)*rho
     _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "L") # point that starts the last S.

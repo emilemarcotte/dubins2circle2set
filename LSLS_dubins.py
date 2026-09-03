@@ -12,6 +12,8 @@ y0 = 4
 # thetf = 105*pi/180
 xf = 1
 yf = 4
+# xf = 0
+# yf = 0
 xc = 1
 yc = -2# + 3 or 1
 
@@ -528,8 +530,12 @@ for i, c1 in enumerate(c1_candidates):
     _theta1_t = thet1_candidates[i]
     L = ( (_c_x1 - xf)**2 + (_c_y1 - yf)**2 )**.5
     # D = ( L**2 - rho**2 )**.5
-    _theta = acos(rho/L)
-    _delta = acos((xf - xc + (r_c + rho)*sin(_theta1_t))/L)
+    try:
+        _theta = acos(rho/L)
+        _delta = acos((xf - xc + (r_c + rho)*sin(_theta1_t))/L)
+    except ValueError:
+        # The separation distance L is too short
+        continue
     _theta_f = _delta - _theta + pi/2
     arc2_length = abs(_theta_f - _psi)*rho
     _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "L") # point that starts the last S.
