@@ -460,10 +460,10 @@ x Final point of 1st curve (= first point of 2nd curve)
 x Final point of 2nd curve (= first point of 3nd curve)
 x Final point of 3rd curve (= first point of final S segment)
 x Length of 1st curve
-- Length of 2st curve
-- Length of 3st curve
+x Length of 2st curve
+x Length of 3st curve
 x Length of last S segment
-- Get the total path length
+x Get the total path length
 """
 for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
@@ -511,14 +511,12 @@ for i, c1 in enumerate(c1_candidates):
     beta_1 = atan2(_c_ya-c_y0,_c_xa-c_x0) + pi/2 # CHANGE THIS SIGN FOR RLRS
     if beta_1 < thet0:
         beta_1 += 2*pi
-    # Point of intersection:
     _x_t0 = c_x0 + rho*cos(beta_1-pi/2) # CHANGE THIS SIGN FOR RLRS
     _y_t0 = c_y0 + rho*sin(beta_1-pi/2) # CHANGE THIS SIGN FOR RLRS
 
     # Get the final point of the second curve
     # The heading at the intersection with the third curve is beta_2
     beta_2 = beta_1 - alphas_ok[0] # CHANGE THIS SIGN FOR RLRS
-    # Point of intersection:
     _x_t1 = _c_xa + rho*cos(beta_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
     _y_t1 = _c_ya + rho*sin(beta_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
     if len(alphas_ok) > 1:
@@ -530,18 +528,25 @@ for i, c1 in enumerate(c1_candidates):
     _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "L") # point that starts the last S, CHANGE L FOR RLRS.
 
     # Get the length of the first curved segment, length = theta*rho
-    arc1_length = (beta_1 - thet0)*rho
+    arc1_length = abs((beta_1 - thet0)*rho)
 
     # Get the length of the second curved segment, length = theta*rho
-    arc2_length = None
+    arc2_length = alphas_ok[0]*rho
+    if len(alphas_ok) > 1:
+        arc2_length_2 = alphas_ok[1]*rho
 
     # Get the length of the third curved segment, length = theta*rho
-    arc3_length = None
+    arc3_length = abs((_theta_f - beta_2)*rho)
+    if len(alphas_ok) > 1:
+        arc3_length_2 = abs((_theta_f - beta_2_2)*rho)
 
     # Get the length of the final S segment
     S_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
 
     # Get the total path length
+    total_path_length = arc1_length + arc2_length + arc3_length + S_length
+    if len(alphas_ok) > 1:
+        total_path_length_2 = arc1_length + arc2_length_2 + arc3_length_2 + S_length
 
 
     ############### This is where I'm at ####################################################################################################################################
