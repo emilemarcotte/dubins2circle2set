@@ -434,8 +434,8 @@ for thet1 in thet1_candidates:
 c_x0, c_y0 = get_circle_center(x0, y0, thet0, rho, "L")
 distance = np.inf
 min_dist_idx = None
-c_x1 = None
-c_y1 = None
+c_x1 = None # middle of the third curve circle
+c_y1 = None # middle of the third curve circle
 c_xa = None # middle of the alpha circle
 c_ya = None # middle of the alpha circle
 x_t0 = None # point that ends the first curve
@@ -595,8 +595,11 @@ plt.plot(x_t0, y_t0, "go")
 # Get the point that starts the third curve
 plt.plot(x_t1, y_t1, "go")
 
-# Get the points for the first curved segment
-angles1 = np.linspace(thet0-pi, beta_1-pi, 20) # changed for L
+# Get the points for the first curved segment, and make sure angle range is ok
+if beta_1 < thet0: # changed for L
+    angles1 = np.linspace(thet0-pi, beta_1+pi, 20) # changed for L
+else:
+    angles1 = np.linspace(thet0-pi, beta_1-pi, 20) # changed for L
 x_L1 = []
 y_L1 = []
 for angle in angles1:
@@ -605,50 +608,41 @@ for angle in angles1:
     y_L1.append(y)
 plt.plot(x_L1, y_L1, "g-")
 
-# Get the points for the second curved segment
-angles2 = np.linspace(beta_1-pi, beta_2-pi, 20) # changed for L
+# Get the points for the second curved segment, and make sure angle range is ok
+if beta_2 > beta_1: # changed for R
+    angles2 = np.linspace(beta_1-pi, beta_2-3*pi, 20) # changed for R
+else:
+    angles2 = np.linspace(beta_1-pi, beta_2-pi, 20) # changed for R
 x_L2 = []
 y_L2 = []
 for angle in angles2:
-    x, y = get_circle_center(c_xa, c_ya, angle, rho, "R") # changed for L
+    x, y = get_circle_center(c_xa, c_ya, angle, rho, "R") # changed for R
     x_L2.append(x)
     y_L2.append(y)
 plt.plot(x_L2, y_L2, "g-")
 
-# # Get the points for the second curved segment
-# angles2 = np.linspace(thet0-pi, beta_1-pi, 10) # changed for L
-# x_L0 = []
-# y_L0 = []
-# for angle in angles0:
-#     x, y = get_circle_center(c_x0, c_y0, angle, rho, "L") # changed for L
-#     x_L0.append(x)
-#     y_L0.append(y)
-# plt.plot(x_L0, y_L0, "g-")
+# Get the points for the third curved segment, and make sure angle range is ok
+if theta_f < beta_2: # changed for L
+    angles3 = np.linspace(beta_2-pi, theta_f+pi, 20) # changed for L
+else:
+    angles3 = np.linspace(beta_2-pi, theta_f-pi, 20) # changed for L
+x_L3 = []
+y_L3 = []
+for angle in angles3:
+    x, y = get_circle_center(c_x1, c_y1, angle, rho, "L") # changed for L
+    x_L3.append(x)
+    y_L3.append(y)
+plt.plot(x_L3, y_L3, "g-")
 
-# # Get the points for the first straight segment
-# x_s01 = np.linspace(x_t0, x_t1, 10)
-# y_s01 = np.linspace(y_t0, y_t1, 10)
-# plt.plot(x_s01, y_s01, "g-")
+# Get the points for the last straight segment
+x_S_f = np.linspace(x_L3[-1], xf, 10)
+y_S_f = np.linspace(y_L3[-1], yf, 10)
+plt.plot(x_S_f, y_S_f, "g-")
 
-# # Get the points for the second curved segment
-# angles1 = np.linspace(psi, theta_f-pi, 10) # changed for R
-# x_L1 = []
-# y_L1 = []
-# for angle in angles1:
-#     x, y = get_circle_center(c_x1, c_y1, angle, rho, "R") # changed for R
-#     x_L1.append(x)
-#     y_L1.append(y)
-# plt.plot(x_L1, y_L1, "g-")
-# plt.plot(x_L1[-1], y_L1[-1], "go")
-# # Get the points for the last straight segment
-# x_S_f = np.linspace(x_L1[-1], xf, 10)
-# y_S_f = np.linspace(y_L1[-1], yf, 10)
-# plt.plot(x_S_f, y_S_f, "g-")
-
-# # Plot the full trajectory
-# all_x_trajectory = x_L0 + x_s01.tolist()[1:-1] + x_L1 + x_S_f.tolist()[1:]
-# all_y_trajectory = y_L0 + y_s01.tolist()[1:-1] + y_L1 + y_S_f.tolist()[1:]
-# plt.plot(all_x_trajectory, all_y_trajectory, "c-")
+# Plot the full trajectory
+all_x_trajectory = x_L1 + x_L2[1:] + x_L3[1:] + x_S_f.tolist()[1:]
+all_y_trajectory = y_L1 + y_L2[1:] + y_L3[1:] + y_S_f.tolist()[1:]
+plt.plot(all_x_trajectory, all_y_trajectory, "c-")
 
 plt.grid(False)
 plt.axis("equal")
