@@ -448,23 +448,7 @@ beta_1 = None
 beta_2 = None
 theta_f = None
 theta1_t = None
-"""
-What I need:
-x Initial point
-x Middle of c_0
-x Middle of c_1
-x Angle alpha
-x Middle point of middle curve (center of alpha, c_alpha = c_a)
-x Angle of final S segment
-x Final point of 1st curve (= first point of 2nd curve)
-x Final point of 2nd curve (= first point of 3nd curve)
-x Final point of 3rd curve (= first point of final S segment)
-x Length of 1st curve
-x Length of 2st curve
-x Length of 3st curve
-x Length of last S segment
-x Get the total path length
-"""
+
 for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
     if dist_points(c_x0, c_y0, _c_x1, _c_y1) >= 4*rho:
@@ -544,7 +528,7 @@ for i, c1 in enumerate(c1_candidates):
     total_path_length = arc1_length + arc2_length + arc3_length + S_length
 
     if total_path_length < distance:
-    # if (i == 1): # for testing purposes
+    # if (i == 7): # for testing purposes
         # Only keep the parameters for the shortest path
         distance = total_path_length
         min_dist_idx = i
