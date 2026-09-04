@@ -432,7 +432,7 @@ for thet1 in thet1_candidates:
 
 # Keep only the candidate value that gives the shortest overall path length
 c_x0, c_y0 = get_circle_center(x0, y0, thet0, rho, "L")
-distance = -1
+distance = np.inf
 min_dist_idx = None
 c_x1 = None
 c_y1 = None
@@ -447,7 +447,7 @@ y_tf = None # point that starts the last S segment
 beta_1 = None
 beta_2 = None
 theta_f = None
-
+theta1_t = None
 """
 What I need:
 x Initial point
@@ -498,7 +498,7 @@ for i, c1 in enumerate(c1_candidates):
     L = ( (_c_x1 - xf)**2 + (_c_y1 - yf)**2 )**.5
     _delta = acos((xf - xc + (r_c + rho)*sin(_theta1_t))/L) # changed for L
     _theta = acos(rho/L)
-    _theta_f = _delta - _theta + pi/2 # changed for L
+    _theta_f = (_delta - _theta + pi/2)%(2*pi) # changed for L
 
     # Get the final point of the first curve
     # The heading at the intersection with the second curve is beta_1
@@ -532,7 +532,7 @@ for i, c1 in enumerate(c1_candidates):
     # Get the total path length
     total_path_length = arc1_length + arc2_length + arc3_length + S_length
 
-    if (i == 0) or (total_path_length < distance):
+    if total_path_length < distance:
     # if (i == 1): # for testing purposes
         # Only keep the parameters for the shortest path
         distance = total_path_length
@@ -550,6 +550,7 @@ for i, c1 in enumerate(c1_candidates):
         beta_1 = _beta_1
         beta_2 = _beta_2
         theta_f = _theta_f
+        theta1_t = _theta1_t
     # print("total_path_length:", total_path_length)
 
 end = perf_counter() # To know how quick the code is
@@ -562,28 +563,38 @@ arrow_length = 1
 # Initial point and circle
 plt.plot(x0, y0, "ro")
 plt.arrow(x0, y0, arrow_length*cos(thet0), arrow_length*sin(thet0), head_width=0.2)
-circle0 = plt.Circle((c_x0,c_y0), 
+circle0 = plt.Circle((c_x0,c_y0),
                      rho, fill=False, linestyle="--")
 ax.add_patch(circle0)
-# # Mid circle
-# circle_c = plt.Circle((xc,yc), r_c, fill=False, linestyle="--", color="b")
-# ax.add_patch(circle_c)
-# # End point and circle
-# plt.plot(xf, yf, "ro")
-# plt.arrow(xf, yf, arrow_length*cos(theta_f), arrow_length*sin(theta_f), head_width=0.2)
-# # # Candidate circles tangent to the target
-# # for c1_xy in c1_candidates:
-# #     circle1 = plt.Circle(c1_xy, rho, fill=False, linestyle="--", color="g")
-# #     ax.add_patch(circle1)
-# circle1 = plt.Circle((c_x1,c_y1), rho, fill=False, linestyle="--", color="k")
-# ax.add_patch(circle1)
-# # Get and plot the tangent point
-# p_xt, p_yt = get_circle_center(xc, yc, thet1_t, r_c, "R") # changed for R
-# plt.plot(p_xt, p_yt, "ro")
-# plt.arrow(p_xt, p_yt, arrow_length*cos(thet1_t), arrow_length*sin(thet1_t), head_width=0.2)
-# # Plot the point that starts the first S segment
-# plt.plot(x_t0, y_t0, "go")
-# plt.plot(x_t1, y_t1, "go")
+
+# Mid circle
+circle_c = plt.Circle((xc,yc), r_c, fill=False, linestyle="--", color="b")
+ax.add_patch(circle_c)
+
+# End point and circle
+plt.plot(xf, yf, "ro")
+plt.arrow(xf, yf, arrow_length*cos(theta_f), arrow_length*sin(theta_f), head_width=0.2)
+
+
+# Tangent circle giving the shortest path
+circle1 = plt.Circle((c_x1,c_y1), rho, fill=False, linestyle="--", color="k")
+ax.add_patch(circle1)
+# # Other candidate circles tangent to the target
+# for c1_xy in c1_candidates:
+#     circle1 = plt.Circle(c1_xy, rho, fill=False, linestyle="--", color="g")
+#     ax.add_patch(circle1)
+
+# Get and plot the tangent point
+p_xt, p_yt = get_circle_center(xc, yc, theta1_t, r_c, "L") # changed for L
+plt.plot(p_xt, p_yt, "ro")
+plt.arrow(p_xt, p_yt, arrow_length*cos(theta1_t), arrow_length*sin(theta1_t), head_width=0.2)
+
+# Plot the point that starts the second curve
+plt.plot(x_t0, y_t0, "go")
+
+# Get the point that starts the third curve
+plt.plot(x_t1, y_t1, "go")
+
 # # Get the points for the first curved segment
 # angles0 = np.linspace(thet0-pi, psi, 10) # changed for L
 # x_L0 = []
@@ -616,6 +627,6 @@ ax.add_patch(circle0)
 # all_y_trajectory = y_L0 + y_s01.tolist()[1:-1] + y_L1 + y_S_f.tolist()[1:]
 # plt.plot(all_x_trajectory, all_y_trajectory, "c-")
 
-# plt.grid(False)
-# plt.axis("equal")
-# plt.show()
+plt.grid(False)
+plt.axis("equal")
+plt.show()
