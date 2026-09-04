@@ -443,11 +443,10 @@ x_t1 = None # point that ends the second curve
 y_t1 = None # point that ends the second curve
 x_tf = None # point that starts the last S segment
 y_tf = None # point that starts the last S segment
-thet1_t = None
-psi = None
+beta_1 = None
+beta_2 = None
 theta_f = None
-c_x01 = None
-c_y01 = None
+
 """
 What I need:
 x Initial point
@@ -476,29 +475,21 @@ for i, c1 in enumerate(c1_candidates):
     alpha_1 = 2*acos(cos_alpha_2)
     alpha_2 = 2*acos(-cos_alpha_2)
     alphas = [alpha_1, alpha_2]
-    alphas_ok = []
-    # alpha has to be between pi and 2pi, let's verify that.
+    _alpha = False
+    # alpha has to be in the interval (pi,2pi), let's verify that. Only one of the candidates can be.
     for alpha_ in alphas:
-        if alpha_ < 0:
-            # Keep angles between [0,2pi]
-            alpha_ += 2*pi
         if (pi < alpha_ < 2*pi):
             # alpha_ is between pi and 2pi
-            alphas_ok.append(alpha_)
-    if len(alphas_ok) == 0:
-        # none of these angles are in the right range, go to next candidate solution
+            _alpha = alpha_
+            break
+    if not _alpha:
+        # alpha is not in the right range, go to next candidate solution
         continue
-    # We have at least one good angle alpha, let's keep going.
+    # We have a good alpha, let's keep going.
 
     # Get the coordinates of the middle point of the alpha circle
-    _c_xa = c_x0 + 2*rho*cos( atan2(_c_y1-c_y0,_c_x1-c_x0) + (alphas_ok[0] - pi)/2 )
-    _c_ya = c_y0 + 2*rho*sin( atan2(_c_y1-c_y0,_c_x1-c_x0) + (alphas_ok[0] - pi)/2 )
-    _c_xa2 = False
-    _c_ya2 = False
-    if len(alphas_ok) > 1:
-        # Both alpha candidates were fine
-        _c_xa2 = c_x0 + 2*rho*cos( atan2(_c_y1-c_y0,_c_x1-c_x0) + (alphas_ok[1] - pi)/2 )
-        _c_ya2 = c_y0 + 2*rho*sin( atan2(_c_y1-c_y0,_c_x1-c_x0) + (alphas_ok[1] - pi)/2 )
+    _c_xa = c_x0 + 2*rho*cos( atan2(_c_y1-c_y0,_c_x1-c_x0) + (_alpha - pi)/2 )
+    _c_ya = c_y0 + 2*rho*sin( atan2(_c_y1-c_y0,_c_x1-c_x0) + (_alpha - pi)/2 )
 
     # Get the angle of the last S segment
     L = ( (_c_x1 - xf)**2 + (_c_y1 - yf)**2 )**.5
@@ -508,58 +499,37 @@ for i, c1 in enumerate(c1_candidates):
 
     # Get the final point of the first curve
     # The heading at the intersection with the second curve is beta_1
-    beta_1 = atan2(_c_ya-c_y0,_c_xa-c_x0) + pi/2 # CHANGE THIS SIGN FOR RLRS
-    if beta_1 < thet0:
-        beta_1 += 2*pi
-    _x_t0 = c_x0 + rho*cos(beta_1-pi/2) # CHANGE THIS SIGN FOR RLRS
-    _y_t0 = c_y0 + rho*sin(beta_1-pi/2) # CHANGE THIS SIGN FOR RLRS
+    _beta_1 = atan2(_c_ya-c_y0,_c_xa-c_x0) + pi/2 # CHANGE THIS SIGN FOR RLRS
+    if _beta_1 < thet0:
+        _beta_1 += 2*pi
+    _x_t0 = c_x0 + rho*cos(_beta_1-pi/2) # CHANGE THIS SIGN FOR RLRS
+    _y_t0 = c_y0 + rho*sin(_beta_1-pi/2) # CHANGE THIS SIGN FOR RLRS
 
     # Get the final point of the second curve
     # The heading at the intersection with the third curve is beta_2
-    beta_2 = beta_1 - alphas_ok[0] # CHANGE THIS SIGN FOR RLRS
-    _x_t1 = _c_xa + rho*cos(beta_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
-    _y_t1 = _c_ya + rho*sin(beta_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
-    if len(alphas_ok) > 1:
-        beta_2_2 = beta_1 - alphas_ok[1] # CHANGE THIS SIGN FOR RLRS
-        _x_t1_2 = _c_xa2 + rho*cos(beta_2_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
-        _y_t1_2 = _c_ya2 + rho*sin(beta_2_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
+    _beta_2 = _beta_1 - _alpha # CHANGE THIS SIGN FOR RLRS
+    _x_t1 = _c_xa + rho*cos(_beta_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
+    _y_t1 = _c_ya + rho*sin(_beta_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
 
     # Get the first point of the final S segment
     _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "L") # point that starts the last S, CHANGE L FOR RLRS.
 
     # Get the length of the first curved segment, length = theta*rho
-    arc1_length = abs((beta_1 - thet0)*rho)
+    arc1_length = abs((_beta_1 - thet0)*rho)
 
     # Get the length of the second curved segment, length = theta*rho
-    arc2_length = alphas_ok[0]*rho
-    if len(alphas_ok) > 1:
-        arc2_length_2 = alphas_ok[1]*rho
+    arc2_length = _alpha*rho
 
     # Get the length of the third curved segment, length = theta*rho
-    arc3_length = abs((_theta_f - beta_2)*rho)
-    if len(alphas_ok) > 1:
-        arc3_length_2 = abs((_theta_f - beta_2_2)*rho)
+    arc3_length = abs((_theta_f - _beta_2)*rho)
 
     # Get the length of the final S segment
     S_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
 
     # Get the total path length
     total_path_length = arc1_length + arc2_length + arc3_length + S_length
-    if len(alphas_ok) > 1:
-        total_path_length_2 = arc1_length + arc2_length_2 + arc3_length_2 + S_length
 
-
-    ############### This is where I'm at ####################################################################################################################################
-    _psi = atan2(c_y0-_c_y1, c_x0-_c_x1)#+ gamma # angle of segment joining the centers of c0 and c1 (same as S segment angle)
-    _x_t0, _y_t0 = get_circle_center(c_x0, c_y0, _psi, rho, "L") # point that starts the first S.
-    _x_t1, _y_t1 = get_circle_center(_c_x1, _c_y1, _psi, rho, "R") # point that ends the first S, and starts the R.
-    # arc1_length = abs(psi - (thet0 - pi))*rho # arc = theta*rho
-    straight1_length = ( (_x_t0 - _x_t1)**2 + (_y_t0 - _y_t1)**2 )**.5
-    arc1_length = abs(_psi - thet0)*rho # arc = theta*rho
-    arc2_length = abs(_theta_f - _psi)*rho
-    _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "R") # point that starts the last S.
-    straight2_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
-    total_path_length = arc1_length + straight1_length + arc2_length + straight2_length
+    ############### This is where I'm at ###############################################################################
     if (i == 0) or (total_path_length < distance):
     # if (i == 1): # for testing purposes
         # Only keep the parameters for the shortest path
@@ -575,8 +545,8 @@ for i, c1 in enumerate(c1_candidates):
         y_t1 = _y_t1
         x_tf = _x_tf
         y_tf = _y_tf
-        thet1_t = _theta1_t
-        psi = _psi
+        beta_1 = _beta_1
+        beta_2 = _beta_2
         theta_f = _theta_f
     # print("total_path_length:", total_path_length)
 
