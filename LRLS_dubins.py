@@ -595,8 +595,28 @@ plt.plot(x_t0, y_t0, "go")
 # Get the point that starts the third curve
 plt.plot(x_t1, y_t1, "go")
 
-# # Get the points for the first curved segment
-# angles0 = np.linspace(thet0-pi, psi, 10) # changed for L
+# Get the points for the first curved segment
+angles1 = np.linspace(thet0-pi, beta_1-pi, 20) # changed for L
+x_L1 = []
+y_L1 = []
+for angle in angles1:
+    x, y = get_circle_center(c_x0, c_y0, angle, rho, "L") # changed for L
+    x_L1.append(x)
+    y_L1.append(y)
+plt.plot(x_L1, y_L1, "g-")
+
+# Get the points for the second curved segment
+angles2 = np.linspace(beta_1-pi, beta_2-pi, 20) # changed for L
+x_L2 = []
+y_L2 = []
+for angle in angles2:
+    x, y = get_circle_center(c_xa, c_ya, angle, rho, "R") # changed for L
+    x_L2.append(x)
+    y_L2.append(y)
+plt.plot(x_L2, y_L2, "g-")
+
+# # Get the points for the second curved segment
+# angles2 = np.linspace(thet0-pi, beta_1-pi, 10) # changed for L
 # x_L0 = []
 # y_L0 = []
 # for angle in angles0:
@@ -604,10 +624,12 @@ plt.plot(x_t1, y_t1, "go")
 #     x_L0.append(x)
 #     y_L0.append(y)
 # plt.plot(x_L0, y_L0, "g-")
+
 # # Get the points for the first straight segment
 # x_s01 = np.linspace(x_t0, x_t1, 10)
 # y_s01 = np.linspace(y_t0, y_t1, 10)
 # plt.plot(x_s01, y_s01, "g-")
+
 # # Get the points for the second curved segment
 # angles1 = np.linspace(psi, theta_f-pi, 10) # changed for R
 # x_L1 = []
@@ -623,6 +645,7 @@ plt.plot(x_t1, y_t1, "go")
 # y_S_f = np.linspace(y_L1[-1], yf, 10)
 # plt.plot(x_S_f, y_S_f, "g-")
 
+# # Plot the full trajectory
 # all_x_trajectory = x_L0 + x_s01.tolist()[1:-1] + x_L1 + x_S_f.tolist()[1:]
 # all_y_trajectory = y_L0 + y_s01.tolist()[1:-1] + y_L1 + y_S_f.tolist()[1:]
 # plt.plot(all_x_trajectory, all_y_trajectory, "c-")
