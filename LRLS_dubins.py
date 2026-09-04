@@ -13,7 +13,7 @@ x0 = -2
 y0 = 2
 # thetf = 105*pi/180
 xf = 1
-yf = 4
+yf = 1
 # xf = 5
 # yf = -4
 xc = 1
@@ -483,8 +483,12 @@ for i, c1 in enumerate(c1_candidates):
 
     # Get the angle of the last S segment
     L = ( (_c_x1 - xf)**2 + (_c_y1 - yf)**2 )**.5
-    _delta = atan2(yf-_c_y1, xf-_c_x1)
-    _theta = acos(rho/L)
+    try:
+        _theta = acos(rho/L)
+        _delta = atan2(yf-_c_y1, xf-_c_x1)
+    except (ValueError, ZeroDivisionError):
+        # The separation distance L is too short
+        continue
     _theta_f = (_delta - _theta + pi/2)%(2*pi) # changed for L
 
     # Get the final point of the first curve
@@ -615,6 +619,9 @@ plt.plot(x_L2, y_L2, "g-")
 # Get the points for the third curved segment, and make sure angle range is ok
 if theta_f < beta_2: # changed for L
     angles3 = np.linspace(beta_2-pi, theta_f+pi, 20) # changed for L
+    # if theta_f < theta1_t:
+    #     # To account for the case where more than one full turn is done around the circle c1.
+    #     angles3 = np.linspace(beta_2-pi, theta_f+3*pi, 20) # changed for R
 else:
     angles3 = np.linspace(beta_2-pi, theta_f-pi, 20) # changed for L
 x_L3 = []

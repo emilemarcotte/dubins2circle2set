@@ -533,7 +533,7 @@ for i, c1 in enumerate(c1_candidates):
     try:
         _theta = acos(rho/L)
         _delta = acos((xf - xc + (r_c + rho)*sin(_theta1_t))/L)
-    except ValueError:
+    except (ValueError, ZeroDivisionError):
         # The separation distance L is too short
         continue
     _theta_f = _delta - _theta + pi/2
