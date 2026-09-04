@@ -483,23 +483,20 @@ for i, c1 in enumerate(c1_candidates):
 
     # Get the angle of the last S segment
     L = ( (_c_x1 - xf)**2 + (_c_y1 - yf)**2 )**.5
-    _delta = acos((xf - xc + (r_c + rho)*sin(_theta1_t))/L) # changed for L
+    _delta = atan2(yf-_c_y1, xf-_c_x1)
     _theta = acos(rho/L)
     _theta_f = (_delta - _theta + pi/2)%(2*pi) # changed for L
 
     # Get the final point of the first curve
     # The heading at the intersection with the second curve is beta_1
     _beta_1 = atan2(_c_ya-c_y0,_c_xa-c_x0) + pi/2 # CHANGE THIS SIGN FOR RLRS
-    if _beta_1 < 0:
-        _beta_1 += 2*pi
+    _beta_1 = _beta_1%(2*pi)
     _x_t0 = c_x0 + rho*cos(_beta_1-pi/2) # CHANGE THIS SIGN FOR RLRS
     _y_t0 = c_y0 + rho*sin(_beta_1-pi/2) # CHANGE THIS SIGN FOR RLRS
 
     # Get the final point of the second curve
     # The heading at the intersection with the third curve is beta_2
-    _beta_2 = _beta_1 - _alpha # CHANGE THIS SIGN FOR RLRS
-    if _beta_2 < 0:
-        _beta_2 += 2*pi
+    _beta_2 = (_beta_1 - _alpha)%(2*pi) # CHANGE THIS SIGN FOR RLRS
     _x_t1 = _c_xa + rho*cos(_beta_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
     _y_t1 = _c_ya + rho*sin(_beta_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
 
@@ -569,7 +566,6 @@ ax.add_patch(circle_c)
 # End point and circle
 plt.plot(xf, yf, "ro")
 plt.arrow(xf, yf, arrow_length*cos(theta_f), arrow_length*sin(theta_f), head_width=0.2)
-
 
 # Tangent circle giving the shortest path
 circle1 = plt.Circle((c_x1,c_y1), rho, fill=False, linestyle="--", color="k")
