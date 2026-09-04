@@ -467,6 +467,9 @@ x Get the total path length
 """
 for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
+    if dist_points(c_x0, c_y0, _c_x1, _c_y1) >= 4*rho:
+        # The separation distance is too large for a CCC solution to be optimal
+        continue
     _theta1_t = thet1_candidates[i]
     q = tan(_theta1_t/2)
     md_minus = (c_mdm0 + c_mdm1*q + c_mdm2*q**2)/(q**2 + 1) # = ||c_1-c_0||**2
@@ -503,7 +506,7 @@ for i, c1 in enumerate(c1_candidates):
     # Get the final point of the first curve
     # The heading at the intersection with the second curve is beta_1
     _beta_1 = atan2(_c_ya-c_y0,_c_xa-c_x0) + pi/2 # CHANGE THIS SIGN FOR RLRS
-    if _beta_1 < thet0:
+    if _beta_1 < 0:
         _beta_1 += 2*pi
     _x_t0 = c_x0 + rho*cos(_beta_1-pi/2) # CHANGE THIS SIGN FOR RLRS
     _y_t0 = c_y0 + rho*sin(_beta_1-pi/2) # CHANGE THIS SIGN FOR RLRS
@@ -511,6 +514,8 @@ for i, c1 in enumerate(c1_candidates):
     # Get the final point of the second curve
     # The heading at the intersection with the third curve is beta_2
     _beta_2 = _beta_1 - _alpha # CHANGE THIS SIGN FOR RLRS
+    if _beta_2 < 0:
+        _beta_2 += 2*pi
     _x_t1 = _c_xa + rho*cos(_beta_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
     _y_t1 = _c_ya + rho*sin(_beta_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
 
@@ -518,13 +523,19 @@ for i, c1 in enumerate(c1_candidates):
     _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "L") # point that starts the last S, CHANGE L FOR RLRS.
 
     # Get the length of the first curved segment, length = theta*rho
-    arc1_length = abs((_beta_1 - thet0)*rho)
+    if _beta_1 < thet0: # CHANGE THIS SIGN FOR RLRS
+        arc1_length = abs((_beta_1+2*pi - thet0)*rho)
+    else:
+        arc1_length = abs((_beta_1 - thet0)*rho)
 
     # Get the length of the second curved segment, length = theta*rho
     arc2_length = _alpha*rho
 
     # Get the length of the third curved segment, length = theta*rho
-    arc3_length = abs((_theta_f - _beta_2)*rho)
+    if _theta_f < _beta_2: # CHANGE THIS SIGN FOR RLRS
+        arc3_length = abs((_theta_f+2*pi - _beta_2)*rho)
+    else:
+        arc3_length = abs((_theta_f - _beta_2)*rho)
 
     # Get the length of the final S segment
     S_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
@@ -640,9 +651,9 @@ y_S_f = np.linspace(y_L3[-1], yf, 10)
 plt.plot(x_S_f, y_S_f, "g-")
 
 # Plot the full trajectory
-all_x_trajectory = x_L1 + x_L2[1:] + x_L3[1:] + x_S_f.tolist()[1:]
-all_y_trajectory = y_L1 + y_L2[1:] + y_L3[1:] + y_S_f.tolist()[1:]
-plt.plot(all_x_trajectory, all_y_trajectory, "c-")
+# all_x_trajectory = x_L1 + x_L2[1:] + x_L3[1:] + x_S_f.tolist()[1:]
+# all_y_trajectory = y_L1 + y_L2[1:] + y_L3[1:] + y_S_f.tolist()[1:]
+# plt.plot(all_x_trajectory, all_y_trajectory, "c-")
 
 plt.grid(False)
 plt.axis("equal")
