@@ -413,15 +413,16 @@ start = perf_counter()
 
 # Find the candidate values for the angle thet1
 roots, c_mdm0, c_mdm1, c_mdm2 = get_thet1_LRLS(r_c, rho, thet0, x0, y0, xf, yf, xc, yc)
-print("Real roots:", roots)
+# print("Real roots:", roots)
 # end = perf_counter() # To know how quick the code is
 # print("time =", end-start)
 
-thet1_candidates = [2*atan(half_angle) for half_angle in roots]
-# Account for the fact that adding 180 degrees can also give the same tangent, I MIGHT BE ABLE TO REMOVE THAT!
+thet1_candidates = [(2*atan(half_angle))%(2*pi) for half_angle in roots]
+# print(thet1_candidates)
+# Account for the fact that adding 180 degrees can also give the same tangent
 thet1_candidates_180 = []
 for angle in thet1_candidates:
-    thet1_candidates_180.append(angle+pi)
+    thet1_candidates_180.append((angle+pi)%(2*pi))
 thet1_candidates += thet1_candidates_180
 # print(thet1_candidates)
 c1_candidates = []
@@ -468,10 +469,12 @@ for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
     _theta1_t = thet1_candidates[i]
     q = tan(_theta1_t/2)
-    md_minus = (c_mdm0 + c_mdm1*q + c_mdm2*q**2)/(q**2 + 1)
-
+    md_minus = (c_mdm0 + c_mdm1*q + c_mdm2*q**2)/(q**2 + 1) # = ||c_1-c_0||**2
     # Get the angle span "alpha" for the middle turn
     cos_alpha_2 = (1/(4*rho))*(16*rho**2 - md_minus)**.5
+    if np.imag(cos_alpha_2) != 0:
+        # md_minus > 16*rho**2, so skip to next candidate solution
+        continue
     alpha_1 = 2*acos(cos_alpha_2)
     alpha_2 = 2*acos(-cos_alpha_2)
     alphas = [alpha_1, alpha_2]
@@ -529,7 +532,6 @@ for i, c1 in enumerate(c1_candidates):
     # Get the total path length
     total_path_length = arc1_length + arc2_length + arc3_length + S_length
 
-    ############### This is where I'm at ###############################################################################
     if (i == 0) or (total_path_length < distance):
     # if (i == 1): # for testing purposes
         # Only keep the parameters for the shortest path
@@ -553,14 +555,16 @@ for i, c1 in enumerate(c1_candidates):
 end = perf_counter() # To know how quick the code is
 print("time =", end-start)
 
-# # Plot the results
-# fig, ax = plt.subplots() # note we must use plt.subplots, not plt.subplot
-# arrow_length = 1
-# # Initial point and circle
-# plt.plot(x0, y0, "ro")
-# plt.arrow(x0, y0, arrow_length*cos(thet0), arrow_length*sin(thet0), head_width=0.2)
-# circle0 = plt.Circle((c_x0,c_y0), rho, fill=False, linestyle="--")
-# ax.add_patch(circle0)
+### Plot the results
+fig, ax = plt.subplots() # note we must use plt.subplots, not plt.subplot
+arrow_length = 1
+
+# Initial point and circle
+plt.plot(x0, y0, "ro")
+plt.arrow(x0, y0, arrow_length*cos(thet0), arrow_length*sin(thet0), head_width=0.2)
+circle0 = plt.Circle((c_x0,c_y0), 
+                     rho, fill=False, linestyle="--")
+ax.add_patch(circle0)
 # # Mid circle
 # circle_c = plt.Circle((xc,yc), r_c, fill=False, linestyle="--", color="b")
 # ax.add_patch(circle_c)
