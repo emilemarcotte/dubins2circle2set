@@ -16,6 +16,8 @@ xf = 1
 yf = 1
 # xf = 5
 # yf = -4
+# xf = 4
+# yf = 2
 xc = 1
 yc = -2# + 3 or 1
 
@@ -517,16 +519,26 @@ for i, c1 in enumerate(c1_candidates):
     arc2_length = _alpha*rho
 
     # Get the length of the third curved segment, length = theta*rho
+    # Need to divide it in 2 to account for cases where there is more than 1 rotation
     if _theta_f < _beta_2: # CHANGE THIS SIGN FOR RLRS
         arc3_length = abs((_theta_f+2*pi - _beta_2)*rho)
     else:
         arc3_length = abs((_theta_f - _beta_2)*rho)
 
+    if _theta1_t < _beta_2: # CHANGED THIS SIGN FOR RLRS
+        arc3_length_1 = abs((_theta1_t+2*pi - _beta_2)*rho)
+    else:
+        arc3_length_1 = abs((_theta1_t - _beta_2)*rho)
+    if _theta_f < _theta1_t:
+        arc3_length_2 = abs((_theta_f+2*pi - _theta1_t)*rho)
+    else:
+        arc3_length_2 = abs((_theta_f - _theta1_t)*rho)
+
     # Get the length of the final S segment
     S_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
 
     # Get the total path length
-    total_path_length = arc1_length + arc2_length + arc3_length + S_length
+    total_path_length = arc1_length + arc2_length + arc3_length_1 + arc3_length_2 + S_length
 
     if total_path_length < distance:
     # if (i == 7): # for testing purposes
@@ -617,13 +629,17 @@ for angle in angles2:
 plt.plot(x_L2, y_L2, "g-")
 
 # Get the points for the third curved segment, and make sure angle range is ok
-if theta_f < beta_2: # changed for L
-    angles3 = np.linspace(beta_2-pi, theta_f+pi, 20) # changed for L
-    # if theta_f < theta1_t:
-    #     # To account for the case where more than one full turn is done around the circle c1.
-    #     angles3 = np.linspace(beta_2-pi, theta_f+3*pi, 20) # changed for R
+if theta1_t < beta_2: # changed for L
+    angles3_1 = np.linspace(beta_2-pi, theta1_t+pi, 20) # changed for L
+    print("angles3")
 else:
-    angles3 = np.linspace(beta_2-pi, theta_f-pi, 20) # changed for L
+    angles3_1 = np.linspace(beta_2-pi, theta1_t-pi, 20) # changed for L
+if theta_f < theta1_t:
+    angles3_2 = np.linspace(theta1_t-pi, theta_f+pi, 20) # changed for L
+else:
+    angles3_2 = np.linspace(theta1_t-pi, theta_f-pi, 20) # changed for L
+angles3 = angles3_1.tolist() + angles3_2.tolist()[1:]
+
 x_L3 = []
 y_L3 = []
 for angle in angles3:
