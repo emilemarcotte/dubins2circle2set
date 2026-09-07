@@ -561,6 +561,9 @@ for i, c1 in enumerate(c1_candidates):
         theta1_t = _theta1_t
     # print("total_path_length:", total_path_length)
 
+if theta_f is None:
+    raise ValueError("No solution exists for this combination of trajectory type and input parameters.")
+
 end = perf_counter() # To know how quick the code is
 print("time =", end-start)
 

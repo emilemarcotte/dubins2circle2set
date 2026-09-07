@@ -556,6 +556,9 @@ for i, c1 in enumerate(c1_candidates):
         theta1_t = _theta1_t
     # print("total_path_length:", total_path_length)
 
+if theta_f is None:
+    raise ValueError("No solution exists for this combination of trajectory type and input parameters.")
+
 end = perf_counter() # To know how quick the code is
 print("time =", end-start)
 
@@ -611,8 +614,6 @@ for angle in angles1:
 plt.plot(x_L1, y_L1, "g-")
 
 # Get the points for the second curved segment, and make sure angle range is ok
-print("beta_2", beta_2)
-print("beta_1", beta_1)
 if beta_2 < beta_1: # changed for R
     angles2 = np.linspace(beta_1-pi, beta_2+pi, 20) # changed for L
 else:
