@@ -4,6 +4,22 @@ from math import sin, cos, tan, pi, atan, atan2, acos, asin, sqrt
 import matplotlib.pyplot as plt
 from time import perf_counter
 
+r_c = 1.5
+rho = 1
+thet0 = 90*pi/180
+# thet0 = 26*pi/180
+# x0 = -4
+# y0 = 4
+x0 = -4
+y0 = -3
+# thetf = 105*pi/180
+xf = 3
+yf = -5
+xc = 1
+yc = -0.5# + 3 or 1
+
+"""
+Weird edge case:
 r_c = 2
 rho = 1
 thet0 = 260*pi/180
@@ -19,6 +35,7 @@ xf = 5
 yf = -4
 xc = 1
 yc = -2# + 3 or 1
+"""
 
 """
 LRLS case
@@ -450,6 +467,7 @@ beta_1 = None
 beta_2 = None
 theta_f = None
 theta1_t = None
+alpha = None
 
 for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
@@ -554,6 +572,7 @@ for i, c1 in enumerate(c1_candidates):
         beta_2 = _beta_2
         theta_f = _theta_f
         theta1_t = _theta1_t
+        alpha = _alpha
     # print("total_path_length:", total_path_length)
 
 if theta_f is None:
@@ -573,6 +592,8 @@ circle0 = plt.Circle((c_x0,c_y0),
                      rho, fill=False, linestyle="--")
 ax.add_patch(circle0)
 
+# print("c_x0,c_y0", c_x0,c_y0)
+
 # Mid circle
 circle_c = plt.Circle((xc,yc), r_c, fill=False, linestyle="--", color="b")
 ax.add_patch(circle_c)
@@ -589,16 +610,22 @@ ax.add_patch(circle1)
 #     circle1 = plt.Circle(c1_xy, rho, fill=False, linestyle="--", color="g")
 #     ax.add_patch(circle1)
 
+# print("c_x1,c_y1", c_x1,c_y1)
+
 # Get and plot the tangent point
 p_xt, p_yt = get_circle_center(xc, yc, theta1_t, r_c, "R") # changed for R
 plt.plot(p_xt, p_yt, "ro")
 plt.arrow(p_xt, p_yt, arrow_length*cos(theta1_t), arrow_length*sin(theta1_t), head_width=0.2)
+# print("p_xt, p_yt", p_xt, p_yt)
+# print("theta1_t", theta1_t)
 
-# Plot the point that starts the second curve
+# Plot the point that starts the second curve, P1
 plt.plot(x_t0, y_t0, "go")
+# print("x_t0, y_t0", x_t0, y_t0)
 
-# Get the point that starts the third curve
+# Get the point that starts the third curve, Q1
 plt.plot(x_t1, y_t1, "go")
+# print("x_t1, y_t1", x_t1, y_t1)
 
 # Get the points for the first curved segment, and make sure angle range is ok
 if beta_1 > thet0: # changed for R
@@ -626,6 +653,11 @@ for angle in angles2:
     y_L2.append(y)
 plt.plot(x_L2, y_L2, "g-")
 
+# print("c_xa, c_ya", c_xa, c_ya)
+# print("beta_1", beta_1)
+# print("beta_2", beta_2)
+# print("alpha", alpha)
+
 # Get the points for the third curved segment, and make sure angle range is ok
 if theta1_t > beta_2: # changed for R
     angles3_1 = np.linspace(beta_2-pi, theta1_t-3*pi, 20) # changed for R
@@ -647,15 +679,23 @@ for angle in angles3:
     y_L3.append(y)
 plt.plot(x_L3, y_L3, "g-")
 
+# Get the point that starts the final segment, P2
+# plt.plot(x_L3[-1], y_L3[-1], "go")
+# print("x_L3[-1], y_L3[-1]", x_L3[-1], y_L3[-1])
+
 # Get the points for the last straight segment
 x_S_f = np.linspace(x_L3[-1], xf, 10)
 y_S_f = np.linspace(y_L3[-1], yf, 10)
 plt.plot(x_S_f, y_S_f, "g-")
 
-# # Plot the full trajectory
-# all_x_trajectory = x_L1 + x_L2[1:] + x_L3[1:] + x_S_f.tolist()[1:]
-# all_y_trajectory = y_L1 + y_L2[1:] + y_L3[1:] + y_S_f.tolist()[1:]
+# Plot the full trajectory, and save the data
+all_x_trajectory = x_L1 + x_L2[1:] + x_L3[1:] + x_S_f.tolist()[1:]
+all_y_trajectory = y_L1 + y_L2[1:] + y_L3[1:] + y_S_f.tolist()[1:]
 # plt.plot(all_x_trajectory, all_y_trajectory, "c-")
+# path_array = np.array([all_x_trajectory, all_y_trajectory]).T
+# np.savetxt("RLRSpath.txt", path_array, delimiter=" ")
+
+# print("theta_f", theta_f)
 
 plt.grid(False)
 plt.axis("equal")
