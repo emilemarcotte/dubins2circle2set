@@ -403,27 +403,31 @@ y_t0 = None
 x_t1 = None
 y_t1 = None
 thet1_t = None
-phi = None
+psi = None
 theta_f = None
 for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
-    _phi = atan2(c_y0-_c_y1, c_x0-_c_x1) # angle of segment joining the centers of c0 and c1 (same as S segment angle)
-    _x_t0, _y_t0 = get_circle_center(c_x0, c_y0, _phi, rho, "R") # point that starts the first S.
-    _x_t1, _y_t1 = get_circle_center(_c_x1, _c_y1, _phi, rho, "R") # point that ends the first S, and starts the 2nd R.
-    # arc1_length = abs(phi - (thet0 - pi))*rho # arc = theta*rho
+    _psi = atan2(c_y0-_c_y1, c_x0-_c_x1) # angle of segment joining the centers of c0 and c1 (same as S segment angle)
+    _x_t0, _y_t0 = get_circle_center(c_x0, c_y0, _psi, rho, "R") # point that starts the first S.
+    _x_t1, _y_t1 = get_circle_center(_c_x1, _c_y1, _psi, rho, "R") # point that ends the first S, and starts the 2nd R.
+    # arc1_length = abs(psi - (thet0 - pi))*rho # arc = theta*rho
     straight1_length = ( (_x_t0 - _x_t1)**2 + (_y_t0 - _y_t1)**2 )**.5
-    arc1_length = abs(_phi - thet0)*rho # arc = theta*rho
+    arc1_length = abs(_psi - thet0)*rho # arc = theta*rho
     # Get the final angle
     _theta1_t = thet1_candidates[i]
     L = ( (_c_x1 - xf)**2 + (_c_y1 - yf)**2 )**.5
     # D = ( L**2 - rho**2 )**.5
     # print("rho/L", rho/L)
-    _theta = acos(rho/L)
-    # _theta = asin(D/L)
-    # _theta = atan2(D, rho)
-    _delta = acos((xf - xc - (r_c + rho)*sin(_theta1_t))/L) # changed for R
+    try:
+        _theta = acos(rho/L)
+        # _theta = asin(D/L)
+        # _theta = atan2(D, rho)
+        _delta = acos((xf - xc - (r_c + rho)*sin(_theta1_t))/L) # changed for R
+    except ValueError:
+        # The separation distance L is too short
+        continue
     _theta_f = _delta + _theta - pi/2 # changed for R
-    arc2_length = abs(_theta_f - _phi)*rho
+    arc2_length = abs(_theta_f - _psi)*rho
     _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "R") # point that starts the last S.
     straight2_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
     total_path_length = arc1_length + straight1_length + arc2_length + straight2_length
@@ -439,7 +443,7 @@ for i, c1 in enumerate(c1_candidates):
         x_t1 = _x_t1
         y_t1 = _y_t1
         thet1_t = _theta1_t
-        phi = _phi
+        psi = _psi
         theta_f = _theta_f
     # print("total_path_length:", total_path_length)
 
@@ -474,7 +478,7 @@ plt.arrow(p_xt, p_yt, arrow_length*cos(thet1_t), arrow_length*sin(thet1_t), head
 plt.plot(x_t0, y_t0, "go")
 plt.plot(x_t1, y_t1, "go")
 # Get the points for the first curved segment
-angles0 = np.linspace(thet0+pi, phi, 10) # changed for R
+angles0 = np.linspace(thet0+pi, psi, 10) # changed for R
 x_L0 = []
 y_L0 = []
 for angle in angles0:
@@ -487,7 +491,7 @@ x_s01 = np.linspace(x_t0, x_t1, 10)
 y_s01 = np.linspace(y_t0, y_t1, 10)
 plt.plot(x_s01, y_s01, "g-")
 # Get the points for the second curved segment
-angles1 = np.linspace(phi, theta_f-pi, 10) # changed for R
+angles1 = np.linspace(psi, theta_f-pi, 10) # changed for R
 x_L1 = []
 y_L1 = []
 for angle in angles1:
