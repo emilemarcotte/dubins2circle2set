@@ -588,8 +588,7 @@ arrow_length = 1
 # Initial point and circle
 plt.plot(x0, y0, "ro")
 plt.arrow(x0, y0, arrow_length*cos(thet0), arrow_length*sin(thet0), head_width=0.2)
-circle0 = plt.Circle((c_x0,c_y0),
-                     rho, fill=False, linestyle="--")
+circle0 = plt.Circle((c_x0,c_y0), rho, fill=False, linestyle="--")
 ax.add_patch(circle0)
 
 # print("c_x0,c_y0", c_x0,c_y0)

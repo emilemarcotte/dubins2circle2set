@@ -556,7 +556,7 @@ for i, c1 in enumerate(c1_candidates):
     q = tan(_theta1_t/2)
     md_minus = (c_mdm0 + c_mdm1*q + c_mdm2*q**2)/(q**2 + 1)
     gamma = asin(2*rho/(md_minus**.5))
-    _psi = atan2(c_y0-_c_y1, c_x0-_c_x1) - gamma # angle of segment joining the centers of c0 and c1 (same as S segment angle)
+    _psi = atan2(_c_y1-c_y0, _c_x1-c_x0) - gamma # angle of segment joining the centers of c0 and c1 (same as S segment angle)
     _x_t0, _y_t0 = get_circle_center(c_x0, c_y0, _psi, rho, "R") # point that starts the first S.
     _x_t1, _y_t1 = get_circle_center(_c_x1, _c_y1, _psi, rho, "L") # point that ends the first S, and starts the L.
     # arc1_length = abs(psi - (thet0 - pi))*rho # arc = theta*rho

@@ -520,11 +520,6 @@ for i, c1 in enumerate(c1_candidates):
 
     # Get the length of the third curved segment, length = theta*rho
     # Need to divide it in 2 to account for cases where there is more than 1 rotation
-    if _theta_f < _beta_2: # CHANGE THIS SIGN FOR RLRS
-        arc3_length = abs((_theta_f+2*pi - _beta_2)*rho)
-    else:
-        arc3_length = abs((_theta_f - _beta_2)*rho)
-
     if _theta1_t < _beta_2: # CHANGED THIS SIGN FOR RLRS
         arc3_length_1 = abs((_theta1_t+2*pi - _beta_2)*rho)
     else:
@@ -574,8 +569,7 @@ arrow_length = 1
 # Initial point and circle
 plt.plot(x0, y0, "ro")
 plt.arrow(x0, y0, arrow_length*cos(thet0), arrow_length*sin(thet0), head_width=0.2)
-circle0 = plt.Circle((c_x0,c_y0),
-                     rho, fill=False, linestyle="--")
+circle0 = plt.Circle((c_x0,c_y0), rho, fill=False, linestyle="--")
 ax.add_patch(circle0)
 
 # Mid circle
