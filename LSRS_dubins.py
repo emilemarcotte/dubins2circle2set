@@ -4,21 +4,18 @@ from math import sin, cos, tan, pi, atan, atan2, acos, asin
 import matplotlib.pyplot as plt
 from time import perf_counter
 
-r_c = 2
+r_c = 1.5
 rho = 1
 thet0 = 260*pi/180
-x0 = 0
-y0 = -4
-# thetf = 105*pi/180
-xf = -4
+x0 = 2
+y0 = 0
+xf = 3
 yf = -6
-# xf = 5
-# yf = -4
-xc = 1
-yc = -2# + 3 or 1
+xc = 8
+yc = -3
 
 """
-For testing a weird edge case!
+# For testing a weird edge case!
 r_c = 2
 rho = 1
 thet0 = 260*pi/180
@@ -27,6 +24,20 @@ y0 = -4
 # thetf = 105*pi/180
 xf = 1
 yf = 4
+# xf = 5
+# yf = -4
+xc = 1
+yc = -2# + 3 or 1
+
+# Or:
+r_c = 2
+rho = 1
+thet0 = 260*pi/180
+x0 = 0
+y0 = -4
+# thetf = 105*pi/180
+xf = -4
+yf = -6
 # xf = 5
 # yf = -4
 xc = 1
@@ -527,12 +538,6 @@ def get_circle_center(x, y, thet, rho, turn):
         raise ValueError("""The "turn" argument is invalid. It should be either "L" or "R".""")
     return c_x, c_y
 
-def dist_points(x1, y1, x2, y2):
-    """
-    Returns the distance between 2 points in a 2D plane.
-    """
-    return ((x1 - x2)**2 + (y1 - y2)**2)**.5
-
 # Calculate the total execution time
 start = perf_counter()
 
@@ -553,6 +558,7 @@ c1_candidates = []
 for thet1 in thet1_candidates:
     c_x1_, c_y1_ = get_circle_center(xc, yc, thet1, rho+r_c, "R")
     c1_candidates.append((c_x1_,c_y1_))
+
 # Keep only the candidate value that gives the shortest overall path length
 c_x0, c_y0 = get_circle_center(x0, y0, thet0, rho, "L")
 distance = np.inf
@@ -563,9 +569,14 @@ x_t0 = None # point that ends the first curve
 y_t0 = None # point that ends the first curve
 x_t1 = None # point that starts the second curve
 y_t1 = None # point that starts the second curve
+P2x = None # point that starts the last S
+P2y = None # point that starts the last S
 thet1_t = None
 psi = None
 theta_f = None
+gamma = None
+phi = None
+delta = None
 
 for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
@@ -574,12 +585,12 @@ for i, c1 in enumerate(c1_candidates):
     md_minus = (c_mdm0 + c_mdm1*q + c_mdm2*q**2)/(q**2 + 1)
     # print(md_minus)
     try:
-        gamma = asin(2*rho/(md_minus**.5))
+        _gamma = asin(2*rho/(md_minus**.5))
     except ValueError:
         continue
 
     # angle of segment joining the centers of c0 and c1 (same as S segment angle)
-    _psi = (atan2(_c_y1-c_y0, _c_x1-c_x0) + gamma)%(2*pi)
+    _psi = (atan2(_c_y1-c_y0, _c_x1-c_x0) + _gamma)%(2*pi)
 
     # Get the final angle
     L = ( (_c_x1 - xf)**2 + (_c_y1 - yf)**2 )**.5
@@ -621,14 +632,14 @@ for i, c1 in enumerate(c1_candidates):
         arc2_length_2 = abs((_theta_f - _theta1_t)*rho)
 
     # Get the length of the last S
-    _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "R") # point that starts the last S.
-    straight2_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
+    _P2x, _P2y = get_circle_center(_c_x1, _c_y1, _theta_f-pi, rho, "R") # point that starts the last S.
+    straight2_length = ( (_P2x - xf)**2 + (_P2y - yf)**2 )**.5
 
     # Get the total path length
     total_path_length = arc1_length + straight1_length + arc2_length_1 + arc2_length_2 + straight2_length
 
-    # if total_path_length < distance:
-    if (i == 12): # for testing purposes
+    if total_path_length < distance:
+    # if (i == 12): # for testing purposes
         # Only keep the parameters for the shortest path
         distance = total_path_length
         min_dist_idx = i
@@ -638,9 +649,14 @@ for i, c1 in enumerate(c1_candidates):
         y_t0 = _y_t0
         x_t1 = _x_t1
         y_t1 = _y_t1
+        P2x = _P2x
+        P2y = _P2y
         thet1_t = _theta1_t
         psi = _psi
         theta_f = _theta_f
+        gamma = _gamma
+        phi = _theta
+        delta = _delta
     # print("total_path_length:", total_path_length)
 
 end = perf_counter() # To know how quick the code is
@@ -659,6 +675,8 @@ plt.arrow(x0, y0, arrow_length*cos(thet0), arrow_length*sin(thet0), head_width=0
 circle0 = plt.Circle((c_x0,c_y0), rho, fill=False, linestyle="--")
 ax.add_patch(circle0)
 
+# print("c_x0,c_y0", c_x0,c_y0)
+
 # Mid circle
 circle_c = plt.Circle((xc,yc), r_c, fill=False, linestyle="--", color="b")
 ax.add_patch(circle_c)
@@ -675,10 +693,14 @@ ax.add_patch(circle1)
 #     circle1 = plt.Circle(c1_xy, rho, fill=False, linestyle="--", color="g")
 #     ax.add_patch(circle1)
 
+# print("c_x1,c_y1", c_x1,c_y1)
+
 # Get and plot the tangent point
 p_xt, p_yt = get_circle_center(xc, yc, thet1_t, r_c, "R") # changed for R
 plt.plot(p_xt, p_yt, "ro")
 plt.arrow(p_xt, p_yt, arrow_length*cos(thet1_t), arrow_length*sin(thet1_t), head_width=0.2)
+# print("p_xt, p_yt", p_xt, p_yt)
+# print("theta1_t", thet1_t)
 
 # Plot the points that start and end the first S segment
 plt.plot(x_t0, y_t0, "go")
@@ -698,6 +720,10 @@ for angle in angles0:
     x_L0.append(x)
     y_L0.append(y)
 plt.plot(x_L0, y_L0, "g-")
+
+# print("psi", psi)
+# print("gamma", gamma)
+# print("x_L0[-1], y_L0[-1]", x_L0[-1], y_L0[-1])
 
 # Get the points for the first straight segment
 x_s01 = np.linspace(x_t0, x_t1, 10)
@@ -731,12 +757,19 @@ x_S_f = np.linspace(x_L3[-1], xf, 10)
 y_S_f = np.linspace(y_L3[-1], yf, 10)
 plt.plot(x_S_f, y_S_f, "g-")
 
+# print("P2x, P2y", P2x, P2y)
+
 # Plot the full trajectory, and save the data
 all_x_trajectory = x_L0 + x_s01.tolist()[1:-1] + x_L3 + x_S_f.tolist()[1:]
 all_y_trajectory = y_L0 + y_s01.tolist()[1:-1] + y_L3 + y_S_f.tolist()[1:]
 # plt.plot(all_x_trajectory, all_y_trajectory, "c-")
 # path_array = np.array([all_x_trajectory, all_y_trajectory]).T
-# np.savetxt("RLRSpath.txt", path_array, delimiter=" ")
+# np.savetxt("LSRSpath.txt", path_array, delimiter=" ")
+
+# print("theta_f", theta_f)
+# print("phi", phi)
+# print("delta", delta%(2*pi))
+
 
 plt.grid(False)
 plt.axis("equal")
