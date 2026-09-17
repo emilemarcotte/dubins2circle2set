@@ -109,6 +109,8 @@ plt.arrow(x0, y0, arrow_length*cos(thet0), arrow_length*sin(thet0), head_width=0
 circle0 = plt.Circle((c_x0,c_y0), rho, fill=False, linestyle="--")
 ax.add_patch(circle0)
 
+# print("c_x0, c_y0", c_x0, c_y0)
+
 # Mid circle
 circle_c = plt.Circle((xc,yc), rc, fill=False, linestyle="--", color="b")
 ax.add_patch(circle_c)
@@ -129,6 +131,8 @@ plt.plot(x_L1, y_L1, "g-")
 
 # Plot P1
 plt.plot(P1x, P1y, "ro")
+
+# print("P1x, P1y", P1x, P1y)
 
 # Plot first tangent point
 plt.plot(x1, y1, "ro")
@@ -157,6 +161,8 @@ S2_x = np.linspace(x2, xT, 20)
 b = yT - tan(thet2)*xT
 S2_y = tan(thet2)*S2_x + b
 plt.plot(S2_x, S2_y, "g-")
+
+# print("thet2", thet2)
 
 # Plot the full trajectory
 all_x_trajectory = x_L1 + S1_x.tolist()[1:] + x_L2[1:] + S2_x.tolist()[1:]
