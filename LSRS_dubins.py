@@ -587,6 +587,7 @@ for i, c1 in enumerate(c1_candidates):
     try:
         _gamma = asin(2*rho/(md_minus**.5))
     except ValueError:
+        # Invalid value
         continue
 
     # angle of segment joining the centers of c0 and c1 (same as S segment angle)
@@ -608,14 +609,13 @@ for i, c1 in enumerate(c1_candidates):
     else:
         arc1_length = abs((_psi - thet0)*rho) # arc = theta*rho
 
-    # point that starts the first S.
+    # point that starts the first S
     _x_t0 = c_x0 + rho*cos(_psi-pi/2) # CHANGE THIS SIGN FOR OTHER PATHS
     _y_t0 = c_y0 + rho*sin(_psi-pi/2) # CHANGE THIS SIGN FOR OTHER PATHS
 
-    # point that ends the first S, and starts the R.
+    # point that ends the first S, and starts the R
     _x_t1 = _c_x1 + rho*cos(_psi+pi/2)
     _y_t1 = _c_y1 + rho*sin(_psi+pi/2)
-    # _x_t1, _y_t1 = get_circle_center(_c_x1, _c_y1, _psi, rho, "R")
 
     # Get the length of the first S
     straight1_length = ( (_x_t0 - _x_t1)**2 + (_y_t0 - _y_t1)**2 )**.5
@@ -632,7 +632,9 @@ for i, c1 in enumerate(c1_candidates):
         arc2_length_2 = abs((_theta_f - _theta1_t)*rho)
 
     # Get the length of the last S
-    _P2x, _P2y = get_circle_center(_c_x1, _c_y1, _theta_f-pi, rho, "R") # point that starts the last S.
+    # _P2x, _P2y = get_circle_center(_c_x1, _c_y1, _theta_f-pi, rho, "R") # point that starts the last S.
+    _P2x = _c_x1 + rho*cos(_theta_f+pi/2)
+    _P2y = _c_y1 + rho*sin(_theta_f+pi/2)
     straight2_length = ( (_P2x - xf)**2 + (_P2y - yf)**2 )**.5
 
     # Get the total path length
@@ -769,6 +771,8 @@ all_y_trajectory = y_L0 + y_s01.tolist()[1:-1] + y_L3 + y_S_f.tolist()[1:]
 # print("theta_f", theta_f)
 # print("phi", phi)
 # print("delta", delta%(2*pi))
+
+plt.plot(P2x,P2y,"mo")
 
 
 plt.grid(False)

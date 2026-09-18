@@ -511,12 +511,6 @@ def get_circle_center(x, y, thet, rho, turn):
         raise ValueError("""The "turn" argument is invalid. It should be either "L" or "R".""")
     return c_x, c_y
 
-def dist_points(x1, y1, x2, y2):
-    """
-    Returns the distance between 2 points in a 2D plane.
-    """
-    return ((x1 - x2)**2 + (y1 - y2)**2)**.5
-
 # Calculate the total execution time
 start = perf_counter()
 
@@ -526,60 +520,98 @@ print("Real roots:", roots)
 # end = perf_counter() # To know how quick the code is
 # print("time =", end-start)
 
-thet1_candidates = [2*atan(half_angle) for half_angle in roots]
+thet1_candidates = [(2*atan(half_angle))%(2*pi) for half_angle in roots]
 # Account for the fact that adding 180 degrees can also give the same tangent
 thet1_candidates_180 = []
 for angle in thet1_candidates:
-    thet1_candidates_180.append(angle+pi)
+    thet1_candidates_180.append((angle+pi)%(2*pi))
 thet1_candidates += thet1_candidates_180
 # print(thet1_candidates)
 c1_candidates = []
 for thet1 in thet1_candidates:
     c_x1_, c_y1_ = get_circle_center(xc, yc, thet1, rho+r_c, "L")
     c1_candidates.append((c_x1_,c_y1_))
+
 # Keep only the candidate value that gives the shortest overall path length
 c_x0, c_y0 = get_circle_center(x0, y0, thet0, rho, "R")
-distance = -1
+distance = np.inf
 min_dist_idx = None
-c_x1 = None
-c_y1 = None
-x_t0 = None
-y_t0 = None
-x_t1 = None
-y_t1 = None
+c_x1 = None # middle of the tangent curve circle
+c_y1 = None # middle of the tangent curve circle
+x_t0 = None # point that ends the first curve
+y_t0 = None # point that ends the first curve
+x_t1 = None # point that starts the second curve
+y_t1 = None # point that starts the second curve
+P2x = None # point that starts the last S
+P2y = None # point that starts the last S
 thet1_t = None
 psi = None
 theta_f = None
+gamma = None
+phi = None
+delta = None
+
 for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
     _theta1_t = thet1_candidates[i]
     q = tan(_theta1_t/2)
     md_minus = (c_mdm0 + c_mdm1*q + c_mdm2*q**2)/(q**2 + 1)
-    gamma = asin(2*rho/(md_minus**.5))
-    _psi = atan2(_c_y1-c_y0, _c_x1-c_x0) - gamma # angle of segment joining the centers of c0 and c1 (same as S segment angle)
-    _x_t0, _y_t0 = get_circle_center(c_x0, c_y0, _psi, rho, "R") # point that starts the first S.
-    _x_t1, _y_t1 = get_circle_center(_c_x1, _c_y1, _psi, rho, "L") # point that ends the first S, and starts the L.
-    # arc1_length = abs(psi - (thet0 - pi))*rho # arc = theta*rho
-    straight1_length = ( (_x_t0 - _x_t1)**2 + (_y_t0 - _y_t1)**2 )**.5
-    arc1_length = abs(_psi - thet0)*rho # arc = theta*rho
+    try:
+        _gamma = asin(2*rho/(md_minus**.5))
+    except ValueError:
+        # Invalid value
+        continue
+
+    # angle of segment joining the centers of c0 and c1 (same as S segment angle)
+    _psi = (atan2(_c_y1-c_y0, _c_x1-c_x0) - _gamma)%(2*pi)
+
     # Get the final angle
     L = ( (_c_x1 - xf)**2 + (_c_y1 - yf)**2 )**.5
-    # D = ( L**2 - rho**2 )**.5
-    # print("rho/L", rho/L)
     try:
         _theta = acos(rho/L)
-        # _theta = asin(D/L)
-        # _theta = atan2(D, rho)
-        _delta = acos((xf - xc + (r_c + rho)*sin(_theta1_t))/L) # changed for L
+        _delta = atan2(yf-_c_y1, xf-_c_x1)
     except ValueError:
         # The separation distance L is too short
         continue
-    _theta_f = _delta - _theta + pi/2 # changed for L
-    arc2_length = abs(_theta_f - _psi)*rho
-    _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "L") # point that starts the last S.
-    straight2_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
-    total_path_length = arc1_length + straight1_length + arc2_length + straight2_length
-    if (i == 0) or (total_path_length < distance):
+    _theta_f = (_delta - _theta + pi/2)%(2*pi) # changed for L
+
+    # Get the length of the R segment
+    if _psi > thet0:
+        arc1_length = abs(((thet0+2*pi) - _psi)*rho) # arc = theta*rho
+    else:
+        arc1_length = abs((thet0 - _psi)*rho) # arc = theta*rho
+
+    # point that starts the first S
+    _x_t0 = c_x0 + rho*cos(_psi+pi/2) # CHANGE THIS SIGN FOR OTHER PATHS
+    _y_t0 = c_y0 + rho*sin(_psi+pi/2) # CHANGE THIS SIGN FOR OTHER PATHS
+
+    # point that ends the first S, and starts the L
+    _x_t1 = _c_x1 + rho*cos(_psi-pi/2)
+    _y_t1 = _c_y1 + rho*sin(_psi-pi/2)
+
+    # Get the length of the first S
+    straight1_length = ( (_x_t0 - _x_t1)**2 + (_y_t0 - _y_t1)**2 )**.5
+
+    # Get the length of the L segment
+    # Need to divide it in 2 to account for cases where there is more than 1 rotation
+    if _theta1_t < _psi:
+        arc2_length_1 = abs((_theta1_t+2*pi - _psi)*rho)
+    else:
+        arc2_length_1 = abs((_theta1_t - _psi)*rho)
+    if _theta_f < _theta1_t:
+        arc2_length_2 = abs((_theta_f+2*pi - _theta1_t)*rho)
+    else:
+        arc2_length_2 = abs((_theta_f - _theta1_t)*rho)
+
+    # Get the length of the last S
+    _P2x = _c_x1 + rho*cos(_theta_f-pi/2)
+    _P2y = _c_y1 + rho*sin(_theta_f-pi/2)
+    straight2_length = ( (_P2x - xf)**2 + (_P2y - yf)**2 )**.5
+
+    # Get the total path length
+    total_path_length = arc1_length + straight1_length + arc2_length_1 + arc2_length_2 + straight2_length
+
+    if total_path_length < distance:
     # if (i == 1): # for testing purposes
         # Only keep the parameters for the shortest path
         distance = total_path_length
@@ -590,9 +622,14 @@ for i, c1 in enumerate(c1_candidates):
         y_t0 = _y_t0
         x_t1 = _x_t1
         y_t1 = _y_t1
+        P2x = _P2x
+        P2y = _P2y
         thet1_t = _theta1_t
         psi = _psi
         theta_f = _theta_f
+        gamma = _gamma
+        phi = _theta
+        delta = _delta
     # print("total_path_length:", total_path_length)
 
 end = perf_counter() # To know how quick the code is

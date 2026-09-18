@@ -507,7 +507,8 @@ for i, c1 in enumerate(c1_candidates):
     _y_t1 = _c_ya + rho*sin(_beta_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
 
     # Get the first point of the final S segment
-    _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "L") # point that starts the last S, CHANGE L FOR RLRS.
+    _P2x = _c_x1 + rho*cos(_theta_f-pi/2)
+    _P2y = _c_y1 + rho*sin(_theta_f-pi/2)
 
     # Get the length of the first curved segment, length = theta*rho
     if _beta_1 < thet0: # CHANGE THIS SIGN FOR RLRS
@@ -530,7 +531,7 @@ for i, c1 in enumerate(c1_candidates):
         arc3_length_2 = abs((_theta_f - _theta1_t)*rho)
 
     # Get the length of the final S segment
-    S_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
+    S_length = ( (_P2x - xf)**2 + (_P2y - yf)**2 )**.5
 
     # Get the total path length
     total_path_length = arc1_length + arc2_length + arc3_length_1 + arc3_length_2 + S_length
@@ -548,8 +549,8 @@ for i, c1 in enumerate(c1_candidates):
         y_t0 = _y_t0
         x_t1 = _x_t1
         y_t1 = _y_t1
-        x_tf = _x_tf
-        y_tf = _y_tf
+        x_tf = _P2x
+        y_tf = _P2y
         beta_1 = _beta_1
         beta_2 = _beta_2
         theta_f = _theta_f
@@ -651,8 +652,8 @@ y_S_f = np.linspace(y_L3[-1], yf, 10)
 plt.plot(x_S_f, y_S_f, "g-")
 
 # Plot the full trajectory
-# all_x_trajectory = x_L1 + x_L2[1:] + x_L3[1:] + x_S_f.tolist()[1:]
-# all_y_trajectory = y_L1 + y_L2[1:] + y_L3[1:] + y_S_f.tolist()[1:]
+all_x_trajectory = x_L1 + x_L2[1:] + x_L3[1:] + x_S_f.tolist()[1:]
+all_y_trajectory = y_L1 + y_L2[1:] + y_L3[1:] + y_S_f.tolist()[1:]
 # plt.plot(all_x_trajectory, all_y_trajectory, "c-")
 
 plt.grid(False)
