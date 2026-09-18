@@ -635,56 +635,81 @@ for i, c1 in enumerate(c1_candidates):
 end = perf_counter() # To know how quick the code is
 print("time =", end-start)
 
+if theta_f is None:
+    raise ValueError("No solution exists for this combination of trajectory type and input parameters.")
+
 # Plot the results
 fig, ax = plt.subplots() # note we must use plt.subplots, not plt.subplot
 arrow_length = 1
+
 # Initial point and circle
 plt.plot(x0, y0, "ro")
 plt.arrow(x0, y0, arrow_length*cos(thet0), arrow_length*sin(thet0), head_width=0.2)
 circle0 = plt.Circle((c_x0,c_y0), rho, fill=False, linestyle="--")
 ax.add_patch(circle0)
+
 # Mid circle
 circle_c = plt.Circle((xc,yc), r_c, fill=False, linestyle="--", color="b")
 ax.add_patch(circle_c)
+
 # End point and circle
 plt.plot(xf, yf, "ro")
 plt.arrow(xf, yf, arrow_length*cos(theta_f), arrow_length*sin(theta_f), head_width=0.2)
+
+# Tangent circle giving the shortest path
+circle1 = plt.Circle((c_x1,c_y1), rho, fill=False, linestyle="--", color="k")
+ax.add_patch(circle1)
 # # Candidate circles tangent to the target
 # for c1_xy in c1_candidates:
 #     circle1 = plt.Circle(c1_xy, rho, fill=False, linestyle="--", color="g")
 #     ax.add_patch(circle1)
-circle1 = plt.Circle((c_x1,c_y1), rho, fill=False, linestyle="--", color="k")
-ax.add_patch(circle1)
+
 # Get and plot the tangent point
 p_xt, p_yt = get_circle_center(xc, yc, thet1_t, r_c, "L") # changed for L
 plt.plot(p_xt, p_yt, "ro")
 plt.arrow(p_xt, p_yt, arrow_length*cos(thet1_t), arrow_length*sin(thet1_t), head_width=0.2)
-# Plot the point that starts the first S segment
+
+# Plot the points that start and end the first S segment
 plt.plot(x_t0, y_t0, "go")
 plt.plot(x_t1, y_t1, "go")
-# Get the points for the first curved segment
-angles0 = np.linspace(thet0+pi, psi, 10) # changed for R
+
+# Get the points for the first curved segment, and make sure angle range is ok
+if psi > thet0: # changed for R
+    angles1 = np.linspace(thet0-pi, psi-3*pi, 20) # changed for R
+else:
+    angles1 = np.linspace(thet0-pi, psi-pi, 20)
 x_L0 = []
 y_L0 = []
-for angle in angles0:
+for angle in angles1:
     x, y = get_circle_center(c_x0, c_y0, angle, rho, "R") # changed for R
     x_L0.append(x)
     y_L0.append(y)
 plt.plot(x_L0, y_L0, "g-")
+
 # Get the points for the first straight segment
 x_s01 = np.linspace(x_t0, x_t1, 10)
 y_s01 = np.linspace(y_t0, y_t1, 10)
 plt.plot(x_s01, y_s01, "g-")
-# Get the points for the second curved segment
-angles1 = np.linspace(psi, theta_f+pi, 10) # changed for L
+
+# Get the points for the second curved segment, and make sure angle range is ok
+if thet1_t < psi: # changed for L
+    angles3_1 = np.linspace(psi-pi, thet1_t+pi, 20) # changed for L
+    print("angles3")
+else:
+    angles3_1 = np.linspace(psi-pi, thet1_t-pi, 20) # changed for L
+if theta_f < thet1_t:
+    angles3_2 = np.linspace(thet1_t-pi, theta_f+pi, 20) # changed for L
+else:
+    angles3_2 = np.linspace(thet1_t-pi, theta_f-pi, 20) # changed for L
+angles3 = angles3_1.tolist() + angles3_2.tolist()[1:]
 x_L1 = []
 y_L1 = []
-for angle in angles1:
+for angle in angles3:
     x, y = get_circle_center(c_x1, c_y1, angle, rho, "L") # changed for L
     x_L1.append(x)
     y_L1.append(y)
 plt.plot(x_L1, y_L1, "g-")
-plt.plot(x_L1[-1], y_L1[-1], "go")
+
 # Get the points for the last straight segment
 x_S_f = np.linspace(x_L1[-1], xf, 10)
 y_S_f = np.linspace(y_L1[-1], yf, 10)
@@ -692,7 +717,7 @@ plt.plot(x_S_f, y_S_f, "g-")
 
 all_x_trajectory = x_L0 + x_s01.tolist()[1:-1] + x_L1 + x_S_f.tolist()[1:]
 all_y_trajectory = y_L0 + y_s01.tolist()[1:-1] + y_L1 + y_S_f.tolist()[1:]
-plt.plot(all_x_trajectory, all_y_trajectory, "c-")
+# plt.plot(all_x_trajectory, all_y_trajectory, "c-")
 
 plt.grid(False)
 plt.axis("equal")

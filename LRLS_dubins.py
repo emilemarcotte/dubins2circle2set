@@ -637,7 +637,6 @@ if theta_f < theta1_t:
 else:
     angles3_2 = np.linspace(theta1_t-pi, theta_f-pi, 20) # changed for L
 angles3 = angles3_1.tolist() + angles3_2.tolist()[1:]
-
 x_L3 = []
 y_L3 = []
 for angle in angles3:
