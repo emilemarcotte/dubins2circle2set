@@ -367,12 +367,6 @@ def get_circle_center(x, y, thet, rho, turn):
         raise ValueError("""The "turn" argument is invalid. It should be either "L" or "R".""")
     return c_x, c_y
 
-def dist_points(x1, y1, x2, y2):
-    """
-    Returns the distance between 2 points in a 2D plane.
-    """
-    return ((x1 - x2)**2 + (y1 - y2)**2)**.5
-
 # Calculate the total execution time
 start = perf_counter()
 

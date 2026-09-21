@@ -404,12 +404,6 @@ def get_circle_center(x, y, thet, rho, turn):
         raise ValueError("""The "turn" argument is invalid. It should be either "L" or "R".""")
     return c_x, c_y
 
-def dist_points(x1, y1, x2, y2):
-    """
-    Returns the distance between 2 points in a 2D plane.
-    """
-    return ((x1 - x2)**2 + (y1 - y2)**2)**.5
-
 # Calculate the total execution time
 start = perf_counter()
 
@@ -446,6 +440,8 @@ x_t1 = None # point that ends the second curve
 y_t1 = None # point that ends the second curve
 x_tf = None # point that starts the last S segment
 y_tf = None # point that starts the last S segment
+p_xt = None # tangent point
+p_yt = None # tangent point
 beta_1 = None
 beta_2 = None
 theta_f = None
@@ -453,10 +449,12 @@ theta1_t = None
 
 for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
-    if dist_points(c_x0, c_y0, _c_x1, _c_y1) >= 4*rho:
+    _theta1_t = thet1_candidates[i]
+    # Tangent point
+    _p_xt, _p_yt = get_circle_center(xc, yc, _theta1_t, r_c, "L") # changed for L
+    if ((x0 - _p_xt)**2 + (y0 - _p_yt))**.5 >= 4*rho:
         # The separation distance is too large for a CCC solution to be optimal
         continue
-    _theta1_t = thet1_candidates[i]
     q = tan(_theta1_t/2)
     md_minus = (c_mdm0 + c_mdm1*q + c_mdm2*q**2)/(q**2 + 1) # = ||c_1-c_0||**2
     # Get the angle span "alpha" for the middle turn
@@ -551,6 +549,8 @@ for i, c1 in enumerate(c1_candidates):
         y_t1 = _y_t1
         x_tf = _P2x
         y_tf = _P2y
+        p_xt = _p_xt
+        p_yt = _p_yt
         beta_1 = _beta_1
         beta_2 = _beta_2
         theta_f = _theta_f
@@ -590,7 +590,6 @@ ax.add_patch(circle1)
 #     ax.add_patch(circle1)
 
 # Get and plot the tangent point
-p_xt, p_yt = get_circle_center(xc, yc, theta1_t, r_c, "L") # changed for L
 plt.plot(p_xt, p_yt, "ro")
 plt.arrow(p_xt, p_yt, arrow_length*cos(theta1_t), arrow_length*sin(theta1_t), head_width=0.2)
 
