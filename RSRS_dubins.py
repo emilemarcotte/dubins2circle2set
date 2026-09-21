@@ -404,7 +404,7 @@ for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
 
     # angle of segment joining the centers of c0 and c1 (same as S segment angle)
-    _psi = atan2(c_y0-_c_y1, c_x0-_c_x1)
+    _psi = atan2(_c_y1-c_y0, _c_x1-c_x0)
 
     # Get the final angle
     _theta1_t = thet1_candidates[i]
@@ -489,12 +489,14 @@ ax.add_patch(circle_c)
 # End point and circle
 plt.plot(xf, yf, "ro")
 plt.arrow(xf, yf, arrow_length*cos(theta_f), arrow_length*sin(theta_f), head_width=0.2)
+
+# Tangent circle giving the shortest path
+circle1 = plt.Circle((c_x1,c_y1), rho, fill=False, linestyle="--", color="k")
+ax.add_patch(circle1)
 # # Candidate circles tangent to the target
 # for c1_xy in c1_candidates:
 #     circle1 = plt.Circle(c1_xy, rho, fill=False, linestyle="--", color="g")
 #     ax.add_patch(circle1)
-circle1 = plt.Circle((c_x1,c_y1), rho, fill=False, linestyle="--", color="k")
-ax.add_patch(circle1)
 
 # Get and plot the tangent point
 p_xt, p_yt = get_circle_center(xc, yc, thet1_t, r_c, "R")
@@ -503,14 +505,19 @@ plt.arrow(p_xt, p_yt, arrow_length*cos(thet1_t), arrow_length*sin(thet1_t), head
 
 # Plot the point that starts the first S segment
 plt.plot(x_t0, y_t0, "go")
+
+# Plot the point that ends the first S segment
 plt.plot(x_t1, y_t1, "go")
 
-# Get the points for the first curved segment
-angles0 = np.linspace(thet0+pi, psi, 10) # changed for R
+# Get the points for the first curved segment, and make sure angle range is ok
+if psi > thet0: # changed for R
+    angles0 = np.linspace(thet0-pi, psi-3*pi, 20) # changed for R
+else:
+    angles0 = np.linspace(thet0-pi, psi-pi, 20)
 x_L0 = []
 y_L0 = []
 for angle in angles0:
-    x, y = get_circle_center(c_x0, c_y0, angle, rho, "R")
+    x, y = get_circle_center(c_x0, c_y0, angle, rho, "R") # changed for R
     x_L0.append(x)
     y_L0.append(y)
 plt.plot(x_L0, y_L0, "g-")
@@ -521,11 +528,22 @@ y_s01 = np.linspace(y_t0, y_t1, 10)
 plt.plot(x_s01, y_s01, "g-")
 
 # Get the points for the second curved segment
-angles1 = np.linspace(psi, theta_f-pi, 10) # changed for R
+if thet1_t > psi: # changed for R
+    angles1_1 = np.linspace(psi-pi, thet1_t-3*pi, 20) # changed for R
+    print("thet11")
+else:
+    angles1_1 = np.linspace(psi-pi, thet1_t-pi, 20) # changed for R
+    print("thet12")
+if theta_f > thet1_t:
+    angles1_2 = np.linspace(thet1_t-pi, theta_f-3*pi, 20) # changed for R
+    print("angle3")
+else:
+    angles1_2 = np.linspace(thet1_t-pi, theta_f-pi, 20) # changed for R
+angles1 = angles1_1.tolist() + angles1_2.tolist()[1:]
 x_L1 = []
 y_L1 = []
 for angle in angles1:
-    x, y = get_circle_center(c_x1, c_y1, angle, rho, "R")
+    x, y = get_circle_center(c_x1, c_y1, angle, rho, "R") # changed for R
     x_L1.append(x)
     y_L1.append(y)
 plt.plot(x_L1, y_L1, "g-")

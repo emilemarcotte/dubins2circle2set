@@ -520,7 +520,8 @@ psi = None
 theta_f = None
 for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
-    _psi = atan2(c_y0-_c_y1, c_x0-_c_x1) # angle of segment joining the centers of c0 and c1 (same as S segment angle)
+    # angle of segment joining the centers of c0 and c1 (same as S segment angle)
+    _psi = atan2(_c_y1-c_y0, _c_x1-c_x0)
     _x_t0, _y_t0 = get_circle_center(c_x0, c_y0, _psi, rho, "L") # point that starts the first S.
     _x_t1, _y_t1 = get_circle_center(_c_x1, _c_y1, _psi, rho, "L") # point that ends the first S, and starts the 2nd L.
     # arc1_length = abs(psi - (thet0 - pi))*rho # arc = theta*rho
