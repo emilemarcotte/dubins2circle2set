@@ -412,7 +412,7 @@ for i, c1 in enumerate(c1_candidates):
     try:
         _theta = acos(rho/L)
         _delta = atan2(yf-_c_y1, xf-_c_x1)
-    except ValueError:
+    except (ValueError, ZeroDivisionError):
         # The separation distance L is too short
         continue
     _theta_f = (_delta + _theta - pi/2)%(2*pi) # changed for R
@@ -556,7 +556,7 @@ plt.plot(x_S_f, y_S_f, "g-")
 
 all_x_trajectory = x_L0 + x_s01.tolist()[1:-1] + x_L1 + x_S_f.tolist()[1:]
 all_y_trajectory = y_L0 + y_s01.tolist()[1:-1] + y_L1 + y_S_f.tolist()[1:]
-plt.plot(all_x_trajectory, all_y_trajectory, "c-")
+# plt.plot(all_x_trajectory, all_y_trajectory, "c-")
 
 plt.grid(False)
 plt.axis("equal")
