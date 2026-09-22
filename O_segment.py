@@ -136,6 +136,7 @@ plt.plot(P1x, P1y, "ro")
 
 # Plot first tangent point
 plt.plot(x1, y1, "ro")
+# print("x1, y1", x1, y1)
 
 # Plot first S
 S1_x = np.linspace(P1x, x1, 20)
@@ -155,6 +156,7 @@ plt.plot(x_L2, y_L2, "g-")
 
 # Plot second tangent point
 plt.plot(x2, y2, "ro")
+# print("x2, y2", x2, y2)
 
 # Plot second S
 S2_x = np.linspace(x2, xT, 20)
@@ -162,6 +164,7 @@ b = yT - tan(thet2)*xT
 S2_y = tan(thet2)*S2_x + b
 plt.plot(S2_x, S2_y, "g-")
 
+# print("thet1", thet1)
 # print("thet2", thet2)
 
 # Plot the full trajectory
