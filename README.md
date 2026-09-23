@@ -7,3 +7,5 @@
 - In the final code, maybe verify in potential solutions if they overlap with C?
 
 - Manage cases where a segment in the optimal path could be of length 0.
+
+- Maybe add a way to see if the optimal path goes through C before rejecting it or accepting it as the shortest path.
