@@ -4,8 +4,12 @@ from math import sin, cos, tan, pi, atan, atan2, acos, asin, sqrt
 import matplotlib.pyplot as plt
 from time import perf_counter
 
+"""
+Will need to add a way to make sure the trajectory does not cross C.
+"""
+
 # Known values
-rho = 1.5
+rho = 0.75
 # thet0 = 260*pi/180 # given between [0,2pi]
 rT = 1
 xT = 0
@@ -27,23 +31,29 @@ d_mc = rho + rc
 d_rp = (d_mT**2 + d_TC**2 - d_mc**2)/(2*d_TC)
 
 # Find d_mp
-d_mp = (d_mT**2 + d_rp**2)**.5
+d_mp = (d_mT**2 - d_rp**2)**.5
 
-# Find v_parx
-v_parx = (xc - xT)*(1/d_TC)
-v_pary = (yc - yT)*(1/d_TC)
+# Find point P, version 1
+# thet_TC = atan2(yc-yT, xc-xT)
+# px = xT + d_rp*cos(thet_TC)
+# py = yT + d_rp*sin(thet_TC)
 
-# Find point p
+# Find point P, version 2
+v_parx = (xc - xT)
+v_pary = (yc - yT)
 px = xT + (d_rp/d_TC)*v_parx
 py = yT + (d_rp/d_TC)*v_pary
 
-# Find c1x, 2 possibilities!!!!!!!!!!!!!!!
-c1x_1 = px + d_mp*(-v_pary)
-c1x_2 = px - d_mp*(-v_pary)
-# Find c1y, 2 possibilities!!!!!!!!!!!!!!!
-c1y_1 = py + d_mp*v_parx
-c1y_2 = py - d_mp*v_parx
+# Find v_parx
+v_parx_u = (xc - xT)*(1/d_TC)
+v_pary_u = (yc - yT)*(1/d_TC)
 
+# Find c1x, 2 possibilities!!!!!!!!!!!!!!!
+c1x_1 = px + d_mp*(-v_pary_u)
+c1x_2 = px - d_mp*(-v_pary_u)
+# Find c1y, 2 possibilities!!!!!!!!!!!!!!!
+c1y_1 = py + d_mp*v_parx_u
+c1y_2 = py - d_mp*v_parx_u
 
 ### Plot the results
 fig, ax = plt.subplots() # note we must use plt.subplots, not plt.subplot
@@ -63,15 +73,12 @@ ax.add_patch(circleT)
 plt.plot(c1x_1, c1y_1, "go")
 c11 = plt.Circle((c1x_1, c1y_1), rho, fill=False, linestyle="--", color="g")
 ax.add_patch(c11)
-# plt.plot(c1x_1, c1y_2, "bo")
-# c12 = plt.Circle((c1x_1, c1y_2), rho, fill=False, linestyle="--", color="b")
-# ax.add_patch(c12)
-# plt.plot(c1x_2, c1y_1, "ro")
-# c21 = plt.Circle((c1x_2, c1y_1), rho, fill=False, linestyle="--", color="r")
-# ax.add_patch(c21)
 plt.plot(c1x_2, c1y_2, "mo")
 c22 = plt.Circle((c1x_2, c1y_2), rho, fill=False, linestyle="--", color="m")
 ax.add_patch(c22)
+
+# point P
+plt.plot(px, py, "ro")
 
 plt.grid(False)
 plt.axis("equal")
