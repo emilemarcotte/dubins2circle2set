@@ -9,8 +9,8 @@ Will need to add a way to make sure the trajectory does not cross C.
 """
 
 # Known values
-rho = 1
-# rho = 3
+# rho = 1
+rho = 2
 # thet0 = 260*pi/180 # given between [0,2pi]
 rT = 1
 xT = 0
@@ -21,25 +21,18 @@ yc = -2
 
 # Find known distances
 d_TC = ( (xc - xT)**2 + (yc - yT)**2 )**.5
-d_mT = rho # middle case
-# d_mT = abs(rT-rho) # tangent case
+d_mT = abs(rT-rho) # tangent case
 d_mc = rho + rc
 
-# Verify triangle inequality, middle case
-assert d_TC <= 2*rho + rc, "Condition 1 not met for this type of solution."
-assert d_TC >= rc, "Condition 2 not met for this type of solution."
-# Verify triangle inequality, tangent case
-# assert d_TC <= abs(rT - rho) + rho + rc, "Condition 3 not met for this type of solution."
-# assert d_TC >= abs( abs(rT-rho) + rho + rc ), "Condition 4 not met for this type of solution."
+### Verify triangle inequality, tangent case
+assert d_TC <= abs(rT - rho) + rho + rc, "Condition 3 not met for this type of solution."
+assert d_TC >= abs( abs(rT-rho) - rho - rc ), "Condition 4 not met for this type of solution."
 
 # Find d_rp
 d_rp = (d_mT**2 + d_TC**2 - d_mc**2)/(2*d_TC)
 
-print("d_TC", d_TC)
-print("d_mT", d_mT)
 # Find d_mp
 d_mp = (d_mT**2 - d_rp**2)**.5
-print("d_mp", d_mp) # becomes complex if d_rp > d_mT
 
 # Find point P, version 1
 # thet_TC = atan2(yc-yT, xc-xT)
