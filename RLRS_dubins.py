@@ -18,6 +18,8 @@ yf = -5
 xc = 1
 yc = -0.5# + 3 or 1
 
+rT = 0.75
+
 """
 Weird edge case:
 r_c = 2
@@ -468,7 +470,7 @@ for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
     _theta1_t = thet1_candidates[i]
     # Tangent point
-    _p_xt, _p_yt = get_circle_center(xc, yc, theta1_t, r_c, "R") # changed for R
+    _p_xt, _p_yt = get_circle_center(xc, yc, _theta1_t, r_c, "R") # changed for R
     if ((x0 - _p_xt)**2 + (y0 - _p_yt))**.5 >= 4*rho:
         # The separation distance is too large for a CCC solution to be optimal
         continue
@@ -546,7 +548,7 @@ for i, c1 in enumerate(c1_candidates):
         arc3_length_2 = abs((_theta_f - _theta1_t)*rho)
 
     # Get the length of the final S segment
-    S_length = ( (_P2x - xf)**2 + (_P2y - yf)**2 )**.5
+    S_length = ( (_P2x - xf)**2 + (_P2y - yf)**2 )**.5 - rT
 
     # Get the total path length
     total_path_length = arc1_length + arc2_length + arc3_length_1 + arc3_length_2 + S_length
@@ -596,6 +598,10 @@ ax.add_patch(circle0)
 # Mid circle
 circle_c = plt.Circle((xc,yc), r_c, fill=False, linestyle="--", color="b")
 ax.add_patch(circle_c)
+
+# Show the terminal set
+circleT = plt.Circle((xf,yf), rT, fill=False, linestyle="--", color="m")
+ax.add_patch(circleT)
 
 # End point and circle
 plt.plot(xf, yf, "ro")

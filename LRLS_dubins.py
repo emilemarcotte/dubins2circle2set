@@ -21,6 +21,8 @@ yf = 1
 xc = 1
 yc = -2# + 3 or 1
 
+rT = 0.75
+
 """
 LRLS case
 """
@@ -529,7 +531,7 @@ for i, c1 in enumerate(c1_candidates):
         arc3_length_2 = abs((_theta_f - _theta1_t)*rho)
 
     # Get the length of the final S segment
-    S_length = ( (_P2x - xf)**2 + (_P2y - yf)**2 )**.5
+    S_length = ( (_P2x - xf)**2 + (_P2y - yf)**2 )**.5 - rT
 
     # Get the total path length
     total_path_length = arc1_length + arc2_length + arc3_length_1 + arc3_length_2 + S_length
@@ -576,6 +578,10 @@ ax.add_patch(circle0)
 # Mid circle
 circle_c = plt.Circle((xc,yc), r_c, fill=False, linestyle="--", color="b")
 ax.add_patch(circle_c)
+
+# Show the terminal set
+circleT = plt.Circle((xf,yf), rT, fill=False, linestyle="--", color="m")
+ax.add_patch(circleT)
 
 # End point and circle
 plt.plot(xf, yf, "ro")

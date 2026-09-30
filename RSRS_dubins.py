@@ -17,6 +17,8 @@ yf = 4
 xc = 1
 yc = -2# + 3 or 1
 
+rT = 0.75
+
 """
 RSRS case
 """
@@ -448,7 +450,7 @@ for i, c1 in enumerate(c1_candidates):
     # Get the length of the last S
     _P2x = _c_x1 + rho*cos(_theta_f+pi/2)
     _P2y = _c_y1 + rho*sin(_theta_f+pi/2)
-    straight2_length = ( (_P2x - xf)**2 + (_P2y - yf)**2 )**.5
+    straight2_length = ( (_P2x - xf)**2 + (_P2y - yf)**2 )**.5 - rT
 
     # Get the total path length
     total_path_length = arc1_length + straight1_length + arc2_length_1 + arc2_length_2 + straight2_length
@@ -485,6 +487,10 @@ ax.add_patch(circle0)
 # Mid circle
 circle_c = plt.Circle((xc,yc), r_c, fill=False, linestyle="--", color="b")
 ax.add_patch(circle_c)
+
+# Show the terminal set
+circleT = plt.Circle((xf,yf), rT, fill=False, linestyle="--", color="m")
+ax.add_patch(circleT)
 
 # End point and circle
 plt.plot(xf, yf, "ro")
