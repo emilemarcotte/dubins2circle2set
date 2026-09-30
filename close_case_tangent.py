@@ -10,7 +10,7 @@ Will need to add a way to make sure the trajectory does not cross C.
 
 # Known values
 # rho = 1
-rho = 2
+rho = 1.9
 # thet0 = 260*pi/180 # given between [0,2pi]
 rT = 1
 xT = 0
@@ -79,8 +79,8 @@ plt.plot(c1x_2, c1y_2, "mo")
 c22 = plt.Circle((c1x_2, c1y_2), rho, fill=False, linestyle="--", color="m")
 ax.add_patch(c22)
 
-# point P
-plt.plot(px, py, "ro")
+# # point P
+# plt.plot(px, py, "ro")
 
 plt.grid(False)
 plt.axis("equal")

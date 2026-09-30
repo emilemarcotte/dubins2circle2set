@@ -79,8 +79,8 @@ plt.plot(c1x_2, c1y_2, "mo")
 c22 = plt.Circle((c1x_2, c1y_2), rho, fill=False, linestyle="--", color="m")
 ax.add_patch(c22)
 
-# point P
-plt.plot(px, py, "ro")
+# # point P
+# plt.plot(px, py, "ro")
 
 plt.grid(False)
 plt.axis("equal")
