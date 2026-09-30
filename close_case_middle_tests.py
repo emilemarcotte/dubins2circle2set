@@ -9,7 +9,8 @@ Will need to add a way to make sure the trajectory does not cross C.
 """
 
 # Known values
-rho = 0.75
+rho = 1
+# rho = 3
 # thet0 = 260*pi/180 # given between [0,2pi]
 rT = 1
 xT = 0
@@ -18,20 +19,27 @@ rc = 2
 xc = 1
 yc = -2
 
-condition = ((xc-xT)**2 + (yc-yT)**2)**.5 - rc
-print(condition)
-assert condition <= 2*rho, "Condition not met for this type of solution."
-
 # Find known distances
 d_TC = ( (xc - xT)**2 + (yc - yT)**2 )**.5
-d_mT = rho
+d_mT = rho # middle case
+# d_mT = abs(rT-rho) # tangent case
 d_mc = rho + rc
+
+# Verify triangle inequality, middle case
+assert d_TC <= 2*rho + rc, "Condition 1 not met for this type of solution."
+assert d_TC >= rc, "Condition 2 not met for this type of solution."
+# Verify triangle inequality, tangent case
+# assert d_TC <= abs(rT - rho) + rho + rc, "Condition 3 not met for this type of solution."
+# assert d_TC >= abs( abs(rT-rho) + rho + rc ), "Condition 4 not met for this type of solution."
 
 # Find d_rp
 d_rp = (d_mT**2 + d_TC**2 - d_mc**2)/(2*d_TC)
 
+print("d_TC", d_TC)
+print("d_mT", d_mT)
 # Find d_mp
 d_mp = (d_mT**2 - d_rp**2)**.5
+print("d_mp", d_mp) # becomes complex if d_rp > d_mT
 
 # Find point P, version 1
 # thet_TC = atan2(yc-yT, xc-xT)
@@ -71,6 +79,7 @@ ax.add_patch(circleT)
 
 # circle c1, 2 possibilities (NOT 4! c_x1 and c_y1 are NOT independent)
 plt.plot(c1x_1, c1y_1, "go")
+# assert False, "Intentional code break!"
 c11 = plt.Circle((c1x_1, c1y_1), rho, fill=False, linestyle="--", color="g")
 ax.add_patch(c11)
 plt.plot(c1x_2, c1y_2, "mo")

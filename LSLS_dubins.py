@@ -523,7 +523,7 @@ for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
 
     # angle of segment joining the centers of c0 and c1 (same as S segment angle)
-    _psi = atan2(_c_y1-c_y0, _c_x1-c_x0)
+    _psi = (atan2(_c_y1-c_y0, _c_x1-c_x0))%(2*pi)
 
     # Get the final angle
     _theta1_t = thet1_candidates[i]
