@@ -497,7 +497,7 @@ start = perf_counter()
 # Find the candidate values for the angle thet1
 roots = get_thet1_LSLS(r_c, rho, thet0, x0, y0, xf, yf, xc, yc)
 print("Real roots:", roots)
-thet1_candidates = [2*atan(half_angle) for half_angle in roots]
+thet1_candidates = [(2*atan(half_angle))%(2*pi) for half_angle in roots]
 # Account for the fact that adding 180 degrees can also give the same tangent
 thet1_candidates_180 = []
 for angle in thet1_candidates:

@@ -737,6 +737,7 @@ plt.plot(x_L0, y_L0, "g-")
 x_s01 = np.linspace(x_t0, x_t1, 10)
 y_s01 = np.linspace(y_t0, y_t1, 10)
 plt.plot(x_s01, y_s01, "g-")
+# print(((x_t0-x_t1)**2+(y_t0-y_t1)**2)**.5)
 
 # Get the points for the second curved segment
 if thet1_t > psi: # changed for R

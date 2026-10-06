@@ -9,3 +9,5 @@
 - Manage cases where a segment in the optimal path could be of length 0.
 
 - Maybe add a way to see if the optimal path goes through C before rejecting it or accepting it as the shortest path.
+
+- Add a check to make sure initial conditions are outside circle C.
