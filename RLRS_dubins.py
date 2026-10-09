@@ -431,9 +431,9 @@ roots, c_mdm0, c_mdm1, c_mdm2 = get_thet1_RLRS(r_c, rho, thet0, x0, y0, xf, yf, 
 # end = perf_counter() # To know how quick the code is
 # print("time =", end-start)
 
-thet1_candidates = [(2*atan(half_angle))%(2*pi) for half_angle in roots]
+thet1_candidates = [(2*atan(root))%(2*pi) for root in roots]
 # print(thet1_candidates)
-# Account for the fact that adding 180 degrees can also give the same tangent
+# Account for the fact that adding pi can also give the same tangent
 thet1_candidates_180 = []
 for angle in thet1_candidates:
     thet1_candidates_180.append((angle+pi)%(2*pi))

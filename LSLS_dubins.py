@@ -463,7 +463,9 @@ def get_thet1_LSLS(r_c, rho, thet0, x0, y0, xf, yf, xc, yc):
     companion = np.hstack((left_mat, coeffs))
     # Get the roots by finding the eigenvalues of the comp matrix
     roots, _ = np.linalg.eig(companion)
+    # print("roots len", len(roots))
     real_roots = [np.real(root) for root in roots if np.imag(root) == 0]
+    # print("real roots len", len(real_roots))
     return real_roots
 
 def get_circle_center(x, y, thet, rho, turn):
@@ -496,9 +498,9 @@ start = perf_counter()
 
 # Find the candidate values for the angle thet1
 roots = get_thet1_LSLS(r_c, rho, thet0, x0, y0, xf, yf, xc, yc)
-print("Real roots:", roots)
-thet1_candidates = [(2*atan(half_angle))%(2*pi) for half_angle in roots]
-# Account for the fact that adding 180 degrees can also give the same tangent
+# print("Real roots:", roots)
+thet1_candidates = [(2*atan(root))%(2*pi) for root in roots]
+# Account for the fact that adding pi can also give the same tangent
 thet1_candidates_180 = []
 for angle in thet1_candidates:
     thet1_candidates_180.append(angle+pi)

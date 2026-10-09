@@ -522,8 +522,8 @@ print("Real roots:", roots)
 # end = perf_counter() # To know how quick the code is
 # print("time =", end-start)
 
-thet1_candidates = [(2*atan(half_angle))%(2*pi) for half_angle in roots]
-# Account for the fact that adding 180 degrees can also give the same tangent
+thet1_candidates = [(2*atan(root))%(2*pi) for root in roots]
+# Account for the fact that adding pi can also give the same tangent
 thet1_candidates_180 = []
 for angle in thet1_candidates:
     thet1_candidates_180.append((angle+pi)%(2*pi))
