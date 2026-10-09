@@ -384,10 +384,14 @@ thet1_candidates_180 = []
 for angle in thet1_candidates:
     thet1_candidates_180.append((angle+pi)%(2*pi))
 thet1_candidates += thet1_candidates_180
+# Add pi to the candidate angles because of the range of validity of arctan
+thet1_candidates.append(pi)
+
 c1_candidates = []
 for thet1 in thet1_candidates:
     c_x1_, c_y1_ = get_circle_center(xc, yc, thet1, rho+r_c, "R")
     c1_candidates.append((c_x1_,c_y1_))
+
 # Keep only the candidate value that gives the shortest overall path length
 c_x0, c_y0 = get_circle_center(x0, y0, thet0, rho, "R")
 distance = np.inf
