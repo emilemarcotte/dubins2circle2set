@@ -11,3 +11,5 @@
 - Maybe add a way to see if the optimal path goes through C before rejecting it or accepting it as the shortest path.
 
 - Add a check to make sure initial conditions are outside circle C.
+
+- Need to check sufficient condition at the start of the code, just raise a warning if it is not met.
