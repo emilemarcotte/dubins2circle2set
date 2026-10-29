@@ -14,6 +14,27 @@ yf = -6
 xc = 8
 yc = -3
 
+### Interesting because c0 intersects with C, but not the trajectory
+# r_c = 2
+# rho = 1
+# thet0 = 270*pi/180
+# x0 = -2
+# y0 = 0
+# xf = 4
+# yf = 0
+# xc = 0
+# yc = 2
+
+# r_c = 2
+# rho = 1
+# thet0 = 270*pi/180
+# x0 = -2
+# y0 = -1
+# xf = 4
+# yf = 0
+# xc = 0
+# yc = 2
+
 rT = 0.75
 
 """

@@ -82,6 +82,8 @@ thet2_2 = acos(thet2_num_2/(xTc**2 + yTc**2))
 
 # MANAGE solutions of theta2 = arccos or theta2 = -arccos
 
+# MANAGE M \ne -\rho^2
+
 
 # Get the final theta2
 thet2 = -thet2_1
