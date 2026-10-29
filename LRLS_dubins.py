@@ -21,6 +21,8 @@ yf = 1
 xc = 1
 yc = -2# + 3 or 1
 
+rT = 0.75
+
 """
 LRLS case
 """
@@ -404,12 +406,6 @@ def get_circle_center(x, y, thet, rho, turn):
         raise ValueError("""The "turn" argument is invalid. It should be either "L" or "R".""")
     return c_x, c_y
 
-def dist_points(x1, y1, x2, y2):
-    """
-    Returns the distance between 2 points in a 2D plane.
-    """
-    return ((x1 - x2)**2 + (y1 - y2)**2)**.5
-
 # Calculate the total execution time
 start = perf_counter()
 
@@ -419,14 +415,17 @@ roots, c_mdm0, c_mdm1, c_mdm2 = get_thet1_LRLS(r_c, rho, thet0, x0, y0, xf, yf, 
 # end = perf_counter() # To know how quick the code is
 # print("time =", end-start)
 
-thet1_candidates = [(2*atan(half_angle))%(2*pi) for half_angle in roots]
+thet1_candidates = [(2*atan(root))%(2*pi) for root in roots]
 # print(thet1_candidates)
-# Account for the fact that adding 180 degrees can also give the same tangent
+# Account for the fact that adding pi can also give the same tangent
 thet1_candidates_180 = []
 for angle in thet1_candidates:
     thet1_candidates_180.append((angle+pi)%(2*pi))
 thet1_candidates += thet1_candidates_180
 # print(thet1_candidates)
+# Add pi to the candidate angles because of the range of validity of arctan
+thet1_candidates.append(pi)
+
 c1_candidates = []
 for thet1 in thet1_candidates:
     c_x1_, c_y1_ = get_circle_center(xc, yc, thet1, rho+r_c, "L")
@@ -446,6 +445,8 @@ x_t1 = None # point that ends the second curve
 y_t1 = None # point that ends the second curve
 x_tf = None # point that starts the last S segment
 y_tf = None # point that starts the last S segment
+p_xt = None # tangent point
+p_yt = None # tangent point
 beta_1 = None
 beta_2 = None
 theta_f = None
@@ -453,10 +454,12 @@ theta1_t = None
 
 for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
-    if dist_points(c_x0, c_y0, _c_x1, _c_y1) >= 4*rho:
+    _theta1_t = thet1_candidates[i]
+    # Tangent point
+    _p_xt, _p_yt = get_circle_center(xc, yc, _theta1_t, r_c, "L") # changed for L
+    if ((x0 - _p_xt)**2 + (y0 - _p_yt))**.5 >= 4*rho:
         # The separation distance is too large for a CCC solution to be optimal
         continue
-    _theta1_t = thet1_candidates[i]
     q = tan(_theta1_t/2)
     md_minus = (c_mdm0 + c_mdm1*q + c_mdm2*q**2)/(q**2 + 1) # = ||c_1-c_0||**2
     # Get the angle span "alpha" for the middle turn
@@ -507,7 +510,8 @@ for i, c1 in enumerate(c1_candidates):
     _y_t1 = _c_ya + rho*sin(_beta_2 + pi/2) # CHANGE THIS SIGN FOR RLRS
 
     # Get the first point of the final S segment
-    _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "L") # point that starts the last S, CHANGE L FOR RLRS.
+    _P2x = _c_x1 + rho*cos(_theta_f-pi/2)
+    _P2y = _c_y1 + rho*sin(_theta_f-pi/2)
 
     # Get the length of the first curved segment, length = theta*rho
     if _beta_1 < thet0: # CHANGE THIS SIGN FOR RLRS
@@ -520,11 +524,6 @@ for i, c1 in enumerate(c1_candidates):
 
     # Get the length of the third curved segment, length = theta*rho
     # Need to divide it in 2 to account for cases where there is more than 1 rotation
-    if _theta_f < _beta_2: # CHANGE THIS SIGN FOR RLRS
-        arc3_length = abs((_theta_f+2*pi - _beta_2)*rho)
-    else:
-        arc3_length = abs((_theta_f - _beta_2)*rho)
-
     if _theta1_t < _beta_2: # CHANGED THIS SIGN FOR RLRS
         arc3_length_1 = abs((_theta1_t+2*pi - _beta_2)*rho)
     else:
@@ -535,7 +534,7 @@ for i, c1 in enumerate(c1_candidates):
         arc3_length_2 = abs((_theta_f - _theta1_t)*rho)
 
     # Get the length of the final S segment
-    S_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
+    S_length = ( (_P2x - xf)**2 + (_P2y - yf)**2 )**.5 - rT
 
     # Get the total path length
     total_path_length = arc1_length + arc2_length + arc3_length_1 + arc3_length_2 + S_length
@@ -553,8 +552,10 @@ for i, c1 in enumerate(c1_candidates):
         y_t0 = _y_t0
         x_t1 = _x_t1
         y_t1 = _y_t1
-        x_tf = _x_tf
-        y_tf = _y_tf
+        x_tf = _P2x
+        y_tf = _P2y
+        p_xt = _p_xt
+        p_yt = _p_yt
         beta_1 = _beta_1
         beta_2 = _beta_2
         theta_f = _theta_f
@@ -574,13 +575,16 @@ arrow_length = 1
 # Initial point and circle
 plt.plot(x0, y0, "ro")
 plt.arrow(x0, y0, arrow_length*cos(thet0), arrow_length*sin(thet0), head_width=0.2)
-circle0 = plt.Circle((c_x0,c_y0),
-                     rho, fill=False, linestyle="--")
+circle0 = plt.Circle((c_x0,c_y0), rho, fill=False, linestyle="--")
 ax.add_patch(circle0)
 
 # Mid circle
 circle_c = plt.Circle((xc,yc), r_c, fill=False, linestyle="--", color="b")
 ax.add_patch(circle_c)
+
+# Show the terminal set
+circleT = plt.Circle((xf,yf), rT, fill=False, linestyle="--", color="m")
+ax.add_patch(circleT)
 
 # End point and circle
 plt.plot(xf, yf, "ro")
@@ -595,7 +599,6 @@ ax.add_patch(circle1)
 #     ax.add_patch(circle1)
 
 # Get and plot the tangent point
-p_xt, p_yt = get_circle_center(xc, yc, theta1_t, r_c, "L") # changed for L
 plt.plot(p_xt, p_yt, "ro")
 plt.arrow(p_xt, p_yt, arrow_length*cos(theta1_t), arrow_length*sin(theta1_t), head_width=0.2)
 
@@ -642,7 +645,6 @@ if theta_f < theta1_t:
 else:
     angles3_2 = np.linspace(theta1_t-pi, theta_f-pi, 20) # changed for L
 angles3 = angles3_1.tolist() + angles3_2.tolist()[1:]
-
 x_L3 = []
 y_L3 = []
 for angle in angles3:
@@ -657,8 +659,8 @@ y_S_f = np.linspace(y_L3[-1], yf, 10)
 plt.plot(x_S_f, y_S_f, "g-")
 
 # Plot the full trajectory
-# all_x_trajectory = x_L1 + x_L2[1:] + x_L3[1:] + x_S_f.tolist()[1:]
-# all_y_trajectory = y_L1 + y_L2[1:] + y_L3[1:] + y_S_f.tolist()[1:]
+all_x_trajectory = x_L1 + x_L2[1:] + x_L3[1:] + x_S_f.tolist()[1:]
+all_y_trajectory = y_L1 + y_L2[1:] + y_L3[1:] + y_S_f.tolist()[1:]
 # plt.plot(all_x_trajectory, all_y_trajectory, "c-")
 
 plt.grid(False)

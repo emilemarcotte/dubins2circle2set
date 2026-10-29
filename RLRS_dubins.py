@@ -18,6 +18,8 @@ yf = -5
 xc = 1
 yc = -0.5# + 3 or 1
 
+rT = 0.75
+
 """
 Weird edge case:
 r_c = 2
@@ -420,30 +422,26 @@ def get_circle_center(x, y, thet, rho, turn):
         raise ValueError("""The "turn" argument is invalid. It should be either "L" or "R".""")
     return c_x, c_y
 
-def dist_points(x1, y1, x2, y2):
-    """
-    Returns the distance between 2 points in a 2D plane.
-    """
-    return ((x1 - x2)**2 + (y1 - y2)**2)**.5
-
 # Calculate the total execution time
 start = perf_counter()
 
 # Find the candidate values for the angle thet1
 roots, c_mdm0, c_mdm1, c_mdm2 = get_thet1_RLRS(r_c, rho, thet0, x0, y0, xf, yf, xc, yc)
-print("Real roots:", roots)
+# print("Real roots:", roots)
 # end = perf_counter() # To know how quick the code is
 # print("time =", end-start)
 
-
-thet1_candidates = [(2*atan(half_angle))%(2*pi) for half_angle in roots]
+thet1_candidates = [(2*atan(root))%(2*pi) for root in roots]
 # print(thet1_candidates)
-# Account for the fact that adding 180 degrees can also give the same tangent
+# Account for the fact that adding pi can also give the same tangent
 thet1_candidates_180 = []
 for angle in thet1_candidates:
     thet1_candidates_180.append((angle+pi)%(2*pi))
 thet1_candidates += thet1_candidates_180
 # print(thet1_candidates)
+# Add pi to the candidate angles because of the range of validity of arctan
+thet1_candidates.append(pi)
+
 c1_candidates = []
 for thet1 in thet1_candidates:
     c_x1_, c_y1_ = get_circle_center(xc, yc, thet1, rho+r_c, "R")
@@ -463,6 +461,8 @@ x_t1 = None # point that ends the second curve
 y_t1 = None # point that ends the second curve
 x_tf = None # point that starts the last S segment
 y_tf = None # point that starts the last S segment
+p_xt = None # tangent point
+p_yt = None # tangent point
 beta_1 = None
 beta_2 = None
 theta_f = None
@@ -471,10 +471,12 @@ alpha = None
 
 for i, c1 in enumerate(c1_candidates):
     _c_x1, _c_y1 = c1
-    if dist_points(c_x0, c_y0, _c_x1, _c_y1) >= 4*rho:
+    _theta1_t = thet1_candidates[i]
+    # Tangent point
+    _p_xt, _p_yt = get_circle_center(xc, yc, _theta1_t, r_c, "R") # changed for R
+    if ((x0 - _p_xt)**2 + (y0 - _p_yt))**.5 >= 4*rho:
         # The separation distance is too large for a CCC solution to be optimal
         continue
-    _theta1_t = thet1_candidates[i]
     q = tan(_theta1_t/2)
     md_minus = (c_mdm0 + c_mdm1*q + c_mdm2*q**2)/(q**2 + 1) # = ||c_1-c_0||**2
     # Get the angle span "alpha" for the middle turn
@@ -525,7 +527,8 @@ for i, c1 in enumerate(c1_candidates):
     _y_t1 = _c_ya + rho*sin(_beta_2 - pi/2) # CHANGED THIS SIGN FOR RLRS
 
     # Get the first point of the final S segment
-    _x_tf, _y_tf = get_circle_center(_c_x1, _c_y1, _theta_f, rho, "R") # point that starts the last S, CHANGED FOR RLRS.
+    _P2x = _c_x1 + rho*cos(_theta_f+pi/2)
+    _P2y = _c_y1 + rho*sin(_theta_f+pi/2)
 
     # Get the length of the first curved segment, length = theta*rho
     if _beta_1 > thet0: # CHANGED THIS SIGN FOR RLRS
@@ -548,7 +551,7 @@ for i, c1 in enumerate(c1_candidates):
         arc3_length_2 = abs((_theta_f - _theta1_t)*rho)
 
     # Get the length of the final S segment
-    S_length = ( (_x_tf - xf)**2 + (_y_tf - yf)**2 )**.5
+    S_length = ( (_P2x - xf)**2 + (_P2y - yf)**2 )**.5 - rT
 
     # Get the total path length
     total_path_length = arc1_length + arc2_length + arc3_length_1 + arc3_length_2 + S_length
@@ -566,8 +569,10 @@ for i, c1 in enumerate(c1_candidates):
         y_t0 = _y_t0
         x_t1 = _x_t1
         y_t1 = _y_t1
-        x_tf = _x_tf
-        y_tf = _y_tf
+        x_tf = _P2x
+        y_tf = _P2y
+        p_xt = _p_xt
+        p_yt = _p_yt
         beta_1 = _beta_1
         beta_2 = _beta_2
         theta_f = _theta_f
@@ -588,8 +593,7 @@ arrow_length = 1
 # Initial point and circle
 plt.plot(x0, y0, "ro")
 plt.arrow(x0, y0, arrow_length*cos(thet0), arrow_length*sin(thet0), head_width=0.2)
-circle0 = plt.Circle((c_x0,c_y0),
-                     rho, fill=False, linestyle="--")
+circle0 = plt.Circle((c_x0,c_y0), rho, fill=False, linestyle="--")
 ax.add_patch(circle0)
 
 # print("c_x0,c_y0", c_x0,c_y0)
@@ -597,6 +601,10 @@ ax.add_patch(circle0)
 # Mid circle
 circle_c = plt.Circle((xc,yc), r_c, fill=False, linestyle="--", color="b")
 ax.add_patch(circle_c)
+
+# Show the terminal set
+circleT = plt.Circle((xf,yf), rT, fill=False, linestyle="--", color="m")
+ax.add_patch(circleT)
 
 # End point and circle
 plt.plot(xf, yf, "ro")
@@ -613,7 +621,6 @@ ax.add_patch(circle1)
 # print("c_x1,c_y1", c_x1,c_y1)
 
 # Get and plot the tangent point
-p_xt, p_yt = get_circle_center(xc, yc, theta1_t, r_c, "R") # changed for R
 plt.plot(p_xt, p_yt, "ro")
 plt.arrow(p_xt, p_yt, arrow_length*cos(theta1_t), arrow_length*sin(theta1_t), head_width=0.2)
 # print("p_xt, p_yt", p_xt, p_yt)
