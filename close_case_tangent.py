@@ -190,6 +190,9 @@ for angle in angles1:
 plt.plot(x_L1, y_L1, "g-")
 # print(x_L1, y_L1)
 
+# Show the final heading, NEEDS TO BE GENERALIZED
+plt.arrow(x_L1[-1], y_L1[-1], arrow_length*cos(thetf+pi/2), arrow_length*sin(thetf+pi/2), head_width=0.1)
+
 plt.grid(False)
 plt.axis("equal")
 plt.tight_layout() # to remove white margins
