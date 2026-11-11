@@ -99,13 +99,13 @@ psi = (atan2(c1y-c0y, c1x-c0x))%(2*pi)
 ### Plot the results
 fig, ax = plt.subplots() # note we must use plt.subplots, not plt.subplot
 arrow_length = 0.5
+ax.set_axis_off() # remove the axes and their numbers
 
 # Initial configuration
 plt.plot(x0,y0, "ro")
 plt.arrow(x0, y0, arrow_length*cos(thet0), arrow_length*sin(thet0), head_width=0.1)
 circleC0 = plt.Circle((c0x,c0y), rho, fill=False, linestyle="--", color="g")
 ax.add_patch(circleC0)
-ax.text(1.1,1, r'$\mathcal{T}$', fontsize=15)
 
 # point that starts the first S
 xt0 = c0x + rho*cos(psi-pi/2)
@@ -122,6 +122,7 @@ ax.text(3, -1, r'$\mathcal{C}$', fontsize=15)
 plt.plot(xT, yT, "ko")
 circleT = plt.Circle((xT,yT), rT, fill=False, linestyle="-", color="k")
 ax.add_patch(circleT)
+ax.text(1.1,1, r'$\mathcal{T}$', fontsize=15)
 
 # circle c1, 2 possibilities (NOT 4! c_x1 and c_y1 are NOT independent)
 plt.plot(c1x, c1y, "go")
@@ -184,4 +185,5 @@ plt.plot([xT,xc],[yT,yc],"m--",linewidth=1)
 
 plt.grid(False)
 plt.axis("equal")
+plt.tight_layout() # to remove white margins
 plt.show()
