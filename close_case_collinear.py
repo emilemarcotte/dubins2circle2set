@@ -93,7 +93,7 @@ thet_TC = atan2(yT-yc, xT-xc)
 c1x = xc + d_mc*cos(thet_TC)
 c1y = yc + d_mc*sin(thet_TC)
 
-# Angle of S segment joining C0 and C1
+# Angle of S segment joining C0 and C1, NEEDS TO BE GENERALIZED
 psi = (atan2(c1y-c0y, c1x-c0x))%(2*pi)
 
 ### Plot the results
@@ -129,7 +129,7 @@ plt.plot(c1x, c1y, "go")
 c1 = plt.Circle((c1x, c1y), rho, fill=False, linestyle="--", color="g")
 ax.add_patch(c1)
 
-# Get the points for the first curved segment, and make sure angle range is ok
+# Get the points for the first curved segment, and make sure angle range is ok, NEEDS TO BE GENERALIZED
 # if psi < thet0: # changed for L
     # angles0 = np.linspace(thet0-pi, psi+pi, 20) # changed for L
 #     print("angles01")
@@ -162,11 +162,11 @@ x2,y2 = intersection_points[1]
 # plt.plot(x1,y1,"mo")
 plt.plot(x2,y2,"ro")
 thetf = atan2(y2-c1y,x2-c1x)%(2*pi)
-print(thetf*180/pi)
+# print(thetf*180/pi)
 
 # Draw the last L, NEEDS TO BE GENERALIZED
 angles1 = np.linspace(psi+pi, thetf+pi/2+pi, 20)
-print(angles1)
+# print(angles1)
 x_L1 = []
 y_L1 = []
 for angle in angles1:
